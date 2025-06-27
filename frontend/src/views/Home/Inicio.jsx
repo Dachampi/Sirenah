@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 const Inicio = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const handleNavigate = (path) => {
     navigate(path); // Redirige a la ruta especificada
   };

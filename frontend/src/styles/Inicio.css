@@ -282,6 +282,11 @@ main {
   }
 }
 
+.aplicar-filtros {
+  background-color: #f5f5dc; /* beige */
+  color: #333; /* texto oscuro para contraste */
+}
+
 /* Modo oscuro */
 .dark-mode {
   background-color: #121212;
