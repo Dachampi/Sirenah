@@ -100,23 +100,23 @@ body {
 }
 
 .aplicar-filtros {
-    background-color: #0ff;
+    background-color: #d6d6a7;
     color: #000;
 }
 
 .aplicar-filtros:hover {
-    background-color: #c6d12b;
+    background-color: #a1a172;
     transform: translateY(-2px);
 }
 
 .limpiar-filtros {
-    background-color: rgb(42, 202, 141);
+    background-color: #b54c4c;
     color: #000;
     transition: all ease-in 0.3s;
 }
 
 .limpiar-filtros:hover {
-    background-color: #c6d12b;
+    background-color: #824444;
     transform: translateY(-2px);
 }
 
