@@ -67,7 +67,7 @@ const Chatbot = () => {
     }
     
     if (message.includes('envío') || message.includes('entrega') || message.includes('delivery')) {
-      return "Realizamos envíos a toda la ciudad. El tiempo de entrega es de 1-3 días hábiles. El costo del envío se calcula al momento de la compra.";
+      return "Realizamos envíos a toda la ciudad. El tiempo de entrega es de 1-3 días hábiles. El costo del envío se calcula al momento de la compra. Y se enviarian por Shalom en los dias siguientes, comunicarse con 945678234";
     }
     
     if (message.includes('pedido') || message.includes('compra')) {
