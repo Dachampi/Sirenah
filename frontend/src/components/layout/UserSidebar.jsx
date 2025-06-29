@@ -62,7 +62,7 @@ function UserSidebar({ onCollapseChange }) {
     }, 1000);
   };
   return (
-    <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+    <div className={`sidebar ${isCollapsed ? "collapsed" : ""} userperfila`}>
       <button className="toggle-btn" onClick={toggleSidebar}>
         {isCollapsed ? <FaBars color="#fff" /> : <FaTimes color="#fff" />}
       </button>

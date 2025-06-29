@@ -6,7 +6,7 @@
     top: 0;
     height: 100%;
     width: 250px;
-    background: #0f0f1a;
+    background: #000;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
     transition: width 0.3s ease, transform 0.3s ease;
     color: #fff;
@@ -14,7 +14,9 @@
     overflow-x: hidden;
     z-index: 100;
 }
-
+.userperfila{
+    background-color: #334a79;
+}
 .sidebar.collapsed {
     width: 75px;
 }
