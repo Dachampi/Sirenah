@@ -20,9 +20,9 @@
 
 .contact-header {
     padding: 30px;
-    background: #11e6db; /* Fondo claro por defecto */
+    background: #e4d3b4 ;  /* Fondo claro por defecto */
     text-align: center;
-    border-radius: 20px 20px 0 0;
+    border-radius: 20px 20px 0 0; 
 }
 
 .contact-title {
@@ -132,7 +132,7 @@ textarea:focus {
     padding: 12px 25px;
     font-size: 1.1rem;
     color: #000;
-    background: #11e6db;
+    background: #e4d3b4 ;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -140,7 +140,7 @@ textarea:focus {
 }
 
 .submit-button:hover {
-    background-color: #e9db1e;
+    background-color: #ccb97e;
     transform: translateY(-3px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Sombra al pasar el mouse */
 }
