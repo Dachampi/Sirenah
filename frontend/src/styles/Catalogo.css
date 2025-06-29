@@ -100,40 +100,44 @@ body {
 }
 
 .aplicar-filtros {
-    background-color: #d6d6a7;
+    background-color: #0ff;
     color: #000;
 }
 
 .aplicar-filtros:hover {
-    background-color: #a1a172;
+    background-color: #e5e5c0;
     transform: translateY(-2px);
 }
 
 .limpiar-filtros {
-    background-color: #b54c4c;
-    color: #000;
+   background-color: #e6b89c;
+  color: #333;
     transition: all ease-in 0.3s;
 }
 
 .limpiar-filtros:hover {
-    background-color: #824444;
+    background-color: #d2b48c;
+    color: #222;
     transform: translateY(-2px);
 }
 
 .dark-mode .aplicar-filtros {
-    background-color: #0ff;
+        background-color: #f5f5dc; /* beige */
+        color: #333;
 }
 
 .dark-mode .aplicar-filtros:hover {
-    background-color: #c6d12b;
+      background-color: #e5e5c0; /* un beige un poco más oscuro para el hover */
+      color: #222;
 }
 
 .dark-mode .limpiar-filtros {
-    background-color: rgb(42, 202, 141);
+    background-color: #e6b89c;
+  color: #333;
 }
 
 .dark-mode .limpiar-filtros:hover {
-    background-color: #c6d12b;
+    background-color: #d2b48c;
 }
 
 /* Contenedor de precio */
@@ -370,6 +374,11 @@ body {
   .modal__cuerpo img {
     max-width: 60%;
   }
+}
+
+.aplicar-filtros {
+  background-color: #f5f5dc; /* beige */
+  color: #333; /* texto oscuro para contraste */
 }
 
 /* Animations */
