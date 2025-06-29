@@ -100,8 +100,8 @@ body {
 }
 
 .aplicar-filtros {
-    background-color: #0ff;
-    color: #000;
+  background-color: #ececd1; /* beige */
+  color: #333;
 }
 
 .aplicar-filtros:hover {
@@ -376,11 +376,6 @@ body {
   }
 }
 
-.aplicar-filtros {
-  background-color: #f5f5dc; /* beige */
-  color: #333; /* texto oscuro para contraste */
-}
-
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -401,3 +396,4 @@ body {
     transform: translateY(0);
   }
 }
+
