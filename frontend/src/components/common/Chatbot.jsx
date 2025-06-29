@@ -115,7 +115,7 @@ const Chatbot = () => {
     <div className="chatbot-container">
       {/* Botón flotante */}
       <button 
-        className={`chatbot-button ${isOpen ? 'active' : ''}`}
+        className={chatbot-button ${isOpen ? 'active' : ''}}
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Abrir chat de ayuda"
       >
@@ -142,7 +142,7 @@ const Chatbot = () => {
             {messages.map((message) => (
               <div 
                 key={message.id} 
-                className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}
+                className={message ${message.sender === 'user' ? 'user-message' : 'bot-message'}}
               >
                 <div className="message-content">
                   {message.text}
@@ -193,4 +193,4 @@ const Chatbot = () => {
   );
 };
 
-export default Chatbot; 
+export default Chatbot;
