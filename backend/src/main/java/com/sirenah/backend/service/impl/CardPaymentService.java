@@ -22,6 +22,7 @@ import com.sirenah.backend.service.OurUserService;
 import com.sirenah.backend.service.ProductoService;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -37,8 +38,10 @@ public class CardPaymentService {
     @Autowired
     private OurUserService ourUserService;
 
-    Dotenv dotenv = Dotenv.load();
-    private String mercadoPagoToken = dotenv.get("MERCADOPAGO_TOKEN");
+    @Value("${mercadopago.token}")
+    private String mercadoPagoToken;
+
+
 
     public PaymentResponseDTO processPayment(Integer idCarrito, CardPaymentDTO cardPaymentDTO) {
         try {
