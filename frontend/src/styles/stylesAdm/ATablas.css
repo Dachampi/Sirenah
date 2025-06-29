@@ -309,6 +309,7 @@ tr:hover {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .cancel-btn:hover {
@@ -483,14 +484,6 @@ form .success-message {
   min-height: 100px;
 }
 
-.modal-actions {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #dee2e6;
-}
 
 .save-btn:disabled {
   opacity: 0.6;
