@@ -4,8 +4,7 @@ package com.sirenah.backend.controller;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.resources.payment.Payment;
-
-import org.springframework.beans.factory.annotation.Value;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/public/webhook")
 public class WebhookController {
-
-    @Value("${mercadopago.token}")
-    private String mercadoPagoToken;
-
+    Dotenv dotenv = Dotenv.load();
+    private String mercadoPagoToken = dotenv.get("MERCADOPAGO_TOKEN");
     @PostMapping
     public ResponseEntity<?> handleWebhook(@RequestBody WebhookNotification notification) {
         try {
@@ -40,7 +37,7 @@ public class WebhookController {
 
     private void processPayment(Long paymentId) {
         try {
-            MercadoPagoConfig.setAccessToken(mercadoPagoToken);
+            MercadoPagoConfig.setAccessToken(dotenv.get(mercadoPagoToken));
 
             PaymentClient paymentClient = new PaymentClient();
             Payment payment = paymentClient.get(paymentId);
