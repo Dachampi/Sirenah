@@ -35,6 +35,8 @@ import Success from "../views/StatusPagos/Success";
 import Failure from "../views/StatusPagos/Failure";
 import Pending from "../views/StatusPagos/Pending";
 import FormPago from "../components/layout/FormPago";
+import RegistroADMIN from "../views/Login/RegistroADMIN";
+import RegistroEMPLEADO from "../views/Login/RegistroEMPLEADO";
 
 function Rutas() {
   return (
@@ -76,6 +78,22 @@ function Rutas() {
           element={
             <ProtegerRutas allowedRoles={["ADMIN"]}>
               <Analiticas />
+            </ProtegerRutas>
+          }
+        />
+        <Route
+          path="/MenuAdmin/Administradores/Agregar"
+          element={
+            <ProtegerRutas allowedRoles={["ADMIN"]}>
+              <RegistroADMIN />
+            </ProtegerRutas>
+          }
+        />
+        <Route
+          path="/MenuAdmin/Empleados/Agregar"
+          element={
+            <ProtegerRutas allowedRoles={["ADMIN"]}>
+              <RegistroEMPLEADO />
             </ProtegerRutas>
           }
         />

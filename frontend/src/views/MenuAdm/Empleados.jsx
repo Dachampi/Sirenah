@@ -56,15 +56,6 @@ function Empleados() {
     }
   }, [searchTerm, empleados])
 
-  const formatearFecha = (fecha) => {
-    if (!fecha) return "N/A"
-    return new Date(fecha).toLocaleDateString("es-ES", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
-  }
-
   const calcularEdad = (fechaNacimiento) => {
     if (!fechaNacimiento) return "N/A"
     const hoy = new Date()
@@ -130,9 +121,7 @@ const handleNavigateToAdministradores = () => {
 };
 
   const handleAddEmpleado = () => {
-    // Aquí iría la navegación al formulario de agregar empleado
-    console.log("Navegando a Agregar Empleado")
-    // window.location.href = "/empleados/nuevo" o abrir modal
+    navigate("/MenuAdmin/Empleados/Agregar");
   }
 
   const clearSearch = () => {
@@ -263,7 +252,7 @@ const handleNavigateToAdministradores = () => {
                 <div className="empty-state">
                   <div className="empty-icon">🔍</div>
                   <h3>No se encontraron resultados</h3>
-                  <p>No hay empleados que coincidan con "{searchTerm}"</p>
+                  <p>No hay empleados que coincidan con {searchTerm}</p>
                   <button className="clear-filter-btn" onClick={clearSearch}>
                     Limpiar filtro
                   </button>
@@ -309,7 +298,7 @@ const handleNavigateToAdministradores = () => {
                                 <div className="empleado-name">
                                   {empleado.nombre} {empleado.apellido}
                                 </div>
-                                <div className="empleado-birth">{formatearFecha(empleado.fecha_nacimiento)}</div>
+                                <div className="empleado-birth">{empleado.fecha_nacimiento}</div>
                               </div>
                             </div>
                           </td>

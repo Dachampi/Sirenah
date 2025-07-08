@@ -56,14 +56,6 @@ function Administradores() {
     }
   }, [searchTerm, administradores])
 
-  const formatearFecha = (fecha) => {
-    if (!fecha) return "N/A"
-    return new Date(fecha).toLocaleDateString("es-ES", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
-  }
 
   const calcularEdad = (fechaNacimiento) => {
     if (!fechaNacimiento) return "N/A"
@@ -131,9 +123,7 @@ function Administradores() {
   };
 
   const handleAddAdmin = () => {
-    // Aquí iría la navegación al formulario de agregar administrador
-    console.log("Navegando a Agregar Administrador")
-    // window.location.href = "/administradores/nuevo" o abrir modal
+    navigate("/MenuAdmin/Administradores/Agregar");
   }
 
   const clearSearch = () => {
@@ -267,7 +257,7 @@ function Administradores() {
                 <div className="empty-state">
                   <div className="empty-icon">🔍</div>
                   <h3>No se encontraron resultados</h3>
-                  <p>No hay administradores que coincidan con "{searchTerm}"</p>
+                  <p>No hay administradores que coincidan con {searchTerm}</p>
                   <button className="clear-filter-btn" onClick={clearSearch}>
                     Limpiar filtro
                   </button>
@@ -313,7 +303,7 @@ function Administradores() {
                                 <div className="admin-name">
                                   {admin.nombre} {admin.apellido}
                                 </div>
-                                <div className="admin-birth">{formatearFecha(admin.fecha_nacimiento)}</div>
+                                <div className="admin-birth">{admin.fecha_nacimiento}</div>
                               </div>
                             </div>
                           </td>
