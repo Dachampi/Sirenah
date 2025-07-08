@@ -8,8 +8,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import "../../styles/Registro.css";
-import { Link } from "react-router-dom";
+import "../../styles/stylesAdm/Formadmin.css";
 import {
   validarNombre,
   validarApellido,
@@ -24,7 +23,7 @@ import { AlertaDeExito, AlertaDeError } from "../../utils/Alertas";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/common/Loanding";
 
-function Registro() {
+function Registroadmin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
@@ -110,7 +109,7 @@ function Registro() {
       name: nombre,
       email: email,
       password: password,
-      role: "USER",
+      role: "ADMIN",
       ourUsers: {
         apellido: apellido,
         dni: dni,
@@ -128,7 +127,7 @@ function Registro() {
       const data = await response.json();
 
       if (data.statuscode === 200) {
-        AlertaDeExito("¡Bienvenido!", "Te has registrado correctamente.");
+        AlertaDeExito("¡Exitoso!", "Se ha registrado correctamente.");
         setEmail("");
         setPassword("");
         setNombre("");
@@ -156,7 +155,7 @@ function Registro() {
       }
       setIsLoading(false);
       setTimeout(() => {
-        navigate("/login");
+        navigate("/MenuAdmin/Administradores");
       }, 2000);
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
@@ -171,166 +170,171 @@ function Registro() {
     setMostrarPassword(!mostrarPassword);
   };
   return (
-    <div className="contenedor-registro">
+    <div className="contenedor-adminAA">
       {isLoading && (
-        <Loading message="Registrandose, por favor espera..." />
+        <Loading message="Registrando adminAAistrador, por favor espera..." />
       )}
       <button
-        className="btn-close"
-        onClick={() => (window.location.href = "/")}
+        className="btn-cerrar-adminAA"
+        onClick={() => (window.location.href = "/MenuAdmin/Administradores")}
       >
-        <FaTimes className="icon-close" />
+        <FaTimes className="icono-cerrar-adminAA" />
       </button>
-      <form onSubmit={manejarRegistro} className="formulario-registro">
-        <h2 className="titulo-registro">¡Crea tu cuenta!</h2>
-        <div className="grupo-input">
-          <label className="etiqueta">Nombre Completo:</label>
-          <div className="input-con-icono">
-            <FaUser className="icono" />
+      <form onSubmit={manejarRegistro} className="formulario-adminAA">
+        <h2 className="titulo-adminAA">¡Agrega un nuevo Administrador!</h2>
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">Nombre Completo:</label>
+          <div className="input-con-icono-adminAA">
+            <FaUser className="icono-adminAA" />
             <input
               type="text"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
-              placeholder="Ingresa tu nombre"
-              className="input-registro"
+              placeholder="Ingresa el nombre"
+              className="input-adminAA"
               onBlur={() => validarNombre(nombre, setErrores)}
             />
           </div>
-          {errores.nombre && <p className="error-message">{errores.nombre}</p>}
+          {errores.nombre && (
+            <p className="mensaje-error-adminAA">{errores.nombre}</p>
+          )}
         </div>
-        <div className="grupo-input">
-          <label className="etiqueta">Apellidos Completos:</label>
-          <div className="input-con-icono">
-            <FaUser className="icono" />
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">Apellidos Completos:</label>
+          <div className="input-con-icono-adminAA">
+            <FaUser className="icono-adminAA" />
             <input
               type="text"
               value={apellido}
               onChange={(e) => setApellido(e.target.value)}
-              placeholder="Ingresa tu apellido"
-              className="input-registro"
+              placeholder="Ingresa los apellidos"
+              className="input-adminAA"
               onBlur={() => validarApellido(apellido, setErrores)}
             />
           </div>
           {errores.apellido && (
-            <p className="error-message">{errores.apellido}</p>
+            <p className="mensaje-error-adminAA">{errores.apellido}</p>
           )}
         </div>
-        <div className="grupo-input">
-          <label className="etiqueta">Correo Electrónico:</label>
-          <div className="input-con-icono">
-            <FaEnvelope className="icono" />
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">Correo Electrónico:</label>
+          <div className="input-con-icono-adminAA">
+            <FaEnvelope className="icono-adminAA" />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Ingresa tu correo"
-              className="input-registro"
+              placeholder="Ingresa el correo"
+              className="input-adminAA"
               onBlur={() => validarEmail(email,null, setErrores)}
             />
           </div>
-          {errores.email && <p className="error-message">{errores.email}</p>}
+          {errores.email && (
+            <p className="mensaje-error-adminAA">{errores.email}</p>
+          )}
         </div>
-        <div className="grupo-input">
-          <label className="etiqueta">DNI:</label>
-          <div className="input-con-icono">
-            <FaIdCard className="icono" />
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">DNI:</label>
+          <div className="input-con-icono-adminAA">
+            <FaIdCard className="icono-adminAA" />
             <input
               type="text"
               value={dni}
               onChange={(e) => setDni(e.target.value)}
-              placeholder="Ingresa tu DNI"
-              className="input-registro"
+              placeholder="Ingresa el DNI"
+              className="input-adminAA"
               onBlur={() => validarDni(dni, setErrores)}
             />
           </div>
-          {errores.dni && <p className="error-message">{errores.dni}</p>}
+          {errores.dni && (
+            <p className="mensaje-error-adminAA">{errores.dni}</p>
+          )}
         </div>
-        <div className="grupo-input">
-          <label className="etiqueta">Teléfono:</label>
-          <div className="input-con-icono">
-            <FaPhone className="icono" />
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">Teléfono:</label>
+          <div className="input-con-icono-adminAA">
+            <FaPhone className="icono-adminAA" />
             <input
               type="tel"
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
-              placeholder="Ingresa tu teléfono"
-              className="input-registro"
+              placeholder="Ingresa el teléfono"
+              className="input-adminAA"
               onBlur={() => validarTelefono(telefono, setErrores)}
             />
           </div>
           {errores.telefono && (
-            <p className="error-message">{errores.telefono}</p>
+            <p className="mensaje-error-adminAA">{errores.telefono}</p>
           )}
         </div>
-        <div className="grupo-input">
-          <label className="etiqueta">Fecha de Nacimiento:</label>
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">Fecha de Nacimiento:</label>
           <input
             type="date"
             value={fechaNacimiento}
             onChange={(e) => setFechaNacimiento(e.target.value)}
-            className="input-registro"
+            className="input-adminAA"
             onBlur={() => validarFechaNacimiento(fechaNacimiento, setErrores)}
           />
           {errores.fechaNacimiento && (
-            <p className="error-message">{errores.fechaNacimiento}</p>
+            <p className="mensaje-error-adminAA">{errores.fechaNacimiento}</p>
           )}
         </div>
-        <div className="grupo-input">
-          <label className="etiqueta">Contraseña:</label>
-          <div className="input-con-icono">
-            <FaLock className="icono" />
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">Contraseña:</label>
+          <div className="input-con-icono-adminAA">
+            <FaLock className="icono-adminAA" />
             <input
               type={mostrarPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Ingresa tu contraseña"
-              className="input-registro"
+              placeholder="Ingresa la contraseña"
+              className="input-adminAA"
               onBlur={() => validarPassword(password, setErrores)}
             />
           </div>
           {errores.password && (
-            <p className="error-message">{errores.password}</p>
+            <p className="mensaje-error-adminAA">{errores.password}</p>
           )}
         </div>
-        <div className="grupo-input">
-          <label className="etiqueta">Confirmar Contraseña:</label>
-          <div className="input-con-icono">
-            <FaLock className="icono" />
+        <div className="grupo-input-adminAA">
+          <label className="etiqueta-adminAA">Confirmar Contraseña:</label>
+          <div className="input-con-icono-adminAA">
+            <FaLock className="icono-adminAA" />
             <input
               type={mostrarPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirma tu contraseña"
-              className="input-registro"
+              placeholder="Confirma la contraseña"
+              className="input-adminAA"
               onBlur={() =>
                 validarConfirmPassword(password, confirmPassword, setErrores)
               }
             />
           </div>
           {errores.confirmPassword && (
-            <p className="error-message">{errores.confirmPassword}</p>
+            <p className="mensaje-error-adminAA">{errores.confirmPassword}</p>
           )}
         </div>
         <button
           type="button"
           onClick={alternarVisibilidadPassword}
-          className="btn-mostrar-password"
+          className="btn-mostrar-password-adminAA"
         >
           {mostrarPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
           {mostrarPassword ? " Ocultar contraseña" : " Mostrar contraseña"}
         </button>
-        {success && <p className="success-message">{success}</p>}
-        {errores.global && <p className="error-message">{errores.global}</p>}
+        {success && <p className="mensaje-exito-adminAA">{success}</p>}
+        {errores.global && (
+          <p className="mensaje-error-adminAA">{errores.global}</p>
+        )}
 
-        <button type="submit" className="boton-registro">
-          Registrarse
+        <button type="submit" className="boton-adminAA">
+          Registrar Administrador
         </button>
-        <p className="parrafo-login">
-          ¿Ya tienes una cuenta? <Link to="/Login">Inicia sesión aquí</Link>
-        </p>
       </form>
     </div>
   );
 }
 
-export default Registro;
+export default Registroadmin;

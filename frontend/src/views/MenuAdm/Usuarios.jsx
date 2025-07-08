@@ -1,217 +1,394 @@
-import AdminSidebar from "../../components/layout/AdminSidebar.jsx";
-import { useState, useEffect } from 'react';
-import { listarUsuarios, eliminarUsuario } from '../../services/usuariosApi.js';
-import '../../styles/stylesAdm/ATablas.css';
-import { AlertaDeEliminacion, AlertaDeError, AlertaDeExito } from '../../utils/Alertas.js';
-import { useNavigate } from "react-router-dom";
+import AdminSidebar from "../../components/layout/AdminSidebar.jsx"
+import { useState, useEffect } from "react"
+import "../../styles/stylesAdm/ATablas.css"
+import "../../styles/stylesAdm/ListadoUsuarios.css"
 import MiniProfile from "../../components/common/MiniProfile.jsx"
+import { listarUsuarios } from "../../services/usuariosApi.js"
+import { useNavigate } from "react-router-dom";
 
 function Usuarios() {
-    const [isCollapsed, setIsCollapsed] = useState(false);
-    const [usuarios, setUsuarios] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [filteredUsuarios, setFilteredUsuarios] = useState([]);
-    const [searchDni, setSearchDni] = useState('');
-    const navigate = useNavigate();
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [usuarios, setUsuarios] = useState([])
+  const [filteredUsuarios, setFilteredUsuarios] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [userToDelete, setUserToDelete] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("")
 
-    const [userForm, setUserForm] = useState({
-        name: '',
-        email: '',
-        password: '',
-        role: 'USER',
-        ourUsers: {
-            id: '',
-            apellido: '',
-            dni: '',
-            telefono: '',
-            fecha_nacimiento: '',
-        }
-    });
+  const handleCollapseChange = (collapsed) => {
+    setIsCollapsed(collapsed)
+  }
 
-    const resetUserForm = () => setUserForm({
-        name: '',
-        email: '',
-        password: '',
-        role: 'USER',
-        ourUsers: {
-            id: '',
-            apellido: '',
-            dni: '',
-            telefono: '',
-            fecha_nacimiento: '',
-        }
-    });
+  useEffect(() => {
+    const cargarUsuarios = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const data = await listarUsuarios()
+        setUsuarios(data)
+        setFilteredUsuarios(data)
+      } catch (err) {
+        setError("Error al cargar la lista de usuarios")
+        console.error("Error:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-    const handleCollapseChange = (collapsed) => {
-        setIsCollapsed(collapsed);
-    };
+    cargarUsuarios()
+  }, [])
 
-    const fetchUsuarios = async () => {
-        try {
-            const data = await listarUsuarios();
-            setUsuarios(data);
-            setFilteredUsuarios(data);
-        } catch (error) {
-            console.error(error);
-            AlertaDeError('Error', 'Error al listar usuarios');
-        }
-    };
+  // Filtrado en tiempo real
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredUsuarios(usuarios)
+    } else {
+      const filtered = usuarios.filter((user) => {
+        const searchLower = searchTerm.toLowerCase()
+        const fullName = `${user.nombre} ${user.apellido}`.toLowerCase()
+        const dni = user.dni?.toLowerCase() || ""
+        const email = user.email?.toLowerCase() || ""
 
-    useEffect(() => {
-        fetchUsuarios();
-    }, []);
+        return fullName.includes(searchLower) || dni.includes(searchLower) || email.includes(searchLower)
+      })
+      setFilteredUsuarios(filtered)
+    }
+  }, [searchTerm, usuarios])
 
-    const handleDeleteUser = async () => {
-        const result = await AlertaDeEliminacion();
-        if (result.isConfirmed) {
-            try {
-                const response = await eliminarUsuario(userForm);
-                if (response.statuscode === 408) {
-                    AlertaDeError('Error', 'Usuario no encontrado');
-                } else {
-                    AlertaDeExito('Usuario eliminado', 'El usuario fue eliminado exitosamente.');
-                    closeModal();
-                    fetchUsuarios();
-                }
-            } catch (error) {
-                console.error(error);
-                AlertaDeError('Error', 'Error al eliminar usuario');
-            }
-        }
-    };
+  const formatearFecha = (fecha) => {
+    if (!fecha) return "N/A"
+    return new Date(fecha).toLocaleDateString("es-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })
+  }
 
-    const closeModal = () => {
-        setModalVisible(false);
-        resetUserForm();
-    };
+  const calcularEdad = (fechaNacimiento) => {
+    if (!fechaNacimiento) return "N/A"
+    const hoy = new Date()
+    const nacimiento = new Date(fechaNacimiento)
+    let edad = hoy.getFullYear() - nacimiento.getFullYear()
+    const mes = hoy.getMonth() - nacimiento.getMonth()
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+      edad--
+    }
+    return edad
+  }
 
-    const openEditModal = (usuario) => {
-        setUserForm({
-            name: usuario.nombre,
-            email: usuario.email,
-            password: '',
-            role: 'USER',
-            ourUsers: {
-                id: usuario.id,
-                apellido: usuario.apellido,
-                dni: usuario.dni,
-                telefono: usuario.telefono,
-                fecha_nacimiento: usuario.fecha_nacimiento,
-            }
-        });
-        setModalVisible(true);
-    };
+  const formatearTelefono = (telefono) => {
+    if (!telefono) return "N/A"
+    return telefono.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3")
+  }
 
-    const handleSearchDni = (e) => {
-        let dni = e.target.value;
+  const handleDeleteClick = (user) => {
+    setUserToDelete(user)
+    setShowDeleteModal(true)
+  }
 
-        dni = dni.replace(/\D/g, '');
-        if (dni.length > 8) {
-            dni = dni.substring(0, 8);
-        }
-        setSearchDni(dni);
-        const filtered = usuarios.filter(usuario => usuario.dni.includes(dni));
-        setFilteredUsuarios(filtered);
-    };
+  const handleDeleteConfirm = async () => {
+    try {
+      // Aquí iría la llamada a la API para eliminar
+      // await eliminarUsuario(userToDelete.id)
 
-    return (
-        <div className="Admin-layout">
-            <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px 20px" }}>
-                <MiniProfile />
-            </div>
-            <AdminSidebar onCollapseChange={handleCollapseChange} />
-            <main style={{marginTop:"0px"}} className={`content ${isCollapsed ? 'collapsed' : ''}`}>
-                <div className="header-section">
-                    <h1>Gestión de Clientes</h1>
-                    <input
-                        type="text"
-                        placeholder="Buscar por DNI"
-                        value={searchDni}
-                        onChange={handleSearchDni}
-                        className="add-btn1"
-                    />
-                    <button onClick={() => navigate('/MenuAdmin/Administradores')} className="add-btn1">Ir a Administradores</button>
-                    <button onClick={() => navigate('/MenuAdmin/Empleados')} className="add-btn1">Ir a Empleados</button>
+      // Por ahora solo removemos del estado local
+      const updatedUsers = usuarios.filter((user) => user.id !== userToDelete.id)
+      setUsuarios(updatedUsers)
+      setFilteredUsuarios(
+        updatedUsers.filter((user) => {
+          if (!searchTerm.trim()) return true
+          const searchLower = searchTerm.toLowerCase()
+          const fullName = `${user.nombre} ${user.apellido}`.toLowerCase()
+          const dni = user.dni?.toLowerCase() || ""
+          const email = user.email?.toLowerCase() || ""
+          return fullName.includes(searchLower) || dni.includes(searchLower) || email.includes(searchLower)
+        }),
+      )
+
+      setShowDeleteModal(false)
+      setUserToDelete(null)
+
+      console.log("Eliminando usuario:", userToDelete.id)
+    } catch (error) {
+      console.error("Error al eliminar:", error)
+    }
+  }
+
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false)
+    setUserToDelete(null)
+  }
+
+  const navigate = useNavigate();
+
+const handleNavigateToEmpleados = () => {
+  navigate("/MenuAdmin/Empleados");
+};
+
+const handleNavigateToAdministradores = () => {
+  navigate("/MenuAdmin/Administradores");
+};
+
+
+  const clearSearch = () => {
+    setSearchTerm("")
+  }
+
+  return (
+    <div className="User-layout">
+      <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px 20px" }}>
+        <MiniProfile />
+      </div>
+
+      <AdminSidebar onCollapseChange={handleCollapseChange} />
+
+      <main style={{ marginTop: "0px" }} className={`content ${isCollapsed ? "collapsed" : ""}`}>
+        <div className="user-container">
+          <div className="user-card">
+            {/* Header con navegación */}
+            <div className="user-header">
+              <div className="header-left">
+                <h1 className="user-title">
+                  <span className="title-icon">👥</span>
+                  Usuarios
+                </h1>
+                <p className="user-subtitle">Gestiona los usuarios del sistema</p>
+              </div>
+
+              <div className="header-right">
+                <div className="header-actions">
+                  
+
+                  <div className="nav-buttons">
+                    <button className="nav-btn employees" onClick={handleNavigateToEmpleados}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                      </svg>
+                      Ir a Empleados
+                    </button>
+                    <button className="nav-btn admins" onClick={handleNavigateToAdministradores}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                      Ir a Administradores
+                    </button>
+                  </div>
                 </div>
-                <div className="div-table">
-                    {filteredUsuarios.length > 0 ? (
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Apellido</th>
-                                    <th>Email</th>
-                                    <th>DNI</th>
-                                    <th>Teléfono</th>
-                                    <th>Fecha de Nacimiento</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredUsuarios.map((usuario) => (
-                                    <tr key={usuario.id}>
-                                        <td>{usuario.nombre}</td>
-                                        <td>{usuario.apellido}</td>
-                                        <td>{usuario.email}</td>
-                                        <td>{usuario.dni}</td>
-                                        <td>{usuario.telefono}</td>
-                                        <td>{usuario.fecha_nacimiento}</td>
-                                        <td>{usuario.estado ? 'Activo' : 'Inactivo'}</td>
-                                        <td>
-                                            <button onClick={() => openEditModal(usuario)} className="delete-btn">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <p>No hay usuarios disponibles</p>
-                    )}
-                </div>
 
-                {modalVisible && (
-                    <div className="modal-overlay">
-                        <div className="modal">
-                            <h2>Datos del Usuario</h2>
-                            <form>
-                                <label>Email</label>
-                                <input readOnly type="email" value={userForm.email} onChange={(e) => setUserForm({ ...userForm, email: e.target.value })} />
-
-                                <label>Nombre</label>
-                                <input readOnly type="text" value={userForm.name} onChange={(e) => setUserForm({ ...userForm, name: e.target.value })} />
-
-                                <label>Apellido</label>
-                                <input readOnly type="text" value={userForm.ourUsers.apellido} onChange={(e) => setUserForm({ ...userForm, ourUsers: { ...userForm.ourUsers, apellido: e.target.value } })} />
-
-                                <label>DNI</label>
-                                <input readOnly type="text" value={userForm.ourUsers.dni} onChange={(e) => setUserForm({ ...userForm, ourUsers: { ...userForm.ourUsers, dni: e.target.value } })} />
-
-                                <label>Teléfono</label>
-                                <input readOnly type="text" value={userForm.ourUsers.telefono} onChange={(e) => setUserForm({ ...userForm, ourUsers: { ...userForm.ourUsers, telefono: e.target.value } })} />
-
-                                <label>Fecha de Nacimiento</label>
-                                <input  type="date" value={userForm.ourUsers.fecha_nacimiento} onChange={(e) => setUserForm({ ...userForm, ourUsers: { ...userForm.ourUsers, fecha_nacimiento: e.target.value } })} />
-
-                                <div className="modal-actions">
-                                    {userForm.ourUsers.id && (
-                                        <button
-                                            type="button"
-                                            onClick={handleDeleteUser}
-                                            className="delete-btn"
-                                        >
-                                            Eliminar
-                                        </button>
-                                    )}
-                                    <button type="button" onClick={closeModal} className="cancel-btn">Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                {!loading && (
+                  <div className="user-stats">
+                    <div className="stat-item">
+                      <span className="stat-number">{filteredUsuarios.length}</span>
+                      <span className="stat-label">Mostrados</span>
                     </div>
+                    <div className="stat-item">
+                      <span className="stat-number">{usuarios.filter((user) => user.estado).length}</span>
+                      <span className="stat-label">Activos</span>
+                    </div>
+                  </div>
                 )}
-            </main>
+              </div>
+            </div>
+
+            {/* Barra de filtrado */}
+            <div className="filter-bar">
+              <div className="search-container">
+                <div className="search-input-wrapper">
+                  <svg
+                    className="search-icon"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Buscar por nombre, DNI o email... 🔍"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                  />
+                  {searchTerm && (
+                    <button className="clear-search" onClick={clearSearch}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+                {searchTerm && (
+                  <div className="search-results">
+                    ✨ {filteredUsuarios.length} resultado{filteredUsuarios.length !== 1 ? "s" : ""} encontrado
+                    {filteredUsuarios.length !== 1 ? "s" : ""}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="user-content">
+              {loading && (
+                <div className="loading-container">
+                  <div className="loading-spinner"></div>
+                  <span className="loading-text">Cargando usuarios... ⏳</span>
+                </div>
+              )}
+
+              {error && (
+                <div className="error-alert">
+                  <span className="error-text">❌ {error}</span>
+                </div>
+              )}
+
+              {!loading && !error && filteredUsuarios.length === 0 && searchTerm && (
+                <div className="empty-state">
+                  <div className="empty-icon">🔍</div>
+                  <h3>No se encontraron resultados</h3>
+                  <p>No hay usuarios que coincidan con "{searchTerm}"</p>
+                  <button className="clear-filter-btn" onClick={clearSearch}>
+                    Limpiar filtro
+                  </button>
+                </div>
+              )}
+
+              {!loading && !error && usuarios.length === 0 && (
+                <div className="empty-state">
+                  <div className="empty-icon">👥</div>
+                  <h3>No hay usuarios</h3>
+                  <p>Aún no se han registrado usuarios en el sistema</p>
+                </div>
+              )}
+
+              {!loading && !error && filteredUsuarios.length > 0 && (
+                <div className="table-container">
+                  <table className="user-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>👤 Usuario</th>
+                        <th>📧 Contacto</th>
+                        <th>🏷️ Rol</th>
+                        <th>📄 DNI</th>
+                        <th>🎂 Edad</th>
+                        <th>📊 Estado</th>
+                        <th>⚙️ Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredUsuarios.map((user) => (
+                        <tr key={user.id} className="table-row">
+                          <td className="id-cell">
+                            <span className="id-text">#{user.id}</span>
+                          </td>
+                          <td className="user-cell">
+                            <div className="user-info">
+                              <div className="user-avatar">
+                                {user.nombre?.charAt(0)}
+                                {user.apellido?.charAt(0)}
+                              </div>
+                              <div className="user-details">
+                                <div className="user-name">
+                                  {user.nombre} {user.apellido}
+                                </div>
+                                <div className="user-birth">{formatearFecha(user.fecha_nacimiento)}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="contact-cell">
+                            <div className="contact-info">
+                              <div className="contact-email">{user.email}</div>
+                              <div className="contact-phone">{formatearTelefono(user.telefono)}</div>
+                            </div>
+                          </td>
+                          <td className="role-cell">
+                            <span className={`role-badge ${user.role?.toLowerCase()}`}>{user.role}</span>
+                          </td>
+                          <td className="dni-cell">
+                            <span className="dni-text">{user.dni}</span>
+                          </td>
+                          <td className="age-cell">
+                            <span className="age-text">{calcularEdad(user.fecha_nacimiento)} años</span>
+                          </td>
+                          <td className="status-cell">
+                            <div className={`status-badge ${user.estado ? "active" : "inactive"}`}>
+                              <div className="status-dot"></div>
+                              <span>{user.estado ? "Activo" : "Inactivo"}</span>
+                            </div>
+                          </td>
+                          <td className="actions-cell">
+                            <button
+                              className="delete-btn"
+                              onClick={() => handleDeleteClick(user)}
+                              title="Eliminar usuario"
+                            >
+                              <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <polyline points="3,6 5,6 21,6"></polyline>
+                                <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-    );
+
+        {/* Modal de confirmación */}
+        {showDeleteModal && (
+          <div className="modal-overlay" onClick={handleDeleteCancel}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>🗑️ Confirmar eliminación</h3>
+              </div>
+              <div className="modal-body">
+                <p>¿Estás seguro de que deseas eliminar al usuario?</p>
+                <div className="user-preview">
+                  <strong>
+                    👤 {userToDelete?.nombre} {userToDelete?.apellido}
+                  </strong>
+                  <span>📧 {userToDelete?.email}</span>
+                  <span>📄 DNI: {userToDelete?.dni}</span>
+                </div>
+                <p className="warning-text">⚠️ Esta acción no se puede deshacer.</p>
+              </div>
+              <div className="modal-actions">
+                <button className="cancel-btn" onClick={handleDeleteCancel}>
+                  Cancelar
+                </button>
+                <button className="confirm-btn" onClick={handleDeleteConfirm}>
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  )
 }
 
-export default Usuarios;
+export default Usuarios

@@ -1,0 +1,189 @@
+/* === Reset básico y fuentes === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* === Contenedor principal === */
+.contenedor-adminAA {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2.5rem 2rem;
+  background: white;
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+.formulario-adminAA {
+  margin-top: 45px;
+}
+/* === Botón cerrar === */
+.btn-cerrar-adminAA {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+.btn-cerrar-adminAA:hover {
+  color: #ef4444;
+}
+
+/* === Título === */
+.titulo-adminAA {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* === Grupos de inputs === */
+.grupo-input-adminAA {
+  margin-bottom: 1.5rem;
+}
+
+/* === Etiquetas === */
+.etiqueta-adminAA {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+/* === Contenedor input + icono === */
+.input-con-icono-adminAA {
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 0.9rem;
+  background-color: #f3f4f6;
+  border-radius: 0.75rem;
+  border: 1.5px solid #e5e7eb;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input-con-icono-adminAA:focus-within {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* === Iconos === */
+.icono-adminAA {
+  margin-right: 0.75rem;
+  color: #6b7280;
+  font-size: 1.2rem;
+}
+
+/* === Inputs === */
+.input-adminAA {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 1rem;
+  color: #111827;
+  transition: color 0.2s;
+}
+
+/* === Fecha sin ícono === */
+input[type="date"].input-adminAA {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background-color: #f3f4f6;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  transition: border 0.2s ease-in-out;
+}
+input[type="date"].input-adminAA:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+
+/* === Errores y validaciones === */
+.mensaje-error-adminAA {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.mensaje-exito-adminAA {
+  margin-top: 1.2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #10b981;
+}
+
+/* === Botón mostrar contraseña === */
+.btn-mostrar-password-adminAA {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: -0.75rem;
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+.btn-mostrar-password-adminAA:hover {
+  color: #4338ca;
+}
+
+/* === Botón de registro === */
+.boton-adminAA {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  transition: background 0.3s ease, transform 0.15s ease;
+}
+
+.boton-adminAA:hover {
+  background: linear-gradient(90deg, #4f46e5, #4338ca);
+  transform: translateY(-1px);
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+  .contenedor-adminAA {
+    margin: 2rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .titulo-adminAA {
+    font-size: 1.5rem;
+  }
+
+  .input-con-icono-adminAA {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .input-adminAA {
+    font-size: 0.95rem;
+  }
+}
