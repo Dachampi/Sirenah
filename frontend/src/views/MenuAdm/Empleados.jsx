@@ -1,142 +1,158 @@
-import AdminSidebar from "../../components/layout/AdminSidebar.jsx"
-import { useState, useEffect } from "react"
-import "../../styles/stylesAdm/ATablas.css"
-import "../../styles/stylesAdm/ListadoEmpleados.css"
-import MiniProfile from "../../components/common/MiniProfile.jsx"
-import { listarEmpleados } from "../../services/empleadosApi.js"
+import AdminSidebar from "../../components/layout/AdminSidebar.jsx";
+import { useState, useEffect } from "react";
+import "../../styles/stylesAdm/ATablas.css";
+import "../../styles/stylesAdm/ListadoEmpleados.css";
+import MiniProfile from "../../components/common/MiniProfile.jsx";
+import { listarEmpleados } from "../../services/empleadosApi.js";
 import { useNavigate } from "react-router-dom";
-
+import {
+  AlertaDeEliminacion,
+  AlertaDeExito,
+  AlertaDeError,
+} from "../../utils/alertas.js";
+import { eliminarUsuario } from "../../services/usuariosApi.js";
 function Empleados() {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const [empleados, setEmpleados] = useState([])
-  const [filteredEmpleados, setFilteredEmpleados] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [empleadoToDelete, setEmpleadoToDelete] = useState(null)
-  const [searchTerm, setSearchTerm] = useState("")
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [empleados, setEmpleados] = useState([]);
+  const [filteredEmpleados, setFilteredEmpleados] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [empleadoToDelete, setEmpleadoToDelete] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleCollapseChange = (collapsed) => {
-    setIsCollapsed(collapsed)
-  }
+    setIsCollapsed(collapsed);
+  };
+
+  const cargarEmpleados = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await listarEmpleados();
+      setEmpleados(data);
+      setFilteredEmpleados(data);
+    } catch (err) {
+      setError("Error al cargar la lista de empleados");
+      console.error("Error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const cargarEmpleados = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const data = await listarEmpleados()
-        setEmpleados(data)
-        setFilteredEmpleados(data)
-      } catch (err) {
-        setError("Error al cargar la lista de empleados")
-        console.error("Error:", err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    cargarEmpleados()
-  }, [])
+    cargarEmpleados();
+  }, []);
 
   // Filtrado en tiempo real
   useEffect(() => {
     if (!searchTerm.trim()) {
-      setFilteredEmpleados(empleados)
+      setFilteredEmpleados(empleados);
     } else {
       const filtered = empleados.filter((empleado) => {
-        const searchLower = searchTerm.toLowerCase()
-        const fullName = `${empleado.nombre} ${empleado.apellido}`.toLowerCase()
-        const dni = empleado.dni?.toLowerCase() || ""
-        const email = empleado.email?.toLowerCase() || ""
+        const searchLower = searchTerm.toLowerCase();
+        const fullName =
+          `${empleado.nombre} ${empleado.apellido}`.toLowerCase();
+        const dni = empleado.dni?.toLowerCase() || "";
+        const email = empleado.email?.toLowerCase() || "";
 
-        return fullName.includes(searchLower) || dni.includes(searchLower) || email.includes(searchLower)
-      })
-      setFilteredEmpleados(filtered)
+        return (
+          fullName.includes(searchLower) ||
+          dni.includes(searchLower) ||
+          email.includes(searchLower)
+        );
+      });
+      setFilteredEmpleados(filtered);
     }
-  }, [searchTerm, empleados])
+  }, [searchTerm, empleados]);
 
   const calcularEdad = (fechaNacimiento) => {
-    if (!fechaNacimiento) return "N/A"
-    const hoy = new Date()
-    const nacimiento = new Date(fechaNacimiento)
-    let edad = hoy.getFullYear() - nacimiento.getFullYear()
-    const mes = hoy.getMonth() - nacimiento.getMonth()
+    if (!fechaNacimiento) return "N/A";
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
     if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-      edad--
+      edad--;
     }
-    return edad
-  }
+    return edad;
+  };
 
   const formatearTelefono = (telefono) => {
-    if (!telefono) return "N/A"
-    return telefono.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3")
-  }
+    if (!telefono) return "N/A";
+    return telefono.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
+  };
 
   const handleDeleteClick = (empleado) => {
-    setEmpleadoToDelete(empleado)
-    setShowDeleteModal(true)
-  }
+    setEmpleadoToDelete(empleado);
+    setShowDeleteModal(true);
+  };
 
   const handleDeleteConfirm = async () => {
     try {
-      // Aquí iría la llamada a la API para eliminar
-      // await eliminarEmpleado(empleadoToDelete.id)
+      const confirmacion = await AlertaDeEliminacion(
+        "¿Eliminar eempleado?",
+        `¿Estás seguro de eliminar a ${empleadoToDelete.nombre} ${empleadoToDelete.apellido}?`
+      );
 
-      // Por ahora solo removemos del estado local
-      const updatedEmpleados = empleados.filter((empleado) => empleado.id !== empleadoToDelete.id)
-      setEmpleados(updatedEmpleados)
-      setFilteredEmpleados(
-        updatedEmpleados.filter((empleado) => {
-          if (!searchTerm.trim()) return true
-          const searchLower = searchTerm.toLowerCase()
-          const fullName = `${empleado.nombre} ${empleado.apellido}`.toLowerCase()
-          const dni = empleado.dni?.toLowerCase() || ""
-          const email = empleado.email?.toLowerCase() || ""
-          return fullName.includes(searchLower) || dni.includes(searchLower) || email.includes(searchLower)
-        }),
-      )
+      if (confirmacion.isConfirmed) {
+        await eliminarUsuario({ ourUsers: { id: empleadoToDelete.id } });
 
-      setShowDeleteModal(false)
-      setEmpleadoToDelete(null)
+        setShowDeleteModal(false);
+        setEmpleadoToDelete(null);
 
-      console.log("Eliminando empleado:", empleadoToDelete.id)
+        AlertaDeExito(
+          "Empleado eliminado",
+          "El empleado fue eliminado correctamente."
+        );
+      }
+      cargarEmpleados();
     } catch (error) {
-      console.error("Error al eliminar:", error)
+      console.error("Error al eliminar empleado:", error);
+      AlertaDeError("Error al eliminar", "No se pudo eliminar el empleado.");
     }
-  }
+  };
 
   const handleDeleteCancel = () => {
-    setShowDeleteModal(false)
-    setEmpleadoToDelete(null)
-  }
-const navigate = useNavigate();
+    setShowDeleteModal(false);
+    setEmpleadoToDelete(null);
+  };
+  const navigate = useNavigate();
 
   const handleNavigateToUsuarios = () => {
-  navigate("/MenuAdmin/Usuarios");
-};
+    navigate("/MenuAdmin/Usuarios");
+  };
 
-const handleNavigateToAdministradores = () => {
-  navigate("/MenuAdmin/Administradores");
-};
+  const handleNavigateToAdministradores = () => {
+    navigate("/MenuAdmin/Administradores");
+  };
 
   const handleAddEmpleado = () => {
     navigate("/MenuAdmin/Empleados/Agregar");
-  }
+  };
 
   const clearSearch = () => {
-    setSearchTerm("")
-  }
+    setSearchTerm("");
+  };
 
   return (
     <div className="Empleado-layout">
-      <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px 20px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "10px 20px",
+        }}
+      >
         <MiniProfile />
       </div>
 
       <AdminSidebar onCollapseChange={handleCollapseChange} />
 
-      <main style={{ marginTop: "0px" }} className={`content ${isCollapsed ? "collapsed" : ""}`}>
+      <main
+        style={{ marginTop: "0px" }}
+        className={`content ${isCollapsed ? "collapsed" : ""}`}
+      >
         <div className="empleado-container">
           <div className="empleado-card">
             {/* Header con navegación */}
@@ -146,13 +162,25 @@ const handleNavigateToAdministradores = () => {
                   <span className="title-icon">👷‍♂️</span>
                   Empleados
                 </h1>
-                <p className="empleado-subtitle">Gestiona el personal y empleados de la empresa</p>
+                <p className="empleado-subtitle">
+                  Gestiona el personal y empleados de la empresa
+                </p>
               </div>
 
               <div className="header-right">
                 <div className="header-actions">
-                  <button className="add-empleado-btn" onClick={handleAddEmpleado}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <button
+                    className="add-empleado-btn"
+                    onClick={handleAddEmpleado}
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
                       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                       <circle cx="9" cy="7" r="4" />
                       <line x1="22" y1="11" x2="22" y2="17" />
@@ -162,15 +190,35 @@ const handleNavigateToAdministradores = () => {
                   </button>
 
                   <div className="nav-buttons">
-                    <button className="nav-btn users" onClick={handleNavigateToUsuarios}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <button
+                      className="nav-btn users"
+                      onClick={handleNavigateToUsuarios}
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                       </svg>
                       Ir a Usuarios
                     </button>
-                    <button className="nav-btn admins" onClick={handleNavigateToAdministradores}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <button
+                      className="nav-btn admins"
+                      onClick={handleNavigateToAdministradores}
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                       </svg>
                       Ir a Administradores
@@ -181,11 +229,15 @@ const handleNavigateToAdministradores = () => {
                 {!loading && (
                   <div className="empleado-stats">
                     <div className="stat-item">
-                      <span className="stat-number">{filteredEmpleados.length}</span>
+                      <span className="stat-number">
+                        {filteredEmpleados.length}
+                      </span>
                       <span className="stat-label">Mostrados</span>
                     </div>
                     <div className="stat-item">
-                      <span className="stat-number">{empleados.filter((empleado) => empleado.estado).length}</span>
+                      <span className="stat-number">
+                        {empleados.filter((empleado) => empleado.estado).length}
+                      </span>
                       <span className="stat-label">Activos</span>
                     </div>
                   </div>
@@ -218,7 +270,14 @@ const handleNavigateToAdministradores = () => {
                   />
                   {searchTerm && (
                     <button className="clear-search" onClick={clearSearch}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
                         <line x1="18" y1="6" x2="6" y2="18" />
                         <line x1="6" y1="6" x2="18" y2="18" />
                       </svg>
@@ -227,7 +286,8 @@ const handleNavigateToAdministradores = () => {
                 </div>
                 {searchTerm && (
                   <div className="search-results">
-                    ✨ {filteredEmpleados.length} resultado{filteredEmpleados.length !== 1 ? "s" : ""} encontrado
+                    ✨ {filteredEmpleados.length} resultado
+                    {filteredEmpleados.length !== 1 ? "s" : ""} encontrado
                     {filteredEmpleados.length !== 1 ? "s" : ""}
                   </div>
                 )}
@@ -248,16 +308,19 @@ const handleNavigateToAdministradores = () => {
                 </div>
               )}
 
-              {!loading && !error && filteredEmpleados.length === 0 && searchTerm && (
-                <div className="empty-state">
-                  <div className="empty-icon">🔍</div>
-                  <h3>No se encontraron resultados</h3>
-                  <p>No hay empleados que coincidan con {searchTerm}</p>
-                  <button className="clear-filter-btn" onClick={clearSearch}>
-                    Limpiar filtro
-                  </button>
-                </div>
-              )}
+              {!loading &&
+                !error &&
+                filteredEmpleados.length === 0 &&
+                searchTerm && (
+                  <div className="empty-state">
+                    <div className="empty-icon">🔍</div>
+                    <h3>No se encontraron resultados</h3>
+                    <p>No hay empleados que coincidan con {searchTerm}</p>
+                    <button className="clear-filter-btn" onClick={clearSearch}>
+                      Limpiar filtro
+                    </button>
+                  </div>
+                )}
 
               {!loading && !error && empleados.length === 0 && (
                 <div className="empty-state">
@@ -298,18 +361,26 @@ const handleNavigateToAdministradores = () => {
                                 <div className="empleado-name">
                                   {empleado.nombre} {empleado.apellido}
                                 </div>
-                                <div className="empleado-birth">{empleado.fecha_nacimiento}</div>
+                                <div className="empleado-birth">
+                                  {empleado.fecha_nacimiento}
+                                </div>
                               </div>
                             </div>
                           </td>
                           <td className="contact-cell">
                             <div className="contact-info">
-                              <div className="contact-email">{empleado.email}</div>
-                              <div className="contact-phone">{formatearTelefono(empleado.telefono)}</div>
+                              <div className="contact-email">
+                                {empleado.email}
+                              </div>
+                              <div className="contact-phone">
+                                {formatearTelefono(empleado.telefono)}
+                              </div>
                             </div>
                           </td>
                           <td className="role-cell">
-                            <span className={`role-badge ${empleado.departamento?.toLowerCase()}`}>
+                            <span
+                              className={`role-badge ${empleado.departamento?.toLowerCase()}`}
+                            >
                               {empleado.departamento || empleado.role}
                             </span>
                           </td>
@@ -317,12 +388,20 @@ const handleNavigateToAdministradores = () => {
                             <span className="dni-text">{empleado.dni}</span>
                           </td>
                           <td className="age-cell">
-                            <span className="age-text">{calcularEdad(empleado.fecha_nacimiento)} años</span>
+                            <span className="age-text">
+                              {calcularEdad(empleado.fecha_nacimiento)} años
+                            </span>
                           </td>
                           <td className="status-cell">
-                            <div className={`status-badge ${empleado.estado ? "active" : "inactive"}`}>
+                            <div
+                              className={`status-badge ${
+                                empleado.estado ? "active" : "inactive"
+                              }`}
+                            >
                               <div className="status-dot"></div>
-                              <span>{empleado.estado ? "Activo" : "Inactivo"}</span>
+                              <span>
+                                {empleado.estado ? "Activo" : "Inactivo"}
+                              </span>
                             </div>
                           </td>
                           <td className="actions-cell">
@@ -373,9 +452,14 @@ const handleNavigateToAdministradores = () => {
                   </strong>
                   <span>📧 {empleadoToDelete?.email}</span>
                   <span>📄 DNI: {empleadoToDelete?.dni}</span>
-                  <span>🏢 Departamento: {empleadoToDelete?.departamento || empleadoToDelete?.role}</span>
+                  <span>
+                    🏢 Departamento:{" "}
+                    {empleadoToDelete?.departamento || empleadoToDelete?.role}
+                  </span>
                 </div>
-                <p className="warning-text">⚠️ Esta acción no se puede deshacer.</p>
+                <p className="warning-text">
+                  ⚠️ Esta acción no se puede deshacer.
+                </p>
               </div>
               <div className="modal-actions">
                 <button className="cancel-btn" onClick={handleDeleteCancel}>
@@ -390,7 +474,7 @@ const handleNavigateToAdministradores = () => {
         )}
       </main>
     </div>
-  )
+  );
 }
 
-export default Empleados
+export default Empleados;
