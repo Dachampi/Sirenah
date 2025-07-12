@@ -1,0 +1,77 @@
+.ventas-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.ventas-card {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  max-width: 1000px;
+  width: 100%;
+  transition: box-shadow 0.3s;
+}
+
+.ventas-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.ventas-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.ventas-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 200px;
+}
+
+.field label {
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+  color: #374151;
+}
+
+.field input {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.ventas-form button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ventas-form button:hover {
+  background-color: #1d4ed8;
+}
+
+.ventas-msg {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.chart-wrapper {
+  overflow-x: auto;
+}

@@ -1,0 +1,208 @@
+/* Contenedor principal */
+.crecimiento-container {
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  max-width: 1100px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Título y descripción */
+.crecimiento-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.crecimiento-description {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* Filtros */
+.crecimiento-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: flex-end;
+}
+
+.crecimiento-fecha {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.crecimiento-fecha label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.crecimiento-fecha input {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  font-size: 1rem;
+}
+
+.crecimiento-filtros button {
+  padding: 0.6rem 1.2rem;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.crecimiento-filtros button:hover {
+  background-color: #2563eb;
+}
+
+/* Tarjetas de resultados */
+.crecimiento-resultados {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Estilo base de tarjeta */
+.crecimiento-card {
+  background-color: #f9fafb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+  border-left: 6px solid transparent;
+}
+
+.crecimiento-card:hover {
+  transform: translateY(-2px);
+}
+
+.crecimiento-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.crecimiento-card p {
+  color: #374151;
+  margin: 0.25rem 0;
+}
+
+.crecimiento-card strong {
+  font-size: 1.3rem;
+  color: #111827;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+/* Variación con flechas */
+.variacion {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.variacion.positivo {
+  color: #16a34a;
+}
+
+.variacion.negativo {
+  color: #dc2626;
+}
+
+.variacion.neutro {
+  color: #6b7280;
+}
+
+/* Bordes laterales diferenciados */
+.bg-positivo {
+  border-left-color: #16a34a;
+}
+
+.bg-negativo {
+  border-left-color: #dc2626;
+}
+
+.bg-neutro {
+  border-left-color: #9ca3af;
+}
+
+/* Total final */
+.total-sumado {
+  margin-top: 2rem;
+  text-align: right;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #1f2937;
+}
+
+/* Mensajes */
+.crecimiento-loading,
+.crecimiento-msg {
+  text-align: center;
+  font-size: 1rem;
+  color: #6b7280;
+}
+.crecimiento-resumen-final {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background-color: #f3f4f6;
+  border-left: 6px solid #3b82f6;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.crecimiento-resumen-final h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.total-sumado {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+/* Responsive: centrar en móviles */
+@media (max-width: 600px) {
+  .crecimiento-resumen-final {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .crecimiento-filtros {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .crecimiento-filtros button {
+    width: 100%;
+  }
+
+  .total-sumado {
+    text-align: center;
+    margin-top: 2rem;
+  }
+}
