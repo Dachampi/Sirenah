@@ -10,7 +10,7 @@ import {
   AlertaDeEliminacion,
   AlertaDeExito,
   AlertaDeError,
-} from "../../utils/alertas.js";
+} from "../../utils/Alertas.js";
 function Administradores() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [administradores, setAdministradores] = useState([]);
