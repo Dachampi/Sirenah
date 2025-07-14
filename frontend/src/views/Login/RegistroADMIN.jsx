@@ -8,7 +8,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import "../../styles/stylesAdm/Formadmin.css";
+import "../../styles/stylesAdm/FormAdmin.css";
 import {
   validarNombre,
   validarApellido,
