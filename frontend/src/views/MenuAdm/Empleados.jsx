@@ -9,7 +9,7 @@ import {
   AlertaDeEliminacion,
   AlertaDeExito,
   AlertaDeError,
-} from "../../utils/alertas.js";
+} from "../../utils/Alertas.js";
 import { eliminarUsuario } from "../../services/usuariosApi.js";
 function Empleados() {
   const [isCollapsed, setIsCollapsed] = useState(false);
