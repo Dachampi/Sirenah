@@ -1,51 +1,64 @@
 package com.sirenah.backend.controller;
 
-import com.sirenah.backend.model.MetodoPago;
-import com.sirenah.backend.service.MetodoPagoService;
+import com.mercadopago.MercadoPagoConfig;
+import com.mercadopago.client.preference.PreferenceBackUrlsRequest;
+import com.mercadopago.client.preference.PreferenceClient;
+import com.mercadopago.client.preference.PreferenceItemRequest;
+import com.mercadopago.client.preference.PreferenceRequest;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.preference.Preference;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
-@RequestMapping("/todosroles/Pago")
+@RequestMapping("/todosroles/MercadoPago")
 public class MetodoPagoController {
 
-    @Autowired
-    private MetodoPagoService metodoPagoService;
+    @Value("${mercadopago.token}")
+    private String mercadoPagoAccessToken;
+    @Value("${vite.api}")
+    private String viteapi;
+    @GetMapping("/ProcederPagar")
+    public String mercado() throws MPException, MPApiException {
 
-    // Guardar un método de pago
-    @PostMapping("/Guardar")
-    public ResponseEntity<MetodoPago> guardarMetodoPago(@RequestBody MetodoPago metodoPago) {
-        MetodoPago metodoGuardado = metodoPagoService.guardarMetodoPago(metodoPago);
-        return ResponseEntity.ok(metodoGuardado);
+        MercadoPagoConfig.setAccessToken(mercadoPagoAccessToken);
+
+        PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
+                        .success(viteapi +"/success")
+                        .pending(viteapi +"/pending")
+                        .failure(viteapi +"/failure")
+                        .build();
+
+        PreferenceItemRequest itemRequest =
+                PreferenceItemRequest.builder()
+                        .id("1234")
+                        .title("Games")
+                        .description("PS5")
+                        .pictureUrl("http://picture.com/PS5")
+                        .categoryId("games")
+                        .quantity(2)
+                        .currencyId("BRL")
+                        .unitPrice(new BigDecimal("4000"))
+                        .build();
+        List<PreferenceItemRequest> items = new ArrayList<>();
+
+        items.add(itemRequest);
+
+        PreferenceRequest preferenceRequest = PreferenceRequest.builder()
+                .items(items).backUrls(backUrls).build();
+
+        PreferenceClient client = new PreferenceClient();
+        Preference preference = client.create(preferenceRequest);
+
+        return preference.getSandboxInitPoint();
     }
 
-    // Buscar un método de pago por ID
-    @GetMapping("/ObtenerPorId/{id}")
-    public ResponseEntity<MetodoPago> buscarPorId(@PathVariable Integer id) {
-        Optional<MetodoPago> metodoPago = metodoPagoService.buscarPorId(id);
-        return metodoPago.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/ObtenerPorCliente/{idCliente}")
-    public ResponseEntity<List<MetodoPago>> buscarPorIdCliente(@PathVariable Integer idCliente) {
-        List<MetodoPago> metodosPago = metodoPagoService.buscarPorIdCliente(idCliente);
-
-        if (metodosPago.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(metodosPago); // Devuelve los métodos de pago encontrados
-    }
-    // Listar todos los métodos de pago
-    @GetMapping("/Obtener")
-    public ResponseEntity<List<MetodoPago>> listarTodos() {
-        List<MetodoPago> metodosPago = metodoPagoService.listarTodos();
-        return ResponseEntity.ok(metodosPago);
-    }
 
 }

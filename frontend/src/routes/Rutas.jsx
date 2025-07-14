@@ -33,7 +33,6 @@ import UAyuda from "../views/MenuUser/Ayuda";
 import Success from "../views/StatusPagos/Success";
 import Failure from "../views/StatusPagos/Failure";
 import Pending from "../views/StatusPagos/Pending";
-import FormPago from "../components/layout/FormPago";
 import RegistroADMIN from "../views/Login/RegistroADMIN";
 import RegistroEMPLEADO from "../views/Login/RegistroEMPLEADO";
 import Reportes from "../views/MenuAdm/Reportes";
@@ -226,15 +225,6 @@ function Rutas() {
             </ProtegerRutas>
           }
         />
-        <Route
-          path="/Pago"
-          element={
-            <ProtegerRutas allowedRoles={["USER", "ADMIN", "EMPLEADO"]}>
-              <FormPago />
-            </ProtegerRutas>
-          }
-        />
-        
       </Routes>
     </Router>
   );

@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
 import { obtenerCrecimientoMensual } from "../../services/reportesApi.js";
 import dayjs from "dayjs";
+import "dayjs/locale/es";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+  LabelList,
+} from "recharts";
 import "../../styles/Dashboard/CrecimientoMensualVentas.css";
 
 function CrecimientoMensualVentas() {
@@ -22,12 +34,11 @@ function CrecimientoMensualVentas() {
   };
 
   useEffect(() => {
+    dayjs.locale("es");
     cargarDatos();
   }, []);
 
-  const formatMonth = (mes) => {
-    return dayjs(mes).locale("es").format("MMMM YYYY");
-  };
+  const formatMonth = (mes) => dayjs(mes).format("MMMM YYYY");
 
   const calcularDiferencia = (index) => {
     if (index === 0) return null;
@@ -35,6 +46,12 @@ function CrecimientoMensualVentas() {
   };
 
   const totalPeriodo = datos.reduce((acc, curr) => acc + curr.total, 0);
+
+  const dataChart = datos.map((item) => ({
+    mes: dayjs(item.mes).format("MMM YYYY"),
+    total: item.total,
+    variacion: item.variacionPorcentual ?? 0,
+  }));
 
   return (
     <div className="crecimiento-container">
@@ -103,6 +120,29 @@ function CrecimientoMensualVentas() {
                 </div>
               );
             })}
+          </div>
+
+          <div className="crecimiento-chart-container">
+            <h3>📈 Gráfica de Total Vendido</h3>
+            <ResponsiveContainer width="100%" height={350}>
+              <BarChart
+                data={dataChart}
+                margin={{ top: 20, right: 30, left: 10, bottom: 10 }}
+                barSize={50}
+              >
+                <CartesianGrid strokeDasharray="4 4" stroke="#ccc" />
+                <XAxis dataKey="mes" tick={{ fontSize: 12 }} angle={-15} textAnchor="end" />
+                <YAxis tickFormatter={(value) => `S/. ${value}`} />
+                <Tooltip
+                  formatter={(value) => `S/. ${value.toFixed(2)}`}
+                  contentStyle={{ backgroundColor: "#f9f9f9", borderRadius: 8, border: "1px solid #ddd" }}
+                />
+                <Legend verticalAlign="top" height={36} />
+                <Bar dataKey="total" fill="#4f46e5" radius={[6, 6, 0, 0]} name="Total Vendido">
+                  <LabelList dataKey="total" position="top" formatter={(value) => `S/. ${value}`} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
 
           <div className="crecimiento-resumen-final">

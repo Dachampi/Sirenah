@@ -39,11 +39,23 @@ function IngresosPorPeriodo() {
       setLoading(false);
     }
   };
+  const formatoTipo = (tipo) => {
+    switch (tipo) {
+      case "anio":
+        return "año";
+      case "mes":
+        return "mes";
+      case "dia":
+        return "día";
+      default:
+        return tipo;
+    }
+  };
 
   return (
     <div className="ventas-container">
       <div className="ventas-card">
-        <h2 className="ventas-title">💰 Ingresos por {tipo}</h2>
+        <h2 className="ventas-title">💰 Ingresos por {formatoTipo(tipo)}</h2>
 
         <div className="ventas-form">
           <div className="field">
