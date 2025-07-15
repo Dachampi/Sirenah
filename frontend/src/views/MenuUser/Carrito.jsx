@@ -8,6 +8,7 @@ import Loading from "../../components/common/Loanding.jsx";
 import { vaciarCarrito } from "../../services/CarritoService/VaciarCarrito.js";
 import MiniProfileUser from "../../components/common/MiniProfileUser.jsx";
 import { useNavigate } from "react-router-dom";
+import MercadoPagoWallet from "../../components/layout/mercado-pago/MercadoPagoWallet/index.jsx";
 
 axios.interceptors.request.use(
   (config) => {
@@ -19,9 +20,7 @@ axios.interceptors.request.use(
   }
 );
 
-
 function Carrito() {
-  const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [usuarioId, setUsuarioId] = useState(null);
@@ -30,7 +29,32 @@ function Carrito() {
   };
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading1, setIsLoading1] = useState(false);
+  const [showMPButton, setShowMPButton] = useState(false);
+  const navigate = useNavigate();
+  const [cartData, setCartData] = useState(null);
 
+  const [pedidoId, setPedidoId] = useState(null);
+
+  const handleCheckout = async () => {
+    try {
+      const data = {
+        idUsuario: usuarioId,
+        direccion: "Ica",
+        detalles: cartItems.map((item) => ({
+          idProducto: item.idProducto,
+          cantidad: item.cantidad,
+          precioUnitario: item.precioUnitario,
+          nombreProducto: item.nombre,
+          subtotal: item.subtotal,
+        })),
+      };
+
+      setCartData(data);
+      setShowMPButton(true);
+    } catch (error) {
+      console.error("Error al preparar la orden:", error);
+    }
+  };
 
   const obtenerUsuarioId = async () => {
     try {
@@ -117,6 +141,35 @@ function Carrito() {
     }
   }, [usuarioId]);
 
+  useEffect(() => {
+  const handleMPEvents = (event) => {
+    if (event.origin.includes("mercadopago")) {
+      console.log("🎯 Evento recibido:", event);
+      const data = event.data;
+
+      if (data.type === "wallet_payment_result") {
+        const status = data.payload?.status;
+        const paymentId = data.payload?.id;
+
+        console.log("✅ Resultado del pago:", data.payload);
+
+        if (status === "approved") {
+          localStorage.setItem("idPago", paymentId);
+          navigate("/PagoExitoso");
+        } else if (status === "pending") {
+          navigate("/PagoPendiente");
+        } else {
+          navigate("/PagoFallido");
+        }
+      }
+    }
+  };
+
+  window.addEventListener("message", handleMPEvents);
+  return () => window.removeEventListener("message", handleMPEvents);
+}, [navigate]);
+
+
   const calculateTotal = () => {
     return cartItems
       .reduce((total, item) => total + item.subtotal, 0)
@@ -176,10 +229,16 @@ function Carrito() {
                   >
                     Vaciar Carrito
                   </button>
-                  <button className="btn-checkout" onClick={()=> navigate("/Pago")}>
+                  <button className="btn-checkout" onClick={handleCheckout}>
                     Realizar Compra
                   </button>
-                  
+
+                  {showMPButton && cartData && (
+                    <MercadoPagoWallet
+                      triggerPayment={showMPButton}
+                      cartData={cartData}
+                    />
+                  )}
                 </div>
               </div>
             </>
