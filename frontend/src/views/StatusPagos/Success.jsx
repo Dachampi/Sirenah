@@ -14,9 +14,9 @@ function Success() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const query = new URLSearchParams(window.location.search);
-    const paymentId = query.get("payment_id") || localStorage.getItem("idPago");
+    const idTransaccion = query.get("payment_id") || localStorage.getItem("idPago");
 
-    if (!paymentId) {
+    if (!idTransaccion) {
       AlertaDeError("¡Error!", "No se encontró un ID de pago.");
       return;
     }
@@ -24,7 +24,7 @@ function Success() {
     const fetchPaymentDetails = async () => {
       try {
         const [paymentRes, paymentErr] = await fetch(
-          `${import.meta.env.VITE_API}/todosroles/Pago/ObtenerPorId/${paymentId}`,
+          `${import.meta.env.VITE_API}/todosroles/Pago/ObtenerPorTransaccion/${idTransaccion}`,
           {
             method: "GET",
             headers: {
