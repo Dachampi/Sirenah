@@ -15,7 +15,6 @@ import Dashboard from "../views/MenuAdm/Dashboard";
 import Productos from "../views/MenuAdm/Productos";
 import Usuarios from "../views/MenuAdm/Usuarios";
 import Analiticas from "../views/MenuAdm/Analiticas";
-import Configuracion from "../views/MenuAdm/Configuration";
 import Ayuda from "../views/MenuAdm/Ayuda";
 import Perfil from "../views/MenuAdm/Perfil";
 import Categorias from "../views/MenuAdm/Categorias";
@@ -34,9 +33,9 @@ import UAyuda from "../views/MenuUser/Ayuda";
 import Success from "../views/StatusPagos/Success";
 import Failure from "../views/StatusPagos/Failure";
 import Pending from "../views/StatusPagos/Pending";
-import FormPago from "../components/layout/FormPago";
 import RegistroADMIN from "../views/Login/RegistroADMIN";
 import RegistroEMPLEADO from "../views/Login/RegistroEMPLEADO";
+import Reportes from "../views/MenuAdm/Reportes";
 
 function Rutas() {
   return (
@@ -98,10 +97,10 @@ function Rutas() {
           }
         />
         <Route
-          path="/MenuAdmin/Configuracion"
+          path="/MenuAdmin/Reportes"
           element={
-            <ProtegerRutas allowedRoles={["ADMIN","EMPLEADO"]}>
-              <Configuracion />
+            <ProtegerRutas allowedRoles={["ADMIN"]}>
+              <Reportes />
             </ProtegerRutas>
           }
         />
@@ -226,15 +225,6 @@ function Rutas() {
             </ProtegerRutas>
           }
         />
-        <Route
-          path="/Pago"
-          element={
-            <ProtegerRutas allowedRoles={["USER", "ADMIN", "EMPLEADO"]}>
-              <FormPago />
-            </ProtegerRutas>
-          }
-        />
-        
       </Routes>
     </Router>
   );

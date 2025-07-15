@@ -1,0 +1,29 @@
+.bajo-stock-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bajo-stock-item {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background-color: #fff3cd; /* amarillo claro */
+  border-left: 5px solid #f59e0b; /* naranja */
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.bajo-stock-nombre {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: #92400e;
+}
+
+.bajo-stock-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #7c2d12;
+}

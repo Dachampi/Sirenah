@@ -6,7 +6,7 @@ import {
   FaHome,
   FaShoppingBag,
   FaUsers,
-  FaCog,
+  FaChartLine,
   FaQuestionCircle,
   FaUser,
   FaSignOutAlt,
@@ -87,8 +87,8 @@ function AdminSidebar({ onCollapseChange }) {
             </a>
           </li>
           <li>
-            <a href="/MenuAdmin/Configuracion">
-              <FaCog /> <span>Configuración</span>
+            <a href="/MenuAdmin/Reportes">
+              <FaChartLine /> <span>Reportes</span>
             </a>
           </li>
           <li>

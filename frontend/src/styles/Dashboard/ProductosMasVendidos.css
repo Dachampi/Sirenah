@@ -1,0 +1,39 @@
+.productos-wrapper {
+  margin-top: 1rem;
+}
+
+.resumen {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f3f4f6;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.productos-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.producto-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-nombre {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.producto-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #4b5563;
+}

@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <Rutas />
-      <Chatbot />
+      <Chatbot />z
     </div>
   )
 }

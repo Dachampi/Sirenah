@@ -1,5 +1,6 @@
 package com.sirenah.backend.service.impl;
 
+import com.sirenah.backend.model.DetallePedido;
 import com.sirenah.backend.model.Pedido;
 import com.sirenah.backend.repository.PedidoRepository;
 import com.sirenah.backend.service.PedidoService;
@@ -18,9 +19,12 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Pedido crearPedido(Pedido pedido) {
-
+        for (DetallePedido detalle : pedido.getDetalles()) {
+            detalle.setPedido(pedido);
+        }
         return pedidoRepository.save(pedido);
     }
+
 
     @Override
     public Optional<Pedido> obtenerPedidoPorId(Integer idPedido) {

@@ -1,0 +1,40 @@
+.valor-inventario-total {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #1e40af;
+}
+
+.inventario-tabla-wrapper {
+  overflow-x: auto;
+}
+
+.inventario-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.inventario-tabla th,
+.inventario-tabla td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.inventario-tabla th {
+  background-color: #f3f4f6;
+  color: #374151;
+  font-weight: 600;
+}
+
+.inventario-tabla td {
+  color: #111827;
+}
+
+@media (max-width: 640px) {
+  .inventario-tabla th,
+  .inventario-tabla td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+}
