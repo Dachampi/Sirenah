@@ -14,7 +14,6 @@ com\sirenah\backend\repository\DireccionRepository.class
 com\sirenah\backend\service\impl\CarritoServiceImpl.class
 com\sirenah\backend\service\impl\ProductoServiceImpl.class
 com\sirenah\backend\service\impl\DetallePedidoServiceImpl.class
-com\sirenah\backend\service\impl\CardPaymentService.class
 com\sirenah\backend\exception\MercadoPagoException.class
 com\sirenah\backend\controller\AdministradorController.class
 com\sirenah\backend\service\impl\AuthService.class
@@ -26,13 +25,11 @@ com\sirenah\backend\controller\PedidoController.class
 com\sirenah\backend\service\PedidoService.class
 com\sirenah\backend\service\impl\PedidoServiceImpl.class
 com\sirenah\backend\service\ProductoService.class
-com\sirenah\backend\controller\PagoController.class
 com\sirenah\backend\controller\TodosRolesController.class
 com\sirenah\backend\model\DetallePedido.class
 com\sirenah\backend\model\Pedido.class
 com\sirenah\backend\service\DireccionService.class
 com\sirenah\backend\service\impl\OurUserDetailsService.class
-com\sirenah\backend\controller\WebhookController$WebhookNotification$WebhookData.class
 com\sirenah\backend\dto\ReqRes.class
 com\sirenah\backend\controller\DetallePedidoController.class
 com\sirenah\backend\model\MetodoPago.class
@@ -53,7 +50,6 @@ com\sirenah\backend\model\OurUsers.class
 com\sirenah\backend\controller\PublicController.class
 com\sirenah\backend\repository\MetodoPagoRepository.class
 com\sirenah\backend\service\impl\JWTUtils.class
-com\sirenah\backend\controller\WebhookController$WebhookNotification.class
 com\sirenah\backend\dto\PaymentResponseDTO.class
 com\sirenah\backend\service\DetallePedidoService.class
 com\sirenah\backend\repository\OurUserRepository.class
