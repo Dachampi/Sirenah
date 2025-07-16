@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.sirenah.backend.BackendApplicationTests
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.234 s -- in com.sirenah.backend.BackendApplicationTests
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.387 s -- in com.sirenah.backend.BackendApplicationTests
+>>>>>>> develop

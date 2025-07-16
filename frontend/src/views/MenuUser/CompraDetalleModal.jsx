@@ -15,7 +15,7 @@ const mapPaymentType = (type) => {
       return "Transferencia Bancaria"
     case "pago_efectivo":
       return "Pago en Efectivo"
-    case "tarjeta_debito":
+    case "debit_card":
       return "Tarjeta de Débito"
     case "deposito_pago_efectivo":
       return "Depósito Pago Efectivo"

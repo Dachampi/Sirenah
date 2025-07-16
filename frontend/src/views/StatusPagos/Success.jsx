@@ -10,8 +10,8 @@ import {
   Banknote,
   ReceiptText,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Importar axios
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import Loading from "../../components/common/Loanding.jsx";
 import "../../styles/stylesPagos/Success.css";
 
@@ -33,7 +33,6 @@ const mapPaymentType = (type) => {
       return type ? type.replace(/_/g, " ") : "N/A";
   }
 };
-
 
 const traducirEstadoDisplay = (estado) => {
   switch (estado?.toLowerCase()) {
@@ -75,39 +74,36 @@ const getTipoIcon = (tipo) => {
 
 function Success() {
   const navigate = useNavigate();
-  const [idPago, setIdPago] = useState(null);
+  const location = useLocation();
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [clientDetails, setClientDetails] = useState(null);
   const [isLoadingDetails, setIsLoadingDetails] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const storedIdPago = localStorage.getItem("idPago");
-    if (storedIdPago) {
-      setIdPago(storedIdPago);
-    } else {
-      setError("No se encontró un ID de pago. Por favor, intente de nuevo.");
-      setIsLoadingDetails(false);
-    }
-  }, []);
+  // Extraer payment_id de la URL
+  const searchParams = new URLSearchParams(location.search);
+  const idTransaccion = searchParams.get("payment_id");
 
   useEffect(() => {
     const fetchPaymentAndClientDetails = async () => {
-      if (!idPago) return;
+      if (!idTransaccion) {
+        setError("No se encontró un ID de transacción válido.");
+        setIsLoadingDetails(false);
+        return;
+      }
 
       setIsLoadingDetails(true);
       setError(null);
+
       try {
         const token = localStorage.getItem("token");
         if (!token) {
           throw new Error("Token de autenticación no disponible.");
         }
 
-        // 1. Obtener detalles del pago
+        // Obtener detalles del pago por idTransaccion
         const paymentResponse = await axios.get(
-          `${
-            import.meta.env.VITE_API
-          }/todosroles/MercadoPago/ObtenerPorId/${idPago}`,
+          `${import.meta.env.VITE_API}/todosroles/MercadoPago/ObtenerPorTransaccion/${idTransaccion}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -122,20 +118,16 @@ function Success() {
           }
         );
         setClientDetails(clientResponse.data);
-
-        localStorage.removeItem("idPago");
       } catch (err) {
         console.error("Error al cargar detalles de pago o cliente:", err);
-        setError(
-          "No se pudieron cargar los detalles de la compra. Intente más tarde."
-        );
+        setError("No se pudieron cargar los detalles de la compra. Intente más tarde.");
       } finally {
         setIsLoadingDetails(false);
       }
     };
 
     fetchPaymentAndClientDetails();
-  }, [idPago]);
+  }, [idTransaccion]);
 
   const handleGoHome = () => {
     navigate("/");
@@ -165,10 +157,7 @@ function Success() {
           </div>
         ) : error ? (
           <div className="success-loading-container">
-            <p
-              className="success-message"
-              style={{ color: "var(--success-danger-color)" }}
-            >
+            <p className="success-message" style={{ color: "var(--success-danger-color)" }}>
               {error}
             </p>
           </div>
@@ -196,16 +185,13 @@ function Success() {
                 <span className="success-info-label">Fecha de Pago:</span>
                 <span className="success-info-value">
                   {paymentDetails?.fechaPago
-                    ? new Date(paymentDetails.fechaPago).toLocaleDateString(
-                        "es-ES",
-                        {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        }
-                      )
+                    ? new Date(paymentDetails.fechaPago).toLocaleDateString("es-ES", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
                     : "N/A"}
                 </span>
               </div>
@@ -218,8 +204,7 @@ function Success() {
               <div className="success-info-item success-total-amount">
                 <span className="success-info-label">Total:</span>
                 <span className="success-info-value">
-                  {paymentDetails?.total?.toFixed(2) || "0.00"}{" "}
-                  {paymentDetails?.moneda || "S/."}
+                  {paymentDetails?.total?.toFixed(2) || "0.00"} {paymentDetails?.moneda || "S/."}
                 </span>
               </div>
             </div>
@@ -233,43 +218,31 @@ function Success() {
               <div className="success-info-item">
                 <span className="success-info-label">Nombre:</span>
                 <span className="success-info-value">
-                  {clientDetails?.nombre || "N/A"}{" "}
-                  {clientDetails?.apellido || ""}
+                  {clientDetails?.nombre || "N/A"} {clientDetails?.apellido || ""}
                 </span>
               </div>
               <div className="success-info-item">
                 <span className="success-info-label">Email:</span>
-                <span className="success-info-value">
-                  {clientDetails?.email || "N/A"}
-                </span>
+                <span className="success-info-value">{clientDetails?.email || "N/A"}</span>
               </div>
               <div className="success-info-item">
                 <span className="success-info-label">Teléfono:</span>
-                <span className="success-info-value">
-                  {clientDetails?.telefono || "N/A"}
-                </span>
+                <span className="success-info-value">{clientDetails?.telefono || "N/A"}</span>
               </div>
               <div className="success-info-item">
                 <span className="success-info-label">DNI:</span>
-                <span className="success-info-value">
-                  {clientDetails?.dni || "N/A"}
-                </span>
+                <span className="success-info-value">{clientDetails?.dni || "N/A"}</span>
               </div>
             </div>
           </div>
         )}
+
         <div className="success-actions">
-          <button
-            className="success-button success-button-primary"
-            onClick={handleViewPurchases}
-          >
+          <button className="success-button success-button-primary" onClick={handleViewPurchases}>
             <ShoppingBag size={20} />
             Ver Mis Compras
           </button>
-          <button
-            className="success-button success-button-secondary"
-            onClick={handleGoHome}
-          >
+          <button className="success-button success-button-secondary" onClick={handleGoHome}>
             <Home size={20} />
             Volver al Inicio
           </button>
