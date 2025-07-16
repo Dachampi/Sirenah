@@ -5,6 +5,22 @@ import axios from "axios" // Importar axios
 import Loading from "../../components/common/Loanding.jsx"
 import "../../styles/stylesUser/SuccessPage.css"
 
+import {
+  CheckCircle,
+  Home,
+  ShoppingBag,
+  CreditCard,
+  User,
+  DollarSign,
+  Info,
+  Banknote,
+  ReceiptText,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Loading from "../../components/common/Loanding.jsx";
+import "../../styles/stylesPagos/Success.css";
+
 
 const mapPaymentType = (type) => {
   switch (type?.toLowerCase()) {
@@ -75,7 +91,7 @@ function Success() {
     const storedIdPago = localStorage.getItem("idPago")
     if (storedIdPago) {
       setIdPago(storedIdPago)
-      // No limpiar aquí, ya que se necesita para la carga de detalles
+
     } else {
       setError("No se encontró un ID de pago. Por favor, intente de nuevo.")
       setIsLoadingDetails(false)
@@ -103,15 +119,16 @@ function Success() {
         )
         setPaymentDetails(paymentResponse.data)
 
-        // 2. Obtener datos del cliente usando el idCliente del pedido asociado al pago
-        const idCliente = paymentResponse.data.pedido.idCliente
-        const clientResponse = await axios.get(`${import.meta.env.VITE_API}/todosroles/datosPorId/${idCliente}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        setClientDetails(clientResponse.data)
+        const idCliente = paymentResponse.data.pedido.idCliente;
+        const clientResponse = await axios.get(
+          `${import.meta.env.VITE_API}/todosroles/datosPorId/${idCliente}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setClientDetails(clientResponse.data);
 
-        // Opcional: Limpiar el ID de pago del localStorage una vez que se han cargado los detalles
-        localStorage.removeItem("idPago")
+        localStorage.removeItem("idPago");
       } catch (err) {
         console.error("Error al cargar detalles de pago o cliente:", err)
         setError("No se pudieron cargar los detalles de la compra. Intente más tarde.")
