@@ -43,4 +43,4 @@ git commit -m "Mensaje"
 git diff nombre-de-la-rama1 nombre-de-la-rama2
 
 ### 10. Combinar ramas
-git merge rama-origen(La que recibira los cambios) rama-destino
+git merge rama-origen(La que recibira los cambios) rama-destino -m "Merge branch 'develop'"
