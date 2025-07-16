@@ -36,6 +36,7 @@ import Pending from "../views/StatusPagos/Pending";
 import RegistroADMIN from "../views/Login/RegistroADMIN";
 import RegistroEMPLEADO from "../views/Login/RegistroEMPLEADO";
 import Reportes from "../views/MenuAdm/Reportes";
+import MisPedidos from "../views/MenuUser/MisPedidos";
 
 function Rutas() {
   return (
@@ -158,6 +159,14 @@ function Rutas() {
           element={
             <ProtegerRutas allowedRoles={["USER", "ADMIN", "EMPLEADO"]}>
               <UMisCompras />
+            </ProtegerRutas>
+          }
+        />
+        <Route
+          path="/MenuCliente/MisPedidos"
+          element={
+            <ProtegerRutas allowedRoles={["USER", "ADMIN", "EMPLEADO"]}>
+              <MisPedidos />
             </ProtegerRutas>
           }
         />

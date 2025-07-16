@@ -89,7 +89,7 @@ public class WebhookController {
         pedido.setIdCliente(carritoDTO.getIdUsuario());
         pedido.setDireccion("Ica");
         pedido.setFechaPedido(OffsetDateTime.now());
-        pedido.setEstado("pendiende");
+        pedido.setEstado("pendiente");
 
         List<DetallePedido> detalles = new ArrayList<>();
         for (CarritoDetalleDTO detalleDTO : carritoDTO.getDetalles()) {

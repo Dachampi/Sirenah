@@ -45,4 +45,11 @@ public class PedidoServiceImpl implements PedidoService {
         }
     }
 
+    @Override
+    public List<Pedido> obtenerPedidosPorCliente(Integer idCliente) {
+        return pedidoRepository.findByIdCliente(idCliente);
+    }
+
+
+
 }

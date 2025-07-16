@@ -14,6 +14,9 @@ import java.util.List;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
+    List<Pedido> findByIdCliente(Integer idCliente);
+
+
     @Query("SELECT new com.sirenah.backend.dto.ReporteVentaDTO(p.idPedido, p.fechaPedido, SUM(d.subtotal)) " +
             "FROM Pedido p JOIN p.detalles d " +
             "WHERE p.fechaPedido BETWEEN :desde AND :hasta " +

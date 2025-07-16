@@ -42,4 +42,11 @@ public class PublicController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/Productos/Buscar/{id}")
+    public ResponseEntity<Producto> buscarPorId(@PathVariable int id) {
+        return productoService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

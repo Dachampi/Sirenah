@@ -47,4 +47,12 @@ public class PedidoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @GetMapping("/ObtenerPorCliente/{idCliente}")
+    public ResponseEntity<List<Pedido>> obtenerPedidosPorCliente(@PathVariable Integer idCliente) {
+        List<Pedido> pedidos = pedidoService.obtenerPedidosPorCliente(idCliente);
+        return ResponseEntity.ok(pedidos);
+    }
+
+
 }
