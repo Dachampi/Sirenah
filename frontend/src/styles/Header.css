@@ -1,4 +1,3 @@
-/* Fuente personalizada */
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Playfair+Display:wght@400&display=swap');
 
 body.dark-mode {
@@ -22,13 +21,9 @@ header {
     z-index: 1000; 
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode header {
-    background-color: #222; /* Fondo oscuro */
-    color: #f8f8f8; /* Color del texto en modo oscuro */
-}
+    background-color: #222;     color: #f8f8f8; }
 
-/* Estilos para los elementos activos */
 .nav-item.active {
     background-color: rgba(255, 255, 255, 0.2); 
     color: #222; 
@@ -105,14 +100,11 @@ header {
 
 .icon {
     font-size: 24px;
-    color: #333; /* Color por defecto */
-}
+    color: #333; }
 
 .dark-mode .icon {
-    color: #f8f8f8; /* Cambia los iconos a blanco en modo oscuro */
-}
+    color: #f8f8f8; }
 
-/* Responsive Styles */
 @media (max-width: 900px) {
     .hamburger {
         display: block;
@@ -142,7 +134,6 @@ header {
     }
 }
 
-/* Estilo general para nav-item */
 .nav-item {
     font-family: 'Nunito', serif;
     margin: 10px;
@@ -154,10 +145,8 @@ header {
     font-weight: 900;
     padding: 10px 15px; 
     border-radius: 5px; 
-    transition: background-color 0.3s, color 0.3s; /* Transición suave */
-}
+    transition: background-color 0.3s, color 0.3s; }
 
-/* Estilo para cuando el elemento está activo */
 .nav-item.active {
     background-color: rgba(48, 11, 11, 0.2); 
     color: blue; 
@@ -167,27 +156,18 @@ header {
     background-color: rgba(255, 255, 255, 0.8);
     color: #222; 
 }
-/* Estilo para los enlaces en modo claro */
 .nav-item a {
     text-decoration: none;
-    color: inherit; /* Hereda el color del elemento padre */
-}
+    color: inherit; }
 
-/* Estilo para los enlaces en modo oscuro */
 .dark-mode .nav-item a {
-    color: #000; /* Color de texto en modo oscuro */
-}
+    color: #000; }
 
-/* Estilo al pasar el mouse */
 .nav-item:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Fondo al pasar el mouse */
-    color: #222; /* Color de texto al pasar el mouse */
-}
+    background-color: rgba(0, 0, 0, 0.1);     color: #222; }
 
 .dark-mode .nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Fondo al pasar el mouse en modo oscuro */
-    color: #f8f8f8; /* Color de texto al pasar el mouse en modo oscuro */
-}
+    background-color: rgba(255, 255, 255, 0.1);     color: #f8f8f8; }
 
 .icon-cart {
     width: 40px;
@@ -300,7 +280,6 @@ img {
     display: none;
 }
 
-/* Main */
 .container-items {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -385,7 +364,6 @@ img {
 }
 
 
-/* Estilo general del modal */
 .cart-modal {
     position: fixed;
     top: 0;
@@ -393,8 +371,7 @@ img {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Fondo semitransparente */
-    display: flex;
+        display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
@@ -408,7 +385,6 @@ img {
     pointer-events: auto;
 }
 
-/* Contenedor del contenido del modal */
 .cart-modal-content {
     background-color: #fff;
     border-radius: 12px;
@@ -421,7 +397,6 @@ img {
     max-height: 80%;
 }
 
-/* Encabezado del modal */
 .cart-modal-content h2 {
     margin-top: 0;
     font-size: 24px;
@@ -431,7 +406,6 @@ img {
     padding-bottom: 10px;
 }
 
-/* Lista de productos */
 .cart-modal-content ul {
     list-style: none;
     padding: 0;
@@ -451,7 +425,6 @@ img {
     border-bottom: none;
 }
 
-/* Imagen del producto */
 .cart-modal-content img {
     width: 60px;
     height: 60px;
@@ -459,7 +432,6 @@ img {
     object-fit: cover;
 }
 
-/* Detalles del producto */
 .product-details h4 {
     font-size: 18px;
     color: #444;
@@ -472,7 +444,6 @@ img {
     margin: 5px 0 0;
 }
 
-/* Controles de cantidad */
 .quantity-controls {
     display: flex;
     align-items: center;
@@ -499,7 +470,6 @@ img {
     color: #333;
 }
 
-/* Resumen del carrito */
 .cart-summary {
     font-size: 18px;
     color: #333;
@@ -509,7 +479,6 @@ img {
     border-top: 2px solid #eee;
 }
 
-/* Botones de acción */
 .cart-actions {
     display: flex;
     justify-content: space-between;
@@ -538,7 +507,6 @@ img {
 .cart-actions .clear-cart:hover {
     background-color: #c82333;
 }
-/* Botón para cerrar el modal */
 .close-modal {
     position: absolute;
     top: 10px;
@@ -552,11 +520,9 @@ img {
 }
 
 .close-modal:hover {
-    color: #ff0000; /* Color rojo al pasar el mouse */
-}
+    color: #ff0000; }
 
 
-/* Adaptabilidad para pantallas pequeñas */
 @media (max-width: 480px) {
     .cart-modal-content {
         width: 95%;
@@ -594,5 +560,4 @@ img {
 
 .icon {
     font-size: 24px;
-    /* Tamaño del ícono */
-}
+    }

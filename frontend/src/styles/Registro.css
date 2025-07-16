@@ -34,9 +34,7 @@ body {
 }
 .formulario-registro {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se ajusten en múltiples filas */
-    gap: 15px; /* Espacio entre los campos */
-    background-color: #ffffff;
+    flex-wrap: wrap;     gap: 15px;     background-color: #ffffff;
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
@@ -56,12 +54,10 @@ body {
     color: var(--primary-color);
     margin-bottom: 10px;
     text-align: center;
-    width: 100%; /* Ocupa todo el ancho disponible */
-}
+    width: 100%; }
 
 .subtitulo-registro {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    font-size: 16px;
+    width: 100%;     font-size: 16px;
     color: #666;
     margin-bottom: 30px;
     text-align: center;
@@ -70,13 +66,11 @@ body {
 .grupo-input {
     display: flex;
     flex-direction: column;
-    width: calc(50% - 15px); /* Dos columnas menos el espacio entre ellas */
-}
+    width: calc(50% - 15px); }
 
 @media (max-width: 768px) {
     .grupo-input {
-        width: 100%; /* Una sola columna en móviles */
-    }
+        width: 100%;     }
 }
 
 .etiqueta {
@@ -139,54 +133,37 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 20px; /* Espacio arriba del botón */
-    grid-column: span 2; /* Botón ocupa ambas columnas */
-}
+    margin-top: 20px;     grid-column: span 2; }
 .parrafo-login {
-    font-size: 16px; /* Tamaño de fuente */
-    color: #333; /* Color del texto */
-    margin-top: 20px; /* Espacio superior */
-    text-align: center; /* Centrar el texto */
-}
+    font-size: 16px;     color: #333;     margin-top: 20px;     text-align: center; }
 
 .parrafo-login a {
-    color: var(--primary-color); /* Color del enlace, puedes usar la variable que ya definiste */
-    font-weight: bold; /* Negrita para el enlace */
-    text-decoration: none; /* Sin subrayado */
-    transition: color 0.3s ease; /* Transición suave para el color */
-}
+    color: var(--primary-color);     font-weight: bold;     text-decoration: none;     transition: color 0.3s ease; }
 
 .parrafo-login a:hover {
-    color: #2c3e50; /* Color del enlace al pasar el mouse */
-    text-decoration: underline; /* Subrayar al pasar el mouse */
-}
+    color: #2c3e50;     text-decoration: underline; }
 
 .boton-registro:hover {
     background-color: #3a7bd5;
     transform: translateY(-2px);
 }
 
-/* Mensajes de error y éxito */
 .error-message {
     color: var(--error-color);
     font-size: 14px;
     margin-top: 5px;
-    width: 100%; /* Ocupa todo el ancho disponible */
-}
+    width: 100%; }
 
 .success-message {
     color: var(--success-color);
     font-size: 14px;
     margin-top: 5px;
-    width: 100%; /* Ocupa todo el ancho disponible */
-}
+    width: 100%; }
 
-/* Estilos para login con redes sociales */
 .social-login {
     margin-top: 30px;
     text-align: center; 
-    width: 100%; /* Ocupa todo el ancho disponible */
-}
+    width: 100%; }
 
 .social-login p {
     margin-bottom: 15px;
@@ -214,17 +191,7 @@ body {
 }
 
 .btn-close {
-    background: transparent; /* Sin fondo */
-    border: none; /* Sin borde */
-    cursor: pointer; /* Cambiar el cursor a mano */
-    position: absolute; /* Posicionarlo de forma absoluta */
-    top: 20px; /* Ajusta según tus necesidades */
-    right: 20px; /* Ajusta según tus necesidades */
-    font-size: 24px; /* Tamaño del ícono */
-    color: #333; /* Color del ícono */
-    transition: color 0.3s ease; /* Transición suave para el color */
-}
+    background: transparent;     border: none;     cursor: pointer;     position: absolute;     top: 20px;     right: 20px;     font-size: 24px;     color: #333;     transition: color 0.3s ease; }
 
 .btn-close:hover {
-    color: #ff0000; /* Cambia el color al pasar el mouse */
-}
+    color: #ff0000; }

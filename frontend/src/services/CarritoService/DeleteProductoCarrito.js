@@ -20,8 +20,7 @@ export const eliminarProductoDelCarrito = async (idCarritoDetalle, setIsLoading,
             return;
         }
 
-        // Obtener carrito
-        const idCarrito = await fetch(
+                const idCarrito = await fetch(
             `${import.meta.env.VITE_API}/todosroles/carrito/obtener/${userId}`,
             {
                 method: "GET",
@@ -72,8 +71,7 @@ export const eliminarProductosCarrito = async (idCarritoDetalle ,setCartItems) =
         }
 
 
-        // Obtener carrito
-        const idCarrito = await fetch(
+                const idCarrito = await fetch(
             `${import.meta.env.VITE_API}/todosroles/carrito/obtener/${userId}`,
             {
                 method: "GET",
@@ -105,8 +103,7 @@ export const eliminarProductosCarrito = async (idCarritoDetalle ,setCartItems) =
             throw new Error(`Error al eliminar el producto: ${response.statusText}`);
         }
         setCartItems(prevCartItems => prevCartItems.filter(item => item.idCarritoDetalle !== idCarritoDetalle));
-        // eslint-disable-next-line no-unused-vars
-    } catch (error) {
+            } catch (error) {
         AlertaDeEliminacion("Error", "Error al eliminar el producto")
     }
 };

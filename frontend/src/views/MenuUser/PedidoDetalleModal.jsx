@@ -7,16 +7,11 @@ const normalizarEstado = (estado) => {
   const estadoLimpio = estado.toLowerCase().trim()
   const mapeoEstados = {
     pendiente: "pendiente",
-    pendiende: "pendiente", // Error común: falta 't'
-    pendente: "pendiente", // Error común: falta 'i'
-    confirmado: "confirmado",
-    confirmdo: "confirmado", // Error común: falta 'a'
-    enviado: "enviado",
+    pendiende: "pendiente",     pendente: "pendiente",     confirmado: "confirmado",
+    confirmdo: "confirmado",     enviado: "enviado",
     entregado: "entregado",
-    entregdo: "entregado", // Error común: falta 'a'
-    cancelado: "cancelado",
-    canceldo: "cancelado", // Error común: falta 'a'
-  }
+    entregdo: "entregado",     cancelado: "cancelado",
+    canceldo: "cancelado",   }
   return mapeoEstados[estadoLimpio] || estadoLimpio
 }
 const useProductoInfo = (idProducto) => {

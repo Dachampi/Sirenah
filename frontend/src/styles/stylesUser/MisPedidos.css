@@ -1,4 +1,3 @@
-/* ===== VARIABLES CSS ===== */
 :root {
   --pedido-primary-color: #2563eb;
   --pedido-primary-hover: #1d4ed8;
@@ -21,7 +20,6 @@
   --pedido-transition: all 0.2s ease-in-out;
 }
 
-/* ===== HEADER SECTION ===== */
 .pedido-header-section {
   background: linear-gradient(135deg, var(--pedido-primary-color) 0%, var(--pedido-primary-hover) 100%);
   color: white;
@@ -58,7 +56,6 @@
   font-weight: 400;
 }
 
-/* ===== FILTERS SECTION ===== */
 .pedido-filters-container {
   display: flex;
   justify-content: space-between;
@@ -120,7 +117,6 @@
   font-size: 0.875rem;
 }
 
-/* ===== LOADING CONTAINER ===== */
 .pedido-loading-container {
   display: flex;
   justify-content: center;
@@ -128,12 +124,10 @@
   min-height: 300px;
 }
 
-/* ===== CONTENT CONTAINER ===== */
 .pedido-content-container {
   min-height: 400px;
 }
 
-/* ===== EMPTY STATE ===== */
 .pedido-empty-state {
   display: flex;
   flex-direction: column;
@@ -168,7 +162,6 @@
   max-width: 400px;
 }
 
-/* ===== GRID CONTAINER ===== */
 .pedido-grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -176,7 +169,6 @@
   padding: 0.5rem 0;
 }
 
-/* ===== PEDIDO CARD ===== */
 .pedido-card {
   background: var(--pedido-background);
   border: 1px solid var(--pedido-border);
@@ -221,7 +213,6 @@
   text-transform: capitalize;
 }
 
-/* ===== ESTADO BADGES ===== */
 .pedido-estado-badge {
   display: flex;
   align-items: center;
@@ -269,7 +260,6 @@
   border: 1px solid rgba(220, 38, 38, 0.2);
 }
 
-/* ===== CARD BODY ===== */
 .pedido-card-body {
   padding: 1.5rem;
 }
@@ -357,7 +347,6 @@
   line-height: 1.4;
 }
 
-/* ===== CARD FOOTER ===== */
 .pedido-card-footer {
   display: flex;
   gap: 0.75rem;
@@ -402,7 +391,6 @@
   transform: translateY(-1px);
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .pedido-grid-container {
     grid-template-columns: 1fr;
@@ -471,7 +459,6 @@
   }
 }
 
-/* ===== ANIMATIONS ===== */
 @keyframes pedido-fade-in {
   from {
     opacity: 0;
@@ -506,7 +493,6 @@
   animation-delay: 0.6s;
 }
 
-/* ===== DARK MODE SUPPORT ===== */
 @media (prefers-color-scheme: dark) {
   :root {
     --pedido-background: #1e293b;

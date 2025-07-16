@@ -1,4 +1,3 @@
-/* ===== ESTILOS PARA EL MODAL DE DETALLES ===== */
 
 .pedido-modal-overlay {
   position: fixed;
@@ -333,7 +332,6 @@
   background: #1d4ed8;
 }
 
-/* Responsive para el modal */
 @media (max-width: 768px) {
   .pedido-modal-overlay {
     padding: 0.5rem;

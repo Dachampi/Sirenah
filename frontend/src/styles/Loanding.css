@@ -1,4 +1,3 @@
-/* Estilos generales */
 .loading-overlay {
     position: fixed;
     top: 0;
@@ -39,42 +38,31 @@
     }
 }
 
-/* Spinner mejorado */
 .spinner {
     width: 60px;
     height: 60px;
     border: 6px solid transparent;
-    /* Borde vacío */
-    border-top: 6px solid #3498db;
-    /* Azul en la parte superior */
-    border-right: 6px solid #2ecc71;
-    /* Verde en la parte derecha */
-    border-radius: 50%;
-    /* Hace que sea un círculo */
-    animation: spinAndPulse 1.5s linear infinite;
-    /* Animación combinada */
-    margin: 0 auto 15px;
+        border-top: 6px solid #3498db;
+        border-right: 6px solid #2ecc71;
+        border-radius: 50%;
+        animation: spinAndPulse 1.5s linear infinite;
+        margin: 0 auto 15px;
 }
 
-/* Animación combinada para el giro y el pulso */
 @keyframes spinAndPulse {
     0% {
         transform: rotate(0deg) scale(1);
-        /* Inicio: sin giro, tamaño normal */
-    }
+            }
 
     50% {
         transform: rotate(180deg) scale(1.2);
-        /* Mitad: 180° y tamaño agrandado */
-    }
+            }
 
     100% {
         transform: rotate(360deg) scale(1);
-        /* Final: giro completo, tamaño normal */
-    }
+            }
 }
 
-/* Texto del loading */
 .loading-modal p {
     margin: 10px 0 0;
     font-size: 18px;
@@ -96,7 +84,6 @@
     }
 }
 
-/* Diseño responsivo */
 @media (max-width: 768px) {
     .loading-modal {
         padding: 20px 30px;

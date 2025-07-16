@@ -20,8 +20,6 @@ body {
     margin-top: 80px;
 }
 
-/* Filtros */
-/* Contenedor principal */
 .filtros-catalogo {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -41,7 +39,6 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Elementos individuales */
 .filtro-item {
     display: flex;
     flex-direction: column;
@@ -58,7 +55,6 @@ body {
     color: #ddd;
 }
 
-/* Campos de entrada */
 .filtro-item .form-control {
     padding: 0.75rem 1rem;
     font-size: 1rem;
@@ -87,7 +83,6 @@ body {
     box-shadow: 0 0 5px rgba(86, 163, 255, 0.3);
 }
 
-/* Botones */
 .aplicar-filtros,
 .limpiar-filtros {
     padding: 0.8rem 1.5rem;
@@ -100,8 +95,7 @@ body {
 }
 
 .aplicar-filtros {
-  background-color: #ececd1; /* beige */
-  color: #333;
+  background-color: #ececd1;   color: #333;
 }
 
 .aplicar-filtros:hover {
@@ -122,13 +116,11 @@ body {
 }
 
 .dark-mode .aplicar-filtros {
-        background-color: #f5f5dc; /* beige */
-        color: #333;
+        background-color: #f5f5dc;         color: #333;
 }
 
 .dark-mode .aplicar-filtros:hover {
-      background-color: #e5e5c0; /* un beige un poco más oscuro para el hover */
-      color: #222;
+      background-color: #e5e5c0;       color: #222;
 }
 
 .dark-mode .limpiar-filtros {
@@ -140,7 +132,6 @@ body {
     background-color: #d2b48c;
 }
 
-/* Contenedor de precio */
 .precio-inputs {
     display: flex;
     align-items: center;
@@ -159,7 +150,6 @@ body {
     color: #ddd;
 }
 
-/* Responsividad */
 @media (max-width: 768px) {
     .filtros-catalogo {
         grid-template-columns: 1fr;
@@ -169,17 +159,11 @@ body {
 
 .tarjetas-catalogo {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Diseño flexible */
-    gap: 1.5rem; /* Espaciado entre tarjetas */
-    padding: 1rem;
-    justify-items: center; /* Centra las tarjetas en la cuadrícula */
-  }
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));     gap: 1.5rem;     padding: 1rem;
+    justify-items: center;   }
   
-  /* Tarjetas individuales */
-  .tarjeta {
-    width: 100%; /* Se ajusta al tamaño del contenedor */
-    max-width: 400px; /* Tamaño máximo */
-    border: 1px solid #ddd;
+    .tarjeta {
+    width: 100%;     max-width: 400px;     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -191,17 +175,13 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
   
-  /* Imágenes dentro de las tarjetas */
-  .tarjeta img {
+    .tarjeta img {
     width: 100%;
-    height: 180px; /* Altura fija para uniformidad */
-    object-fit: cover; /* Mantiene la proporción de la imagen */
-    border-top-left-radius: 8px;
+    height: 180px;     object-fit: cover;     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
   }
   
-  /* Contenido de la tarjeta */
-  .tarjeta .info {
+    .tarjeta .info {
     padding: 1rem;
     text-align: center;
   }
@@ -218,8 +198,7 @@ body {
     margin: 0.5rem 0;
   }
   
-  /* Acciones (botones) */
-  .tarjeta .acciones {
+    .tarjeta .acciones {
     display: flex;
     justify-content: space-between;
     padding: 0.75rem;
@@ -241,8 +220,7 @@ body {
     color: #fff;
   }
   
-  /* Responsividad */
-  @media (max-width: 768px) {
+    @media (max-width: 768px) {
     .tarjetas-catalogo {
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
@@ -254,7 +232,6 @@ body {
     }
   }
   
-/* General Modal Styles */
 .modal-detalles {
   position: fixed;
   top: 0;
@@ -278,7 +255,6 @@ body {
   transform: scale(1);
 }
 
-/* Modal Content */
 .modal-detalles-content {
   background: linear-gradient(145deg, #ffffff, #f4f4f4);
   border-radius: 15px;
@@ -294,7 +270,6 @@ body {
   background: #121212;
   border: none;
 }
-/* Close Button */
 .close-modal {
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -304,7 +279,6 @@ body {
   transform: rotate(90deg);
 }
 
-/* Modal Header */
 .modal__encabezado h2 {
   margin: 0;
   font-size: 2rem;
@@ -316,7 +290,6 @@ body {
   animation: textGlow 1.5s infinite both;
 }
 
-/* Modal Body */
 .modal__cuerpo {
   margin-top: 20px;
   text-align: center;
@@ -357,7 +330,6 @@ body {
 .dark-mode .modal__cuerpo p {
   color: #fff;
 }
-/* Responsive Design */
 @media (max-width: 768px) {
   .modal-detalles-content {
     padding: 20px;
@@ -376,7 +348,6 @@ body {
   }
 }
 
-/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;

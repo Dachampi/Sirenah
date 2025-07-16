@@ -166,7 +166,6 @@
     color: #fff;
 }
 
-/* Modo oscuro para las tarjetas */
 .dark-mode .tarjeta {
     background-color: #1f1f1f;
     border: 1px solid #444;
@@ -176,13 +175,11 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Efectos hover en el modo oscuro */
 .dark-mode .tarjeta:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
 }
 
-/* Imagen y contenedor en el modo oscuro */
 .dark-mode .tarjeta__imagen-contenedor {
     position: relative;
     overflow: hidden;
@@ -200,7 +197,6 @@
     filter: brightness(0.7);
 }
 
-/* Superposición en el modo oscuro */
 .dark-mode .tarjeta__overlay {
     position: absolute;
     top: 0;
@@ -232,7 +228,6 @@
     transform: translateY(-10px);
 }
 
-/* Título en el modo oscuro */
 .dark-mode .tarjeta__titulo {
     font-size: 1.6rem;
     font-weight: bold;
@@ -245,7 +240,6 @@
     color: #3498db;
 }
 
-/* Descripción en el modo oscuro */
 .dark-mode .tarjeta__descripcion {
     font-size: 1rem;
     color: #bbb;
@@ -254,7 +248,6 @@
     opacity: 0.8;
 }
 
-/* Precio en el modo oscuro */
 .dark-mode .tarjeta__precio {
     font-size: 1.3rem;
     font-weight: bold;
@@ -262,7 +255,6 @@
     margin-bottom: 0.5rem;
 }
 
-/* Stock en el modo oscuro */
 .dark-mode .tarjeta__stock {
     font-size: 1rem;
     color: #16a085;
@@ -271,7 +263,6 @@
 
 
 
-/* Iconos de los botones */
 .dark-mode .tarjeta__icono-contenedor {
     position: relative;
     display: flex;

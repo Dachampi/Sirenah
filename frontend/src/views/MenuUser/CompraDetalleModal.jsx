@@ -2,9 +2,7 @@
 
 import PropTypes from "prop-types"
 import { useState, useEffect } from "react"
-import { XCircle, CreditCard, Package, User, DollarSign, Info, Banknote, ReceiptText } from "lucide-react" // Importar nuevos iconos
-
-// Helper para mapear tipos de pago a texto amigable
+import { XCircle, CreditCard, Package, User, DollarSign, Info, Banknote, ReceiptText } from "lucide-react" 
 const mapPaymentType = (type) => {
   switch (type.toLowerCase()) {
     case "credit_card":
@@ -20,7 +18,7 @@ const mapPaymentType = (type) => {
     case "deposito_pago_efectivo":
       return "Depósito Pago Efectivo"
     default:
-      return type.replace(/_/g, " ") // Reemplazar guiones bajos por espacios
+      return type.replace(/_/g, " ")
   }
 }
 const traducirEstadoDisplay = (estado) => {
@@ -38,10 +36,10 @@ const traducirEstadoDisplay = (estado) => {
     case "refunded":
       return "Reembolsado"
     default:
-      return estado // Si no hay traducción, devuelve el estado original
+      return estado 
   }
 }
-// Hook personalizado para obtener información del producto (reutilizado de MisPedidos)
+
 const useProductoInfo = (idProducto) => {
   const [producto, setProducto] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -70,7 +68,7 @@ const useProductoInfo = (idProducto) => {
   return { producto, loading }
 }
 
-// Componente para mostrar producto con imagen (reutilizado de MisPedidos)
+
 const ProductoItem = ({ detalle }) => {
   const { producto, loading } = useProductoInfo(detalle.idProducto)
 
@@ -139,7 +137,7 @@ const CompraDetalleModal = ({ pago, onClose }) => {
     fetchClienteDatos()
   }, [pago])
 
-  // Helper para obtener el icono del tipo de pago
+
   const getTipoIcon = (type) => {
     switch (type.toLowerCase()) {
       case "credit_card":
@@ -147,13 +145,13 @@ const CompraDetalleModal = ({ pago, onClose }) => {
       case "account_money":
         return <DollarSign size={16} />
       case "transferencia":
-        return <Banknote size={16} /> // Icono para transferencia
+        return <Banknote size={16} />
       case "pago_efectivo":
-        return <ReceiptText size={16} /> // Icono para pago en efectivo
-      case "tarjeta_debito":
-        return <CreditCard size={16} /> // Mismo icono que tarjeta de crédito, o buscar uno específico
+        return <ReceiptText size={16} />
+      case "debit_card":
+        return <CreditCard size={16} />
       case "deposito_pago_efectivo":
-        return <Banknote size={16} /> // Icono para depósito
+        return <Banknote size={16} />
       default:
         return <Info size={16} />
     }
@@ -275,7 +273,6 @@ const CompraDetalleModal = ({ pago, onClose }) => {
 
 export default CompraDetalleModal
 
-// PropTypes para validación
 ProductoItem.propTypes = {
   detalle: PropTypes.shape({
     idProducto: PropTypes.number.isRequired,

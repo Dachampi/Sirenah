@@ -28,6 +28,10 @@ public class MetodoPagoServiceImpl implements MetodoPagoService {
     public Optional<MetodoPago> buscarPorId(Integer idPago) {
         return metodoPagoRepository.findById(idPago);
     }
+    @Override
+    public List<MetodoPago> obtener() {
+        return metodoPagoRepository.findAll();
+    }
 
     @Override
     public List<MetodoPago> obtenerPagosPorCliente(Long idCliente) {

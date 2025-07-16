@@ -17,21 +17,15 @@ import Loading from "../../components/common/Loanding";
 import PedidoDetalleModal from "./PedidoDetalleModal";
 import "../../styles/stylesUser/MisPedidos.css";
 
-// Function to normalize pedido states (para manejar el typo "pendiende")
 const normalizarEstado = (estado) => {
   const estadoLimpio = estado.toLowerCase().trim();
   const mapeoEstados = {
     pendiente: "pendiente",
-    pendiende: "pendiente", // Error común: falta 't'
-    pendente: "pendiente", // Error común: falta 'i'
-    confirmado: "confirmado",
-    confirmdo: "confirmado", // Error común: falta 'a'
-    enviado: "enviado",
+    pendiende: "pendiente",     pendente: "pendiente",     confirmado: "confirmado",
+    confirmdo: "confirmado",     enviado: "enviado",
     entregado: "entregado",
-    entregdo: "entregado", // Error común: falta 'a'
-    cancelado: "cancelado",
-    canceldo: "cancelado", // Error común: falta 'a'
-  };
+    entregdo: "entregado",     cancelado: "cancelado",
+    canceldo: "cancelado",   };
   return mapeoEstados[estadoLimpio] || estadoLimpio;
 };
 
@@ -89,8 +83,7 @@ function MisPedidos() {
     }
   };
 
-  // Filtrar y luego ordenar los pedidos
-  const pedidosFiltradosYOrdenados = pedidos
+    const pedidosFiltradosYOrdenados = pedidos
     .filter((pedido) => {
       if (filtroEstado === "todos") return true;
       const estadoPedido = pedido.estado.toLowerCase().trim();
@@ -98,8 +91,7 @@ function MisPedidos() {
       return estadoPedido === filtroNormalizado;
     })
     .sort((a, b) => {
-      // Ordenar por fechaPedido de forma descendente (más reciente primero)
-      return (
+            return (
         new Date(b.fechaPedido).getTime() - new Date(a.fechaPedido).getTime()
       );
     });

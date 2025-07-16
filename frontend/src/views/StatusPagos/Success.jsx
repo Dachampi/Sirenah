@@ -80,8 +80,7 @@ function Success() {
   const [isLoadingDetails, setIsLoadingDetails] = useState(true);
   const [error, setError] = useState(null);
 
-  // Extraer payment_id de la URL
-  const searchParams = new URLSearchParams(location.search);
+    const searchParams = new URLSearchParams(location.search);
   const idTransaccion = searchParams.get("payment_id");
 
   useEffect(() => {
@@ -101,8 +100,7 @@ function Success() {
           throw new Error("Token de autenticación no disponible.");
         }
 
-        // Obtener detalles del pago por idTransaccion
-        const paymentResponse = await axios.get(
+                const paymentResponse = await axios.get(
           `${import.meta.env.VITE_API}/todosroles/MercadoPago/ObtenerPorTransaccion/${idTransaccion}`,
           {
             headers: { Authorization: `Bearer ${token}` },

@@ -72,7 +72,7 @@ function AdminSidebar({ onCollapseChange }) {
             </a>
           </li>
           <li>
-            <a href="/MenuAdmin/Dashboard">
+            <a href="/MenuAdmin/Ventas">
               <FaTachometerAlt /> <span>Ventas</span>
             </a>
           </li>

@@ -97,7 +97,6 @@ nav ul li a svg {
     background: #ffffff22;
     margin: 10px 0;
 }
-/* Estilos generales del modal */
 .modal {
     background: #fff;
     padding: 20px;
@@ -113,7 +112,6 @@ nav ul li a svg {
 
 }
 
-/* Estilos del overlay */
 .modal-overlay {
     background: rgba(0, 0, 0, 0.6);
     display: flex;
@@ -140,13 +138,11 @@ nav ul li a svg {
     margin-bottom: 25px;
 }
 
-/* Contenedor de botones */
 .modal-actions {
     display: flex;
     justify-content: space-between;
 }
 
-/* Botón Cancelar */
 .cancel-button {
     background-color: #f0f0f0;
     color: #213635;
@@ -158,13 +154,11 @@ nav ul li a svg {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-/* Botón Cancelar - Hover */
 .cancel-button:hover {
     background-color: #e0e0e0;
     transform: translateY(-2px);
 }
 
-/* Botón Cerrar Sesión */
 .confirm-button {
     background-color: #007f;
     color: #ffffff;
@@ -176,13 +170,11 @@ nav ul li a svg {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-/* Botón Cerrar Sesión - Hover */
 .confirm-button:hover {
     background-color: #005f;
     transform: translateY(-2px);
 }
 
-/* Estilos de carga */
 .loading {
     display: flex;
     align-items: center;
@@ -190,7 +182,6 @@ nav ul li a svg {
     font-size: 1rem;
 }
 
-/* Loader */
 .loader {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #007f;
@@ -201,7 +192,6 @@ nav ul li a svg {
     margin-right: 10px;
 }
 
-/* Animación de giro */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -212,7 +202,6 @@ nav ul li a svg {
     }
 }
 
-/* Animación de desvanecimiento */
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -224,22 +213,18 @@ nav ul li a svg {
 }
 
 
-/* Estilos responsivos */
 @media (max-width: 600px) {
     .modal {
         width: 90%;
-        /* Ajustar ancho en pantallas pequeñas */
-    }
+            }
 
     .modal h2 {
         font-size: 1.25rem;
-        /* Tamaño del título más pequeño */
-    }
+            }
 
     .modal p {
         font-size: 0.9rem;
-        /* Tamaño del texto más pequeño */
-    }
+            }
 }
 @media (max-width: 768px) {
     

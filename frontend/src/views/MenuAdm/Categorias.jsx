@@ -6,10 +6,13 @@ import {
   actualizarCategoria,
   eliminarCategoria,
 } from "../../services/categoriasApi"
-import "../../styles/stylesAdm/ATablas.css"
 import { useNavigate } from "react-router-dom"
 import { AlertaDeEliminacion, AlertaDeExito, AlertaDeError } from "../../utils/Alertas"
 import MiniProfile from "../../components/common/MiniProfile"
+
+import "../../styles/stylesAdm/ACategorias.css"
+
+import { Tag, PlusCircle, Edit, Trash2, Package, Lightbulb, XCircle, Save, AlertTriangle, Info } from "lucide-react"
 
 function Categorias() {
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -17,10 +20,7 @@ function Categorias() {
   const [error, setError] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
   const navigate = useNavigate()
-
-  // Estado para errores de validación
-  const [formErrors, setFormErrors] = useState({})
-
+    const [formErrors, setFormErrors] = useState({})
   const [categoryForm, setCategoryForm] = useState({
     idCategoria: "",
     nombre: "",
@@ -56,20 +56,16 @@ function Categorias() {
     fetchCategorias()
   }, [])
 
-  // Función para verificar si el nombre ya existe
-  const checkDuplicateName = (nombre, excludeId = null) => {
+    const checkDuplicateName = (nombre, excludeId = null) => {
     return categorias.some(
       (categoria) =>
         categoria.nombre.toLowerCase().trim() === nombre.toLowerCase().trim() && categoria.idCategoria !== excludeId,
     )
   }
 
-  // Función de validación completa
-  const validateForm = () => {
+    const validateForm = () => {
     const errors = {}
-
-    // Validación del nombre
-    if (!categoryForm.nombre.trim()) {
+        if (!categoryForm.nombre.trim()) {
       errors.nombre = "El nombre es obligatorio"
     } else if (categoryForm.nombre.trim().length < 2) {
       errors.nombre = "El nombre debe tener al menos 2 caracteres"
@@ -80,34 +76,26 @@ function Categorias() {
     } else if (checkDuplicateName(categoryForm.nombre, categoryForm.idCategoria)) {
       errors.nombre = "Ya existe una categoría con este nombre"
     }
-
-    // Validación de la descripción
-    if (!categoryForm.descripcion.trim()) {
+        if (!categoryForm.descripcion.trim()) {
       errors.descripcion = "La descripción es obligatoria"
     } else if (categoryForm.descripcion.trim().length < 10) {
       errors.descripcion = "La descripción debe tener al menos 10 caracteres"
     } else if (categoryForm.descripcion.trim().length > 200) {
       errors.descripcion = "La descripción no puede exceder 200 caracteres"
     }
-
     setFormErrors(errors)
-
-    // Si hay errores, mostrar el primero encontrado
-    if (Object.keys(errors).length > 0) {
+        if (Object.keys(errors).length > 0) {
       const firstError = Object.values(errors)[0]
       AlertaDeError("Error de validación", firstError)
       setError(firstError)
       return false
     }
-
     setError("")
     return true
   }
 
-  // Validación en tiempo real para campos específicos
-  const validateField = (fieldName, value) => {
+    const validateField = (fieldName, value) => {
     const errors = { ...formErrors }
-
     switch (fieldName) {
       case "nombre":
         if (!value.trim()) {
@@ -124,7 +112,6 @@ function Categorias() {
           delete errors.nombre
         }
         break
-
       case "descripcion":
         if (!value.trim()) {
           errors.descripcion = "La descripción es obligatoria"
@@ -136,15 +123,11 @@ function Categorias() {
           delete errors.descripcion
         }
         break
-
       default:
         break
     }
-
     setFormErrors(errors)
-
-    // Limpiar error general si no hay errores específicos
-    if (Object.keys(errors).length === 0) {
+        if (Object.keys(errors).length === 0) {
       setError("")
     }
   }
@@ -164,13 +147,11 @@ function Categorias() {
   const handleSaveEdit = async () => {
     if (validateForm()) {
       try {
-        // Limpiar espacios en blanco antes de enviar
-        const cleanedForm = {
+                const cleanedForm = {
           ...categoryForm,
           nombre: categoryForm.nombre.trim(),
           descripcion: categoryForm.descripcion.trim(),
         }
-
         await actualizarCategoria(categoryForm.idCategoria, cleanedForm)
         fetchCategorias()
         closeModal()
@@ -186,13 +167,11 @@ function Categorias() {
   const handleAddCategory = async () => {
     if (validateForm()) {
       try {
-        // Limpiar espacios en blanco antes de enviar
-        const cleanedForm = {
+                const cleanedForm = {
           ...categoryForm,
           nombre: categoryForm.nombre.trim(),
           descripcion: categoryForm.descripcion.trim(),
         }
-
         await agregarCategoria(cleanedForm)
         fetchCategorias()
         closeModal()
@@ -210,7 +189,6 @@ function Categorias() {
       "¿Está seguro de que desea eliminar esta categoría?",
       "Esta acción no se puede deshacer y puede afectar a los productos asociados.",
     )
-
     if (result.isConfirmed) {
       try {
         await eliminarCategoria(id)
@@ -219,9 +197,7 @@ function Categorias() {
       } catch (error) {
         console.error(error)
         setError("Error al eliminar categoría")
-
-        // Mensaje más específico para errores de eliminación
-        if (error.response?.status === 409 || error.message.includes("constraint")) {
+                if (error.response?.status === 409 || error.message.includes("constraint")) {
           AlertaDeError(
             "No se puede eliminar",
             "Esta categoría tiene productos asociados. Elimine primero los productos o cámbielos de categoría.",
@@ -238,45 +214,45 @@ function Categorias() {
     resetCategoryForm()
   }
 
-  // Función para limpiar el nombre mientras se escribe
-  const handleNameChange = (value) => {
-    // Remover caracteres especiales no permitidos automáticamente
-    const cleanedValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\-_.&]/g, "")
+    const handleNameChange = (value) => {
+        const cleanedValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\-_.&]/g, "")
     handleInputChange("nombre", cleanedValue)
   }
 
   return (
-    <div className="Admin-layout">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          padding: "10px 20px",
-        }}
-      >
-        <MiniProfile />
-      </div>
+    <div className="gcategorias-admin-layout">
       <AdminSidebar onCollapseChange={handleCollapseChange} />
-      <main style={{ marginTop: "0px" }} className={`content ${isCollapsed ? "collapsed" : ""}`}>
-        <div className="header-section">
-          <h1>Gestión de Categorías</h1>
-          <button
-            onClick={() => {
-              resetCategoryForm()
-              setModalVisible(true)
-            }}
-            className="add-btn1"
-          >
-            + Añadir Categoría
-          </button>
-          <button onClick={() => navigate("/MenuAdmin/Productos")} className="add-btn2">
-            Ir a Productos
-          </button>
+      <main  style={{ marginTop: "0px" }} className={`content ${isCollapsed ? "collapsed" : ""}`}>
+        <div className="gcategorias-profile-container">
+          <MiniProfile />
         </div>
-
-        <div className="div-table">
+        <div className="gcategorias-header-section">
+          <div className="gcategorias-header-content">
+            <div className="gcategorias-header-title-group">
+              <Tag className="gcategorias-header-icon" /> {/* Icono para Categorías */}
+              <h1 className="gcategorias-header-title">Gestión de Categorías</h1>
+            </div>
+            <div className="gcategorias-header-buttons">
+              <button
+                onClick={() => {
+                  resetCategoryForm()
+                  setModalVisible(true)
+                }}
+                className="gcategorias-add-btn"
+              >
+                <PlusCircle size={20} />
+                Añadir Categoría
+              </button>
+              <button onClick={() => navigate("/MenuAdmin/Productos")} className="gcategorias-navigate-btn">
+                <Package size={20} /> {/* Icono para Productos */}
+                Ir a Productos
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="gcategorias-div-table">
           {categorias.length > 0 ? (
-            <table>
+            <table className="gcategorias-table">
               <thead>
                 <tr>
                   <th>Nombre</th>
@@ -297,17 +273,19 @@ function Categorias() {
                           : categoria.descripcion}
                       </span>
                     </td>
-                    <td>
-                      <button onClick={() => handleEditCategory(categoria)} className="edit-btn">
+                    <td className="gcategorias-actions-cell">
+                      <button onClick={() => handleEditCategory(categoria)} className="gcategorias-edit-btn">
+                        <Edit size={16} />
                         Editar
                       </button>
                       <button
                         onClick={() => handleDeleteCategory(categoria.idCategoria)}
-                        className="delete-btn"
+                        className="gcategorias-delete-btn"
                         title={
                           categoria.productCount > 0 ? "Esta categoría tiene productos asociados" : "Eliminar categoría"
                         }
                       >
+                        <Trash2 size={16} />
                         Eliminar
                       </button>
                     </td>
@@ -316,73 +294,80 @@ function Categorias() {
               </tbody>
             </table>
           ) : (
-            <div className="empty-state">
+            <div className="gcategorias-no-categories">
+              <Tag className="gcategorias-empty-icon" />
               <p>No hay categorías disponibles</p>
               <button
                 onClick={() => {
                   resetCategoryForm()
                   setModalVisible(true)
                 }}
-                className="add-btn1"
+                className="gcategorias-add-btn"
               >
+                <PlusCircle size={20} />
                 Crear primera categoría
               </button>
             </div>
           )}
         </div>
-
         {modalVisible && (
-          <div className="modal-overlay">
-            <div className="modal">
+          <div className="gcategorias-modal-overlay" onClick={closeModal}>
+            <div className="gcategorias-modal" onClick={(e) => e.stopPropagation()}>
               <h2>{categoryForm.idCategoria ? "Editar Categoría" : "Añadir Categoría"}</h2>
               <form>
                 <label>
+                  <Tag size={16} />
                   Nombre de la Categoría *
-                  {formErrors.nombre && <span className="error-text"> - {formErrors.nombre}</span>}
+                  {formErrors.nombre && <span className="gcategorias-error-text"> - {formErrors.nombre}</span>}
                 </label>
                 <input
                   type="text"
                   value={categoryForm.nombre}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  className={formErrors.nombre ? "input-error" : ""}
+                  className={formErrors.nombre ? "gcategorias-input-error" : ""}
                   maxLength="50"
                   placeholder="Ej: Electrónicos, Ropa, Hogar..."
                 />
-                <div className="char-counter">{categoryForm.nombre.length}/50 caracteres</div>
-
+                <div className="gcategorias-char-counter">{categoryForm.nombre.length}/50 caracteres</div>
                 <label>
+                  <Info size={16} />
                   Descripción *
-                  {formErrors.descripcion && <span className="error-text"> - {formErrors.descripcion}</span>}
+                  {formErrors.descripcion && (
+                    <span className="gcategorias-error-text"> - {formErrors.descripcion}</span>
+                  )}
                 </label>
                 <textarea
                   value={categoryForm.descripcion}
                   onChange={(e) => handleInputChange("descripcion", e.target.value)}
-                  className={formErrors.descripcion ? "input-error" : ""}
+                  className={formErrors.descripcion ? "gcategorias-input-error" : ""}
                   maxLength="200"
                   rows="4"
                   placeholder="Describe qué tipo de productos incluye esta categoría (mínimo 10 caracteres)"
                 />
-                <div className="char-counter">{categoryForm.descripcion.length}/200 caracteres</div>
-
-                <div className="form-tips">
-                  <h4>💡 Consejos:</h4>
+                <div className="gcategorias-char-counter">{categoryForm.descripcion.length}/200 caracteres</div>
+                <div className="gcategorias-form-tips">
+                  <h4>
+                    <Lightbulb size={18} />
+                    Consejos:
+                  </h4>
                   <ul>
                     <li>Usa nombres descriptivos y únicos</li>
                     <li>Evita caracteres especiales excepto guiones y puntos</li>
                     <li>La descripción ayuda a los usuarios a entender la categoría</li>
                   </ul>
                 </div>
-
-                <div className="modal-actions">
+                <div className="gcategorias-modal-actions">
                   <button
                     type="button"
                     onClick={categoryForm.idCategoria ? handleSaveEdit : handleAddCategory}
-                    className="save-btn"
+                    className="gcategorias-save-btn"
                     disabled={Object.keys(formErrors).length > 0}
                   >
+                    <Save size={20} />
                     {categoryForm.idCategoria ? "Guardar Cambios" : "Crear Categoría"}
                   </button>
-                  <button type="button" onClick={closeModal} className="cancel-btn">
+                  <button type="button" onClick={closeModal} className="gcategorias-cancel-btn">
+                    <XCircle size={20} />
                     Cancelar
                   </button>
                 </div>
@@ -390,10 +375,10 @@ function Categorias() {
             </div>
           </div>
         )}
-
         {error && (
-          <div className="error-message">
-            <strong>⚠️ Error:</strong> {error}
+          <div className="gcategorias-error-message">
+            <AlertTriangle size={20} />
+            <strong>Error:</strong> {error}
           </div>
         )}
       </main>

@@ -39,8 +39,7 @@ function Usuarios() {
     cargarUsuarios()
   }, [])
 
-  // Filtrado en tiempo real
-  useEffect(() => {
+    useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredUsuarios(usuarios)
     } else {
@@ -89,11 +88,8 @@ function Usuarios() {
 
   const handleDeleteConfirm = async () => {
     try {
-      // Aquí iría la llamada a la API para eliminar
-      // await eliminarUsuario(userToDelete.id)
-
-      // Por ahora solo removemos del estado local
-      const updatedUsers = usuarios.filter((user) => user.id !== userToDelete.id)
+            
+            const updatedUsers = usuarios.filter((user) => user.id !== userToDelete.id)
       setUsuarios(updatedUsers)
       setFilteredUsuarios(
         updatedUsers.filter((user) => {

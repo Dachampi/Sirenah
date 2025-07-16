@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface MetodoPagoRepository extends JpaRepository<MetodoPago, Integer> {
     Optional<MetodoPago> findByIdTransaccion(String idTransaccion);
     List<MetodoPago> findByPedidoIdCliente(Long idCliente);
-
 }

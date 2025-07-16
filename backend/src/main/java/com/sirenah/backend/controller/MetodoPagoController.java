@@ -94,6 +94,19 @@ public class MetodoPagoController {
 
         return ResponseEntity.ok(response);
     }
+
+    // Buscar un método de pago por ID
+    @GetMapping("/Obtener")
+    public ResponseEntity<List<MetodoPago>> obtener() {
+        List<MetodoPago> lista = metodoPagoService.obtener();
+
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(lista);
+    }
+
     // Buscar un método de pago por ID
     @GetMapping("/ObtenerPorTransaccion/{idTransaccion}")
     public ResponseEntity<?> obtenerPorIdTransaccion(@PathVariable String idTransaccion) {

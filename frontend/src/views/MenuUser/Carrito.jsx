@@ -277,8 +277,7 @@ function Carrito() {
                 <div className="carrito-action-buttons">
                   <button
                     className="carrito-btn-clear-cart"
-                    onClick={() => setShowAlertDialog(true)} // Abre el diálogo de confirmación
-                    disabled={isUpdating}
+                    onClick={() => setShowAlertDialog(true)}                     disabled={isUpdating}
                   >
                     <Trash2 className="carrito-quantity-button-icon" />
                     Vaciar Carrito

@@ -52,8 +52,7 @@ const Header = () => {
             if (!isCartOpen) {
                 const token = localStorage.getItem("token");
 
-                // Obtener carrito
-                const response = await fetch(
+                                const response = await fetch(
                     `${import.meta.env.VITE_API}/todosroles/carrito/obtener/${userId}`,
                     {
                         method: "GET",

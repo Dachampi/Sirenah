@@ -1,4 +1,3 @@
-import AdminSidebar from "../../components/layout/AdminSidebar";
 import { useState, useEffect } from "react";
 import {
   listarProductos,
@@ -7,14 +6,33 @@ import {
   eliminarProducto,
 } from "../../services/productosApi";
 import { ListarCategorias } from "../../services/categoriasApi";
-import "../../styles/stylesAdm/ATablas.css";
 import { useNavigate } from "react-router-dom";
 import {
   AlertaDeEliminacion,
   AlertaDeError,
   AlertaDeExito,
 } from "../../utils/Alertas.js";
+import AdminSidebar from "../../components/layout/AdminSidebar";
 import MiniProfile from "../../components/common/MiniProfile.jsx";
+
+import "../../styles/stylesAdm/AProductos.css";
+
+import {
+  Package,
+  PlusCircle,
+  Edit,
+  Trash2,
+  ListFilter,
+  XCircle,
+  Save,
+  Tag,
+  DollarSign,
+  Box,
+  Scale,
+  FileText,
+  ImageIcon,
+  CircleDot,
+} from "lucide-react";
 
 function Productos() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -22,9 +40,7 @@ function Productos() {
   const [categorias, setCategorias] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const navigate = useNavigate();
-
   const [formErrors, setFormErrors] = useState({});
-
   const [productForm, setProductForm] = useState({
     idProducto: "",
     idCategoria: "",
@@ -83,9 +99,7 @@ function Productos() {
 
   const validateForm = () => {
     const errors = {};
-
-    // Validación del nombre
-    if (!productForm.nombre.trim()) {
+        if (!productForm.nombre.trim()) {
       errors.nombre = "El nombre es obligatorio";
     } else if (productForm.nombre.trim().length < 2) {
       errors.nombre = "El nombre debe tener al menos 2 caracteres";
@@ -96,14 +110,10 @@ function Productos() {
     ) {
       errors.nombre = "El nombre contiene caracteres no válidos";
     }
-
-    // Validación de categoría
-    if (!productForm.idCategoria) {
+        if (!productForm.idCategoria) {
       errors.idCategoria = "Debe seleccionar una categoría";
     }
-
-    // Validación del precio
-    if (!productForm.precio) {
+        if (!productForm.precio) {
       errors.precio = "El precio es obligatorio";
     } else {
       const precio = Number.parseFloat(productForm.precio);
@@ -117,9 +127,7 @@ function Productos() {
         errors.precio = "El precio debe tener máximo 2 decimales";
       }
     }
-
-    // Validación del stock
-    if (!productForm.stock && productForm.stock !== 0) {
+        if (!productForm.stock && productForm.stock !== 0) {
       errors.stock = "El stock es obligatorio";
     } else {
       const stock = Number(productForm.stock);
@@ -133,14 +141,11 @@ function Productos() {
         errors.stock = "El stock no puede exceder 999,999 unidades";
       }
     }
-
-    // Validación del stock mínimo
-    if (!productForm.stockMinimo && productForm.stockMinimo !== 0) {
+        if (!productForm.stockMinimo && productForm.stockMinimo !== 0) {
       errors.stockMinimo = "El stock mínimo es obligatorio";
     } else {
       const stockMinimo = Number(productForm.stockMinimo);
       const stock = Number(productForm.stock);
-
       if (isNaN(stockMinimo)) {
         errors.stockMinimo = "El stock mínimo debe ser un número entero";
       } else if (!Number.isInteger(stockMinimo)) {
@@ -155,37 +160,27 @@ function Productos() {
           "El stock mínimo no puede ser mayor al stock actual";
       }
     }
-
-    // Validación de la descripción
-    if (!productForm.descripcion.trim()) {
+        if (!productForm.descripcion.trim()) {
       errors.descripcion = "La descripción es obligatoria";
     } else if (productForm.descripcion.trim().length < 10) {
       errors.descripcion = "La descripción debe tener al menos 10 caracteres";
     } else if (productForm.descripcion.trim().length > 500) {
       errors.descripcion = "La descripción no puede exceder 500 caracteres";
     }
-
-    // Validación de la imagen
-    if (!productForm.imgUrl.trim()) {
+        if (!productForm.imgUrl.trim()) {
       errors.imgUrl = "La imagen es obligatoria";
     }
-
     setFormErrors(errors);
-
-    // Si hay errores, mostrar el primero encontrado
-    if (Object.keys(errors).length > 0) {
+        if (Object.keys(errors).length > 0) {
       const firstError = Object.values(errors)[0];
       AlertaDeError("Error", firstError);
       return false;
     }
-
     return true;
   };
 
-  // Validación en tiempo real para campos específicos
-  const validateField = (fieldName, value) => {
+    const validateField = (fieldName, value) => {
     const errors = { ...formErrors };
-
     switch (fieldName) {
       case "nombre":
         if (!value.trim()) {
@@ -205,7 +200,6 @@ function Productos() {
           delete errors.idCategoria;
         }
         break;
-
       case "precio":
         if (!value) {
           errors.precio = "El precio es obligatorio";
@@ -218,7 +212,6 @@ function Productos() {
           delete errors.precio;
         }
         break;
-
       case "stock":
         if (!value && value !== 0) {
           errors.stock = "El stock es obligatorio";
@@ -232,7 +225,6 @@ function Productos() {
           delete errors.stock;
         }
         break;
-
       case "stockMinimo":
         if (!value && value !== 0) {
           errors.stockMinimo = "El stock mínimo es obligatorio";
@@ -247,7 +239,6 @@ function Productos() {
           delete errors.stockMinimo;
         }
         break;
-
       case "descripcion":
         if (!value.trim()) {
           errors.descripcion = "La descripción es obligatoria";
@@ -257,11 +248,9 @@ function Productos() {
           delete errors.descripcion;
         }
         break;
-
       default:
         break;
     }
-
     setFormErrors(errors);
   };
 
@@ -325,7 +314,6 @@ function Productos() {
       "¿Está seguro de que desea eliminar este producto?",
       "Esta acción no se puede deshacer."
     );
-
     if (result.isConfirmed) {
       try {
         await eliminarProducto(id);
@@ -350,15 +338,13 @@ function Productos() {
     const file = event.target.files[0];
     if (!file) return;
 
-    // Validar tipo de archivo
-    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
       AlertaDeError("Error", "Solo se permiten archivos JPG, PNG o WebP");
       return;
     }
 
-    // Validar tamaño del archivo (máximo 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+        const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
       AlertaDeError("Error", "La imagen no puede exceder 5MB");
       return;
@@ -366,7 +352,6 @@ function Productos() {
 
     const img = new Image();
     const reader = new FileReader();
-
     reader.onload = (e) => {
       img.src = e.target.result;
       img.onload = async () => {
@@ -395,7 +380,6 @@ function Productos() {
           canvas.height = img.height;
         }
 
-        // Configurar crossOrigin para evitar problemas de CORS
         img.crossOrigin = "anonymous";
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -404,7 +388,6 @@ function Productos() {
             const formData = new FormData();
             formData.append("file", blob, file.name);
             formData.append("upload_preset", "Preset_Sirenah");
-
             try {
               const response = await fetch(
                 `https://api.cloudinary.com/v1_1/${
@@ -415,12 +398,10 @@ function Productos() {
                   body: formData,
                 }
               );
-
               const data = await response.json();
               if (data.secure_url) {
                 setProductForm({ ...productForm, imgUrl: data.secure_url });
-                // Limpiar error de imagen si existía
-                const errors = { ...formErrors };
+                                const errors = { ...formErrors };
                 delete errors.imgUrl;
                 setFormErrors(errors);
                 AlertaDeExito(
@@ -440,48 +421,50 @@ function Productos() {
         );
       };
     };
-
     reader.readAsDataURL(file);
   };
 
   return (
-    <div className="Admin-layout">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          padding: "10px 20px",
-        }}
-      >
-        <MiniProfile />
-      </div>
+    <div className="gproductos-admin-layout">
       <AdminSidebar onCollapseChange={handleCollapseChange} />
       <main
         style={{ marginTop: "0px" }}
         className={`content ${isCollapsed ? "collapsed" : ""}`}
       >
-        <div className="header-section">
-          <h1>Gestión de Productos</h1>
-          <button
-            onClick={() => {
-              resetProductForm();
-              setModalVisible(true);
-            }}
-            className="add-btn1"
-          >
-            + Añadir Producto
-          </button>
-          <button
-            onClick={() => navigate("/MenuAdmin/Categorias")}
-            className="add-btn2"
-          >
-            Ir a Categorías
-          </button>
+        <div className="gproductos-profile-container">
+          <MiniProfile />
+        </div>
+        <div className="gproductos-header-section">
+          <div className="gproductos-header-content">
+            <div className="gproductos-header-title-group">
+              <Package className="gproductos-header-icon" />
+              <h1 className="gproductos-header-title">Gestión de Productos</h1>
+            </div>
+            <div className="gproductos-header-buttons">
+              <button
+                onClick={() => {
+                  resetProductForm();
+                  setModalVisible(true);
+                }}
+                className="gproductos-add-btn"
+              >
+                <PlusCircle size={20} />
+                Añadir Producto
+              </button>
+              <button
+                onClick={() => navigate("/MenuAdmin/Categorias")}
+                className="gproductos-navigate-btn"
+              >
+                <ListFilter size={20} />
+                Ir a Categorías
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div className="div-table">
+        <div className="gproductos-div-table">
           {productos.length > 0 ? (
-            <table>
+            <table className="gproductos-table">
               <thead>
                 <tr>
                   <th>Imagen</th>
@@ -502,7 +485,7 @@ function Productos() {
                         <img
                           src={producto.imgUrl || "/placeholder.svg"}
                           alt={producto.nombre}
-                          className="product-image"
+                          className="gproductos-product-image"
                         />
                       ) : (
                         "No Disponible"
@@ -518,18 +501,40 @@ function Productos() {
                     <td>S/. {producto.precio.toFixed(2)}</td>
                     <td>{producto.stock}</td>
                     <td>{producto.stockMinimo}</td>
-                    <td>{producto.estado ? "Activo" : "Inactivo"}</td>
                     <td>
+                      {producto.estado ? (
+                        <span
+                          style={{
+                            color: "var(--gproductos-success-color)",
+                            fontWeight: 600,
+                          }}
+                        >
+                          Activo
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            color: "var(--gproductos-danger-color)",
+                            fontWeight: 600,
+                          }}
+                        >
+                          Inactivo
+                        </span>
+                      )}
+                    </td>
+                    <td className="gproductos-actions-cell">
                       <button
                         onClick={() => handleEditProduct(producto)}
-                        className="edit-btn"
+                        className="gproductos-edit-btn"
                       >
+                        <Edit size={16} />
                         Editar
                       </button>
                       <button
                         onClick={() => handleDeleteProduct(producto.idProducto)}
-                        className="delete-btn"
+                        className="gproductos-delete-btn"
                       >
+                        <Trash2 size={16} />
                         Eliminar
                       </button>
                     </td>
@@ -538,43 +543,53 @@ function Productos() {
               </tbody>
             </table>
           ) : (
-            <p>No hay productos disponibles</p>
+            <p className="gproductos-no-products">
+              No hay productos disponibles
+            </p>
           )}
         </div>
 
         {modalVisible && (
-          <div className="modal-overlay">
-            <div className="modal">
+          <div className="gproductos-modal-overlay" onClick={closeModal}>
+            <div
+              className="gproductos-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h2>
                 {productForm.idProducto ? "Editar Producto" : "Añadir Producto"}
               </h2>
               <form>
                 <label>
+                  <Tag size={16} />
                   Nombre *
                   {formErrors.nombre && (
-                    <span className="error-text"> - {formErrors.nombre}</span>
+                    <span className="gproductos-error-text">
+                      {" "}
+                      - {formErrors.nombre}
+                    </span>
                   )}
                 </label>
                 <input
                   type="text"
                   value={productForm.nombre}
                   onChange={(e) => handleInputChange("nombre", e.target.value)}
-                  className={formErrors.nombre ? "input-error" : ""}
+                  className={formErrors.nombre ? "gproductos-input-error" : ""}
                   maxLength="100"
                 />
 
                 <label>
+                  <ListFilter size={16} />
                   Categoría *
                   {formErrors.idCategoria && (
-                    <span className="error-text">
+                    <span className="gproductos-error-text">
                       {" "}
                       - {formErrors.idCategoria}
                     </span>
                   )}
                 </label>
                 <select
-                  className={`select-style ${
-                    formErrors.idCategoria ? "input-error" : ""
+                  className={`gproductos-select-style ${
+                    formErrors.idCategoria ? "gproductos-input-error" : ""
                   }`}
                   value={productForm.idCategoria}
                   onChange={(e) =>
@@ -593,9 +608,13 @@ function Productos() {
                 </select>
 
                 <label>
+                  <DollarSign size={16} />
                   Precio (S/.) *
                   {formErrors.precio && (
-                    <span className="error-text"> - {formErrors.precio}</span>
+                    <span className="gproductos-error-text">
+                      {" "}
+                      - {formErrors.precio}
+                    </span>
                   )}
                 </label>
                 <input
@@ -605,13 +624,17 @@ function Productos() {
                   max="999999.99"
                   value={productForm.precio}
                   onChange={(e) => handleInputChange("precio", e.target.value)}
-                  className={formErrors.precio ? "input-error" : ""}
+                  className={formErrors.precio ? "gproductos-input-error" : ""}
                 />
 
                 <label>
+                  <Box size={16} />
                   Stock *
                   {formErrors.stock && (
-                    <span className="error-text"> - {formErrors.stock}</span>
+                    <span className="gproductos-error-text">
+                      {" "}
+                      - {formErrors.stock}
+                    </span>
                   )}
                 </label>
                 <input
@@ -620,13 +643,14 @@ function Productos() {
                   max="999999"
                   value={productForm.stock}
                   onChange={(e) => handleInputChange("stock", e.target.value)}
-                  className={formErrors.stock ? "input-error" : ""}
+                  className={formErrors.stock ? "gproductos-input-error" : ""}
                 />
 
                 <label>
+                  <Scale size={16} />
                   Stock Mínimo *
                   {formErrors.stockMinimo && (
-                    <span className="error-text">
+                    <span className="gproductos-error-text">
                       {" "}
                       - {formErrors.stockMinimo}
                     </span>
@@ -640,13 +664,16 @@ function Productos() {
                   onChange={(e) =>
                     handleInputChange("stockMinimo", e.target.value)
                   }
-                  className={formErrors.stockMinimo ? "input-error" : ""}
+                  className={
+                    formErrors.stockMinimo ? "gproductos-input-error" : ""
+                  }
                 />
 
                 <label>
+                  <FileText size={16} />
                   Descripción *
                   {formErrors.descripcion && (
-                    <span className="error-text">
+                    <span className="gproductos-error-text">
                       {" "}
                       - {formErrors.descripcion}
                     </span>
@@ -657,62 +684,81 @@ function Productos() {
                   onChange={(e) =>
                     handleInputChange("descripcion", e.target.value)
                   }
-                  className={formErrors.descripcion ? "input-error" : ""}
+                  className={
+                    formErrors.descripcion ? "gproductos-input-error" : ""
+                  }
                   maxLength="500"
                   rows="4"
                   placeholder="Describe el producto (mínimo 10 caracteres)"
                 />
-                <div className="char-counter">
+                <div className="gproductos-char-counter">
                   {productForm.descripcion.length}/500 caracteres
                 </div>
 
                 <label>
+                  <ImageIcon size={16} />
                   Imagen del Producto *
                   {formErrors.imgUrl && (
-                    <span className="error-text"> - {formErrors.imgUrl}</span>
+                    <span className="gproductos-error-text">
+                      {" "}
+                      - {formErrors.imgUrl}
+                    </span>
                   )}
                 </label>
                 <input
                   type="file"
                   accept="image/jpeg,image/jpg,image/png,image/webp"
                   onChange={handleImageUpload}
-                  className={formErrors.imgUrl ? "input-error" : ""}
+                  className={formErrors.imgUrl ? "gproductos-input-error" : ""}
                 />
-                <small className="help-text">
+                <small className="gproductos-help-text">
                   Formatos permitidos: JPG, PNG, WebP. Tamaño máximo: 5MB.
                   Dimensiones mínimas: 600x400px
                 </small>
-
                 {productForm.imgUrl && (
-                  <div className="image-preview">
+                  <div className="gproductos-image-preview">
                     <img
                       src={productForm.imgUrl || "/placeholder.svg"}
                       alt="Vista previa"
-                      style={{
-                        maxWidth: "200px",
-                        maxHeight: "150px",
-                        objectFit: "cover",
-                      }}
                     />
                   </div>
                 )}
 
-                <div className="modal-actions">
+                <label>
+                  <CircleDot size={16} />
+                  Estado
+                </label>
+                <select
+                  className="gproductos-select-style"
+                  value={productForm.estado}
+                  onChange={(e) =>
+                    handleInputChange("estado", e.target.value === "true")
+                  }
+                >
+                  <option value={true}>Activo</option>
+                  <option value={false}>Inactivo</option>
+                </select>
+
+                <div className="gproductos-modal-actions">
                   <button
                     type="button"
                     onClick={
                       productForm.idProducto ? handleSaveEdit : handleAddProduct
                     }
                     disabled={Object.keys(formErrors).length > 0}
-                    className="save-btn"
+                    className="gproductos-save-btn"
                   >
-                    {productForm.idProducto ? "Guardar" : "Añadir"}
+                    <Save size={20} />
+                    {productForm.idProducto
+                      ? "Guardar Cambios"
+                      : "Añadir Producto"}
                   </button>
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="cancel-btn"
+                    className="gproductos-cancel-btn"
                   >
+                    <XCircle size={20} />
                     Cancelar
                   </button>
                 </div>

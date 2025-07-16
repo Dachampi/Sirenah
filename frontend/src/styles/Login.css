@@ -147,7 +147,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Responsive design */
 @media (max-width: 480px) {
     .formulario-login1 {
         padding: 30px;
@@ -170,7 +169,6 @@ body {
     }
 }
 
-/* Additional features */
 .error-message1 {
     color: var(--error-color);
     font-size: 14px;
@@ -229,36 +227,16 @@ body {
     color: var(--primary-color);
 }
 .parrafo-login1 {
-    font-size: 16px; /* Tamaño de fuente */
-    color: #333; /* Color del texto */
-    margin-top: 20px; /* Espacio superior */
-    text-align: center; /* Centrar el texto */
-}
+    font-size: 16px;     color: #333;     margin-top: 20px;     text-align: center; }
 
 .parrafo-login1 a {
-    color: var(--primary-color); /* Color del enlace, puedes usar la variable que ya definiste */
-    font-weight: bold; /* Negrita para el enlace */
-    text-decoration: none; /* Sin subrayado */
-    transition: color 0.3s ease; /* Transición suave para el color */
-}
+    color: var(--primary-color);     font-weight: bold;     text-decoration: none;     transition: color 0.3s ease; }
 
 .parrafo-login1 a:hover {
-    color: #2c3e50; /* Color del enlace al pasar el mouse */
-    text-decoration: underline; /* Subrayar al pasar el mouse */
-}
+    color: #2c3e50;     text-decoration: underline; }
 
 .btn-close {
-    background: transparent; /* Sin fondo */
-    border: none; /* Sin borde */
-    cursor: pointer; /* Cambiar el cursor a mano */
-    position: absolute; /* Posicionarlo de forma absoluta */
-    top: 20px; /* Ajusta según tus necesidades */
-    right: 20px; /* Ajusta según tus necesidades */
-    font-size: 24px; /* Tamaño del ícono */
-    color: #333; /* Color del ícono */
-    transition: color 0.3s ease; /* Transición suave para el color */
-}
+    background: transparent;     border: none;     cursor: pointer;     position: absolute;     top: 20px;     right: 20px;     font-size: 24px;     color: #333;     transition: color 0.3s ease; }
 
 .btn-close:hover {
-    color: #ff0000; /* Cambia el color al pasar el mouse */
-}
+    color: #ff0000; }

@@ -11,8 +11,7 @@ export const aumentarProductoCarrito = async (idProducto , setCartItems) => {
             return;
         }
 
-        // Obtener carrito
-        const idCarrito = await fetch(
+                const idCarrito = await fetch(
             `${import.meta.env.VITE_API}/todosroles/carrito/obtener/${userId}`,
             {
                 method: "GET",
@@ -63,8 +62,7 @@ export const disminuirProductoCarrito = async (idProducto, idCarritoDetalle, set
             return;
         }
 
-        // Obtener carrito
-        const idCarrito = await fetch(
+                const idCarrito = await fetch(
             `${import.meta.env.VITE_API}/todosroles/carrito/obtener/${userId}`,
             {
                 method: "GET",
@@ -81,8 +79,7 @@ export const disminuirProductoCarrito = async (idProducto, idCarritoDetalle, set
 
         const carritoData = await idCarrito.json();
 
-        // Buscar el producto en el carrito
-        const producto = carritoData.detalles.find(item => item.idProducto === idProducto);
+                const producto = carritoData.detalles.find(item => item.idProducto === idProducto);
 
         if (!producto) {
             alert("Producto no encontrado en el carrito.");

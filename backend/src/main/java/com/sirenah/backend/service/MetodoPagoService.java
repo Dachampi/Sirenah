@@ -9,6 +9,8 @@ public interface MetodoPagoService {
     MetodoPago guardar(MetodoPago metodoPago);
     Optional<MetodoPago> buscarPorIdTransaccion(String idTransaccion);
     public Optional<MetodoPago> buscarPorId(Integer idPago);
+    public List<MetodoPago> obtener();
     public List<MetodoPago> obtenerPagosPorCliente(Long idCliente);
+
 
 }

@@ -11,7 +11,6 @@ import Contacto from "../views/Home/Contacto";
 import Login from "../views/Login/Login";
 import Registro from "../views/Login/Registro";
 
-import Dashboard from "../views/MenuAdm/Dashboard";
 import Productos from "../views/MenuAdm/Productos";
 import Usuarios from "../views/MenuAdm/Usuarios";
 import Analiticas from "../views/MenuAdm/Analiticas";
@@ -37,6 +36,7 @@ import RegistroADMIN from "../views/Login/RegistroADMIN";
 import RegistroEMPLEADO from "../views/Login/RegistroEMPLEADO";
 import Reportes from "../views/MenuAdm/Reportes";
 import MisPedidos from "../views/MenuUser/MisPedidos";
+import Ventas from "../views/MenuAdm/Ventas";
 
 function Rutas() {
   return (
@@ -50,10 +50,10 @@ function Rutas() {
         <Route path="/Registro" element=<Registro /> />
         <Route path="/" element={<Navigate to="/Home" />} />
         <Route
-          path="/MenuAdmin/Dashboard"
+          path="/MenuAdmin/Ventas"
           element={
             <ProtegerRutas allowedRoles={["ADMIN"]}>
-              <Dashboard />
+              <Ventas />
             </ProtegerRutas>
           }
         />

@@ -45,8 +45,7 @@ useEffect(() => {
 }, []);
 
 
-  // Filtrado en tiempo real
-  useEffect(() => {
+    useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredAdministradores(administradores);
     } else {
@@ -96,8 +95,7 @@ useEffect(() => {
     );
 
     if (confirmacion.isConfirmed) {
-      // Solo se necesita el ID para eliminar
-      await eliminarUsuario({ ourUsers: { id: adminToDelete.id } });
+            await eliminarUsuario({ ourUsers: { id: adminToDelete.id } });
       setShowDeleteModal(false);
       setAdminToDelete(null);
 

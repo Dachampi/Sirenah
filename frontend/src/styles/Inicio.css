@@ -1,4 +1,3 @@
-/* Estilos generales */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -9,26 +8,18 @@ body {
 }
 
 main {
-  margin-top: 60px; /* Ajusta esto según la altura de tu encabezado */
-}
+  margin-top: 60px; }
 
-/* Estilos para el carrusel */
 .carousel {
   position: relative;
   overflow: hidden;
 }
 
 .carousel-inner {
-  display: flex; /* Permitir el desplazamiento horizontal */
-  transition: transform 0.5s ease; /* Asegurar la transición suave */
-  width: 100%; /* Asegurar que tome el 100% del contenedor */
-}
+  display: flex;   transition: transform 0.5s ease;   width: 100%; }
 
 .carousel-item {
-  flex: 0 0 100%; /* Cada elemento del carrusel ocupa el 100% del ancho */
-  transition: opacity 0.5s ease; /* Transición suave para la opacidad */
-  position: relative; /* Para el overlay */
-}
+  flex: 0 0 100%;   transition: opacity 0.5s ease;   position: relative; }
 
 .carousel-item img {
   width: 100%;
@@ -68,22 +59,18 @@ main {
   border: none;
   padding: 10px;
   cursor: pointer;
-  z-index: 100; /* Asegura que los botones estén sobre las imágenes */
-}
+  z-index: 100; }
 
 .prev {
-  left: 10px; /* Posición del botón anterior */
-}
+  left: 10px; }
 
 .next {
-  right: 10px; /* Posición del botón siguiente */
-}
+  right: 10px; }
 
 .prev:hover, .next:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* Nuevas Colecciones */
 .new-collection {
   text-align: center;
   margin: 50px 0;
@@ -128,7 +115,6 @@ main {
   color: #333;
 }
 
-/* Sección de Ofertas Especiales */
 .special-offers {
   text-align: center;
   margin: 50px 0;
@@ -136,7 +122,6 @@ main {
 }
 
 
-/* Productos Más Vendidos */
 .best-sellers {
   text-align: center;
   margin: 50px 0;
@@ -187,7 +172,6 @@ main {
 }
 
 
-/* Reseñas de Clientes */
 .customer-reviews {
   text-align: center;
   margin: 50px 0;
@@ -205,8 +189,7 @@ main {
 
 .review-item {
   flex: 0 0 30%;
-  background-color: #f5f5f5; /* Fondo claro */
-  padding: 20px;
+  background-color: #f5f5f5;   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -224,15 +207,12 @@ main {
 .review-item h4 {
   margin-top: 10px;
   font-weight: bold;
-  color: #333; /* Color del título en modo claro */
-}
+  color: #333; }
 
-/* Newsletter */
 .newsletter {
   text-align: center;
   margin: 50px 0px;
-  background-color: #ffecd1; /* Fondo claro */
-  padding: 40px 20px;
+  background-color: #ffecd1;   padding: 40px 20px;
   border-radius: 10px;
 }
 
@@ -250,16 +230,12 @@ main {
 .newsletter input[type="email"] {
   padding: 10px;
   width: 300px;
-  border: 1px solid #ccc; /* Borde claro */
-  border-radius: 4px;
-  background-color: #ffffff; /* Fondo del input en modo claro */
-  color: #333; /* Color del texto en modo claro */
-}
+  border: 1px solid #ccc;   border-radius: 4px;
+  background-color: #ffffff;   color: #333; }
 
 .newsletter button {
   padding: 10px 20px;
-  background-color: #ff5733; /* Fondo del botón */
-  color: white;
+  background-color: #ff5733;   color: white;
   border: none;
   cursor: pointer;
   border-radius: 4px;
@@ -267,67 +243,50 @@ main {
 }
 
 .newsletter button:hover {
-  background-color: #e14e2c; /* Color al pasar el mouse */
-}
+  background-color: #e14e2c; }
 
-/* Responsiveness */
 @media (max-width: 768px) {
   .collection-grid, .products-grid, .reviews-grid {
     flex-direction: column;
-    align-items: center; /* Centrando elementos en pantallas pequeñas */
-  }
+    align-items: center;   }
 
   .collection-item, .product-item, .review-item {
-    flex: 0 0 90%; /* Ocupa el 90% en pantallas pequeñas */
-  }
+    flex: 0 0 90%;   }
 }
 
-/* Modo oscuro */
 .dark-mode {
   background-color: #121212;
   color: #ffffff;
 }
 
-/* Estilos de secciones en modo oscuro */
 .dark-mode .about-us,
 .dark-mode .special-offers,
 .dark-mode .promotions,
 .dark-mode .best-sellers,
 .dark-mode .customer-reviews,
 .dark-mode .newsletter {
-  background-color: #1c1c1c; /* Fondo oscuro para secciones */
-  color: #ffffff; /* Color del texto en modo oscuro */
-}
+  background-color: #1c1c1c;   color: #ffffff; }
 
-/* Estilos específicos para cada sección en modo oscuro */
 .dark-mode .carousel-overlay {
-  background: rgba(0, 0, 0, 0.7); /* Overlay en modo oscuro */
-}
+  background: rgba(0, 0, 0, 0.7); }
 
 .dark-mode .collection-item,
 .dark-mode .product-item,
 .dark-mode .review-item {
-  background-color: #2b2b2b; /* Fondo oscuro para elementos */
-}
+  background-color: #2b2b2b; }
 
 .dark-mode .collection-item h3,
 .dark-mode .product-item h3,
 .dark-mode .review-item h4 {
-  color: #ffffff; /* Color de título en modo oscuro */
-}
+  color: #ffffff; }
 
 .dark-mode .prev,
 .dark-mode .next {
-  background-color: rgba(255, 255, 255, 0.2); /* Botones en modo oscuro */
-}
+  background-color: rgba(255, 255, 255, 0.2); }
 
 .dark-mode .newsletter input[type="email"] {
-  border: 1px solid #555; /* Borde oscuro */
-  background-color: #333; /* Fondo del input en modo oscuro */
-  color: #ffffff; /* Color del texto en modo oscuro */
-}
+  border: 1px solid #555;   background-color: #333;   color: #ffffff; }
 
 .dark-mode .newsletter button {
-  background-color: #ff5733; /* Fondo del botón */
-  color: white;
+  background-color: #ff5733;   color: white;
 }

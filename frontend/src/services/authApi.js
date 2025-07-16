@@ -26,8 +26,7 @@ export const signup = async (userData) => {
 export const signin = async (loginData) => {
     try {
         const response = await axios.post(`${BASE_URL}/signin`, loginData);
-        // Guardar token en localStorage al iniciar sesión
-        localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.data.token);
         return response.data;
     } catch (error) {
         console.error("Error al iniciar sesión:", error);
@@ -38,8 +37,7 @@ export const signin = async (loginData) => {
 export const refreshToken = async (refreshData) => {
     try {
         const response = await axios.post(`${BASE_URL}/refresh`, refreshData);
-        // Actualizar token en localStorage
-        localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.data.token);
         return response.data;
     } catch (error) {
         console.error("Error al refrescar token:", error);

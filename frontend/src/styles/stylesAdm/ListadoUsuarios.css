@@ -1,4 +1,3 @@
-/* Variables para diseño claro, amigable y elegante */
 :root {
   --primary: #150d2c;
   --primary-light: #020107;
@@ -24,8 +23,7 @@
   --orange: #ea580c;
   --orange-light: #f97316;
 
-  /* Colores claros y amigables */
-  --light-bg: #fefefe;
+    --light-bg: #fefefe;
   --light-surface: #ffffff;
   --light-surface-soft: #f8fafc;
   --light-border: #e2e8f0;
@@ -46,8 +44,7 @@
   --gray-900: #0f172a;
   --white: #ffffff;
 
-  /* Sombras suaves y elegantes */
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -60,7 +57,6 @@
   --radius-xl: 20px;
 }
 
-/* Contenedor principal */
 .user-container {
   padding: 28px;
   max-width: 100%;
@@ -68,7 +64,6 @@
   min-height: 100vh;
 }
 
-/* Tarjeta principal */
 .user-card {
   background: var(--light-surface);
   border-radius: var(--radius-xl);
@@ -96,7 +91,6 @@
   border-color: rgba(5, 150, 105, 0.2);
 }
 
-/* Header elegante y amigable */
 .user-header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   color: var(--white);
@@ -177,7 +171,6 @@
   align-items: flex-end;
 }
 
-/* Botón agregar user */
 .add-user-btn {
   display: flex;
   align-items: center;
@@ -205,7 +198,6 @@
   flex-shrink: 0;
 }
 
-/* Botones de navegación */
 .nav-buttons {
   display: flex;
   gap: 10px;
@@ -238,7 +230,6 @@
   flex-shrink: 0;
 }
 
-/* Stats mejoradas */
 .user-stats {
   display: flex;
   gap: 18px;
@@ -276,7 +267,6 @@
   font-weight: 600;
 }
 
-/* Barra de filtrado */
 .filter-bar {
   padding: 24px 36px;
   background: var(--light-surface);
@@ -348,13 +338,11 @@
   font-weight: 700;
 }
 
-/* Contenido */
 .user-content {
   padding: 0;
   background: var(--light-surface);
 }
 
-/* Loading simpático */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -389,7 +377,6 @@
   font-weight: 600;
 }
 
-/* Error simpático */
 .error-alert {
   background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
   border: 2px solid var(--danger-light);
@@ -406,7 +393,6 @@
   font-size: 0.9rem;
 }
 
-/* Estado vacío */
 .empty-state {
   text-align: center;
   padding: 56px 36px;
@@ -451,7 +437,6 @@
   box-shadow: var(--shadow-soft);
 }
 
-/* Tabla con cabecera colorida */
 .table-container {
   margin: 0;
   border-top: 1px solid var(--light-border-soft);
@@ -506,7 +491,6 @@
   border-bottom: none;
 }
 
-/* Celdas específicas */
 .id-cell {
   width: 80px;
 }
@@ -709,7 +693,6 @@
   }
 }
 
-/* Acciones arregladas */
 .actions-cell {
   width: 80px;
   text-align: center;
@@ -742,7 +725,6 @@
   height: 16px;
 }
 
-/* Modal mejorado */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -884,7 +866,6 @@
 .table-container {
     overflow-x: auto;
   }
-/* Responsive */
 @media (max-width: 1024px) {
   .user-container {
     padding: 20px;

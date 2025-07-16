@@ -6,13 +6,11 @@ import Loading from "../common/Loanding.jsx";
 function MiniProfileUser() {
   const [datosCliente, setDatosCliente] = useState(null); 
   const [isLoading, setIsLoading] = useState(true); 
-  const [error, setError] = useState(null); // Para manejar el error
-
+  const [error, setError] = useState(null); 
   useEffect(() => {
     const fetchDatosCliente = async () => {
       try {
-        const response = await obtenerDatos(); // Función para obtener datos del cliente
-        setDatosCliente(response);
+        const response = await obtenerDatos();         setDatosCliente(response);
       } catch (error) {
         console.error("Error al obtener los datos del cliente:", error);
         setError("Error al cargar los datos del cliente.");
@@ -24,23 +22,19 @@ function MiniProfileUser() {
     fetchDatosCliente();
   }, []);
 
-  // Si está cargando, muestra el componente Loading
-  if (isLoading) {
+    if (isLoading) {
     return <Loading message="Cargando datos, por favor espera..." />;
   }
 
-  // Si hubo un error, muestra el mensaje de error
-  if (error) {
+    if (error) {
     return <div className="error-message">{error}</div>;
   }
 
-  // Si no hay datos, muestra un mensaje de error
-  if (!datosCliente) {
+    if (!datosCliente) {
     return <div className="error-message">No se encontraron datos del cliente.</div>;
   }
 
-  // Renderizar el mini perfil del cliente con los datos obtenidos
-  return (
+    return (
     <div className="mini-profile-user">
       <div className="profile-avatar-user">
         <span>{datosCliente.nombre.charAt(0)}</span>

@@ -57,7 +57,7 @@ const getTipoIcon = (tipo) => {
       return <Banknote size={16} />;
     case "pago_efectivo":
       return <ReceiptText size={16} />;
-    case "tarjeta_debito":
+    case "debit_card":
       return <CreditCard size={16} />;
     case "deposito_pago_efectivo":
       return <Banknote size={16} />;
@@ -80,7 +80,7 @@ const traducirEstadoDisplay = (estado) => {
     case "refunded":
       return "Reembolsado";
     default:
-      return estado; // Si no hay traducción, devuelve el estado original
+      return estado;
   }
 };
 function MisCompras() {

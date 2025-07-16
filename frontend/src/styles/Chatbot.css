@@ -1,4 +1,3 @@
-/* Contenedor principal del chatbot */
 .chatbot-container {
   position: fixed;
   bottom: 20px;
@@ -11,13 +10,11 @@
   align-items: flex-end;
 }
 
-/* Botón flotante de WhatsApp */
 .whatsapp-button {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #25D366; /* Color verde de WhatsApp */
-  border: none;
+  background: #25D366;   border: none;
   color: white;
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
@@ -32,8 +29,7 @@
 .whatsapp-button:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
-  background: #128C7E; /* Verde más oscuro al hacer hover */
-}
+  background: #128C7E; }
 
 .whatsapp-button:active {
   transform: scale(0.95);
@@ -56,7 +52,6 @@
   transform: scale(1);
 }
 
-/* Botón flotante del chatbot */
 .chat-button {
   width: 60px;
   height: 60px;
@@ -100,7 +95,6 @@
   transform: scale(1);
 }
 
-/* Efecto de pulso para WhatsApp */
 @keyframes pulse {
   0% {
     box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
@@ -121,7 +115,6 @@
   animation: none;
 }
 
-/* Ventana del chat */
 .chatbot-window {
   position: absolute;
   bottom: 80px;
@@ -148,7 +141,6 @@
   }
 }
 
-/* Header del chat */
 .chatbot-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -168,7 +160,6 @@
   opacity: 0.9;
 }
 
-/* Área de mensajes */
 .chatbot-messages {
   flex: 1;
   padding: 20px;
@@ -194,7 +185,6 @@
   background: #a8a8a8;
 }
 
-/* Estilos de mensajes */
 .message {
   margin-bottom: 15px;
   display: flex;
@@ -239,7 +229,6 @@
   padding: 0 4px;
 }
 
-/* Área de entrada */
 .chatbot-input {
   padding: 20px;
   background: white;
@@ -267,7 +256,6 @@
   color: #999;
 }
 
-/* Botón de enviar */
 .send-button {
   width: 40px;
   height: 40px;
@@ -293,7 +281,6 @@
   transform: none;
 }
 
-/* Animación de escritura para el bot */
 .bot-message .message-content {
   animation: messageSlideIn 0.3s ease;
 }
@@ -309,7 +296,6 @@
   }
 }
 
-/* Indicador de escritura */
 .typing-indicator {
   display: flex;
   gap: 4px;
@@ -343,7 +329,6 @@
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .chatbot-window {
     width: 300px;

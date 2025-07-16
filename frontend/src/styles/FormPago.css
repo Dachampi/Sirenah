@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    margin: 50px auto; /* Centrar formulario */
-    padding: 30px;
+    margin: 50px auto;     padding: 30px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     background-color: #fff;
@@ -52,8 +51,7 @@
   
   
   input::placeholder {
-    color: #a0aec0; /* Marcador de posición gris */
-  }
+    color: #a0aec0;   }
   
   button {
     padding: 15px 20px;
@@ -69,13 +67,10 @@
   }
   
   button:hover {
-    background-color: #2563eb; /* Azul más oscuro */
-    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3); /* Sombra al pasar el mouse */
-  }
+    background-color: #2563eb;     box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);   }
   
   button:active {
-    background-color: #1d4ed8; /* Azul más profundo */
-  }
+    background-color: #1d4ed8;   }
   
   button:disabled {
     background-color: #cbd5e1;

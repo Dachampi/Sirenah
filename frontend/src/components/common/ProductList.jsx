@@ -55,8 +55,7 @@ function ProductList() {
       }
     };
 
-    // Llamada para obtener las categorías
-    const obtenerCategorias = async () => {
+        const obtenerCategorias = async () => {
       try {
         const respuesta = await fetch(
           `${import.meta.env.VITE_API}/public/Categorias/Listar`
@@ -77,8 +76,7 @@ function ProductList() {
       const usuarioId =await obtenerUsuarioId();
       const token = localStorage.getItem("token");
 
-      // 3. Obtener el carrito del usuario
-      let carrito;
+            let carrito;
 
       try {
         const carritoResponse = await fetch(
@@ -106,13 +104,11 @@ function ProductList() {
         } else {
           carrito = await carritoResponse.json();
         }
-        // eslint-disable-next-line no-unused-vars
-      } catch (error) {
+              } catch (error) {
         return;
       }
 
-      // 4. Agregar producto al carrito
-      try {
+            try {
         const agregarProductoResponse = await fetch(
           `${import.meta.env.VITE_API}/todosroles/carrito/${
             carrito.idCarrito
@@ -167,8 +163,7 @@ function ProductList() {
       );
     });
 
-    // Aplicar ordenamiento
-    if (filtro.ordenar === "nombreAsc") {
+        if (filtro.ordenar === "nombreAsc") {
       productosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
     } else if (filtro.ordenar === "nombreDesc") {
       productosFiltrados.sort((a, b) => b.nombre.localeCompare(a.nombre));

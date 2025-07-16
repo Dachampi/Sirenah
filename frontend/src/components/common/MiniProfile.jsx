@@ -24,23 +24,19 @@ function MiniProfile() {
     fetchDatos();
   }, []);
 
-  // Si está cargando, muestra el componente Loading
-  if (isLoading) {
+    if (isLoading) {
     return <Loading message="Cargando datos, por favor espera..." />;
   }
 
-  // Si hubo un error, muestra el mensaje de error
-  if (error) {
+    if (error) {
     return <div className="error-message">{error}</div>;
   }
 
-  // Si no hay datos, muestra un mensaje de error
-  if (!datos) {
+    if (!datos) {
     return <div className="error-message">No se encontraron datos.</div>;
   }
 
-  // Renderizar el mini perfil con los datos obtenidos
-  return (
+    return (
     <div className="mini-profile">
       <div className="profile-avatar">
         {/* Primera letra del nombre como avatar */}
