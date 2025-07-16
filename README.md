@@ -43,4 +43,16 @@ git commit -m "Mensaje"
 git diff nombre-de-la-rama1 nombre-de-la-rama2
 
 ### 10. Combinar ramas
-git merge rama-origen(La que recibira los cambios) rama-destino
+git merge rama-origen(La que recibira los cambios) rama-destino -m "Merge branch 'develop'"
+
+### 13. Abortar un merge (cuando hay conflictos y quieres cancelarlo)
+git merge --abort
+# Útil si estás en medio de una fusión y quieres deshacerla completamente.
+
+### 15. Resetear el estado del proyecto (⚠️ cuidado: borra cambios locales)
+git reset --hard HEAD
+# Vuelve al último commit, descartando todos los cambios no confirmados.
+
+### 16. Eliminar una rama remota
+git push origin --delete nombre-de-la-rama
+# Borra una rama del repositorio remoto (GitHub).
