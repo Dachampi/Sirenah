@@ -15,11 +15,13 @@ import "../../styles/Dashboard/IngresosAgrupados.css";
 import { Printer, DollarSign } from "lucide-react" 
 
 export default function IngresosPorPeriodo() {
-  const [tipo, setTipo] = useState("mes")   const [desde, setDesde] = useState(dayjs().startOf("month").format("YYYY-MM-DD"))
+  const [tipo, setTipo] = useState("mes")
+  const [desde, setDesde] = useState(dayjs().startOf("month").format("YYYY-MM-DD"))
   const [hasta, setHasta] = useState(dayjs().endOf("month").format("YYYY-MM-DD"))
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
-  const [fechaEmision, setFechaEmision] = useState("")   const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo") 
+  const [fechaEmision, setFechaEmision] = useState("")
+  const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo")
   const fetchData = async () => {
     setLoading(true)
     try {

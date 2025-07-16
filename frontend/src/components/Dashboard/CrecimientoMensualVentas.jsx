@@ -56,7 +56,8 @@ export default function CrecimientoMensualVentas() {
       alert("No hay datos para imprimir.")
       return
     }
-    setIsPrinting(true)     setFechaEmision(dayjs().format("DD/MM/YYYY HH:mm"))
+    setIsPrinting(true)     
+    setFechaEmision(dayjs().format("DD/MM/YYYY HH:mm"))
     setTimeout(() => {
       window.print()
       setIsPrinting(false)     }, 500)   }

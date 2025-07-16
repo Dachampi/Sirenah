@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react"
-import { Printer, Package } from "lucide-react" import dayjs from "dayjs"
-import { obtenerValorTotalInventario } from "../../services/reportesApi.js" import "../../styles/Dashboard/ValorInventario.css";
+import { Printer, Package } from "lucide-react"
+import dayjs from "dayjs"
+import { obtenerValorTotalInventario } from "../../services/reportesApi.js"
+import "../../styles/Dashboard/ValorInventario.css";
 
 export default function ValorInventario() {
   const [data, setData] = useState([])
   const [valorTotal, setValorTotal] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [fechaEmision, setFechaEmision] = useState("")   const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo") 
+  const [fechaEmision, setFechaEmision] = useState("")
+  const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo")
   const fetchData = async () => {
     setLoading(true)
     try {

@@ -62,7 +62,8 @@ const getEstadoClass = (estado) => {
 export function VentaDetalleModal({ isOpen, onClose, venta }) {
   if (!isOpen || !venta) return null
 
-  const IGV_RATE = 0.18   const subtotalSinIGV = venta.total / (1 + IGV_RATE)
+  const IGV_RATE = 0.18
+  const subtotalSinIGV = venta.total / (1 + IGV_RATE)
   const igvMonto = venta.total - subtotalSinIGV
 
   return (

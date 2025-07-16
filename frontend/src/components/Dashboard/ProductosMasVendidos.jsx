@@ -5,11 +5,13 @@ import { obtenerProductosMasVendidos } from "../../services/reportesApi.js"
 import "../../styles/Dashboard/ProductosMasVendidos.css"
 
 export default function ProductosMasVendidos() {
-  const [tipo, setTipo] = useState("mes")   const [data, setData] = useState([])
+  const [tipo, setTipo] = useState("mes")
+  const [data, setData] = useState([])
   const [totalUnidades, setTotalUnidades] = useState(0)
   const [totalIngresos, setTotalIngresos] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [fechaEmision, setFechaEmision] = useState("")   const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo") 
+  const [fechaEmision, setFechaEmision] = useState("")
+  const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo")
   const fetchData = async () => {
     setLoading(true)
     try {

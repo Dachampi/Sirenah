@@ -18,7 +18,8 @@ export default function VentasPorFecha() {
   const [hasta, setHasta] = useState(dayjs().endOf("month").format("YYYY-MM-DD"))
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
-  const [fechaEmision, setFechaEmision] = useState("")     const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo")
+  const [fechaEmision, setFechaEmision] = useState("")
+  const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo")
 
   const fetchData = async () => {
     setLoading(true)

@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react"
-import { Printer, AlertTriangle } from "lucide-react" import dayjs from "dayjs"
-import { obtenerProductosConBajoStock } from "../../services/reportesApi.js" import "../../styles/Dashboard/ProductosBajoStock.css"
+import { Printer, AlertTriangle } from "lucide-react"
+import dayjs from "dayjs"
+import { obtenerProductosConBajoStock } from "../../services/reportesApi.js"
+import "../../styles/Dashboard/ProductosBajoStock.css"
 
 export default function ProductosBajoStock() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
-  const [fechaEmision, setFechaEmision] = useState("")   const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo") 
+  const [fechaEmision, setFechaEmision] = useState("")
+  const [usuarioGenerador, setUsuarioGenerador] = useState("Usuario Demo")
   const fetchData = async () => {
     setLoading(true)
     try {
