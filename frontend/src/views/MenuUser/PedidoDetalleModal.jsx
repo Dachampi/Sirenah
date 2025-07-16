@@ -7,13 +7,19 @@ const normalizarEstado = (estado) => {
   const estadoLimpio = estado.toLowerCase().trim()
   const mapeoEstados = {
     pendiente: "pendiente",
-    pendiende: "pendiente",     pendente: "pendiente",     confirmado: "confirmado",
-    confirmdo: "confirmado",     enviado: "enviado",
+    pendiende: "pendiente",
+    pendente: "pendiente",
+    confirmado: "confirmado",
+    confirmdo: "confirmado",
+    enviado: "enviado",
     entregado: "entregado",
-    entregdo: "entregado",     cancelado: "cancelado",
-    canceldo: "cancelado",   }
+    entregdo: "entregado",
+    cancelado: "cancelado",
+    canceldo: "cancelado",
+  }
   return mapeoEstados[estadoLimpio] || estadoLimpio
 }
+
 const useProductoInfo = (idProducto) => {
   const [producto, setProducto] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -55,7 +61,7 @@ const ProductoItem = ({ detalle }) => {
         ) : (
           <img
             src={producto?.imgUrl || "/placeholder.svg?height=60&width=60"}
-            alt={detalle.nombreProducto}
+            alt={producto?.nombre || detalle.nombreProducto || "Producto"}
             className="pedido-producto-imagen"
             onError={(e) => {
               e.target.src = "/placeholder.svg?height=60&width=60"
@@ -64,9 +70,13 @@ const ProductoItem = ({ detalle }) => {
         )}
       </div>
       <div className="pedido-modal-producto-info">
-        <h4 className="pedido-modal-producto-nombre">{detalle.nombreProducto}</h4>
+        <h4 className="pedido-modal-producto-nombre">
+          {producto?.nombre || detalle.nombreProducto || "Producto"}
+        </h4>
         <p className="pedido-modal-producto-precio">S/. {detalle.precioUnitario.toFixed(2)} c/u</p>
-        {producto?.descripcion && <p className="pedido-modal-producto-descripcion">{producto.descripcion}</p>}
+        {producto?.descripcion && (
+          <p className="pedido-modal-producto-descripcion">{producto.descripcion}</p>
+        )}
       </div>
       <div className="pedido-modal-producto-cantidad">
         <span className="pedido-modal-cantidad-label">Cantidad:</span>
@@ -79,7 +89,6 @@ const ProductoItem = ({ detalle }) => {
     </div>
   )
 }
-
 
 const PedidoDetalleModal = ({ pedido, onClose }) => {
   if (!pedido) return null

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import {
   Package,
@@ -21,11 +19,16 @@ const normalizarEstado = (estado) => {
   const estadoLimpio = estado.toLowerCase().trim();
   const mapeoEstados = {
     pendiente: "pendiente",
-    pendiende: "pendiente",     pendente: "pendiente",     confirmado: "confirmado",
-    confirmdo: "confirmado",     enviado: "enviado",
+    pendiende: "pendiente",     
+    pendente: "pendiente",     
+    confirmado: "confirmado",
+    confirmdo: "confirmado",     
+    enviado: "enviado",
     entregado: "entregado",
-    entregdo: "entregado",     cancelado: "cancelado",
-    canceldo: "cancelado",   };
+    entregdo: "entregado",     
+    cancelado: "cancelado",
+    canceldo: "cancelado",   
+  };
   return mapeoEstados[estadoLimpio] || estadoLimpio;
 };
 

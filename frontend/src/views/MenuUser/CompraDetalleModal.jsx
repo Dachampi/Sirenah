@@ -1,5 +1,3 @@
-"use client"
-
 import PropTypes from "prop-types"
 import { useState, useEffect } from "react"
 import { XCircle, CreditCard, Package, User, DollarSign, Info, Banknote, ReceiptText } from "lucide-react" 
@@ -73,35 +71,39 @@ const ProductoItem = ({ detalle }) => {
   const { producto, loading } = useProductoInfo(detalle.idProducto)
 
   return (
-    <div className="compra-modal-producto-item">
-      <div className="compra-modal-producto-imagen">
+    <div className="pedido-modal-producto-item">
+      <div className="pedido-modal-producto-imagen">
         {loading ? (
-          <div className="compra-producto-imagen-loading">
+          <div className="pedido-producto-imagen-loading">
             <Package size={24} />
           </div>
         ) : (
           <img
             src={producto?.imgUrl || "/placeholder.svg?height=60&width=60"}
-            alt={detalle.nombreProducto}
-            className="compra-producto-imagen"
+            alt={producto?.nombre || detalle.nombreProducto || "Producto"}
+            className="pedido-producto-imagen"
             onError={(e) => {
               e.target.src = "/placeholder.svg?height=60&width=60"
             }}
           />
         )}
       </div>
-      <div className="compra-modal-producto-info">
-        <h4 className="compra-modal-producto-nombre">{detalle.nombreProducto}</h4>
-        <p className="compra-modal-producto-precio">S/. {detalle.precioUnitario.toFixed(2)} c/u</p>
-        {producto?.descripcion && <p className="compra-modal-producto-descripcion">{producto.descripcion}</p>}
+      <div className="pedido-modal-producto-info">
+        <h4 className="pedido-modal-producto-nombre">
+          {producto?.nombre || detalle.nombreProducto || "Producto"}
+        </h4>
+        <p className="pedido-modal-producto-precio">S/. {detalle.precioUnitario.toFixed(2)} c/u</p>
+        {producto?.descripcion && (
+          <p className="pedido-modal-producto-descripcion">{producto.descripcion}</p>
+        )}
       </div>
-      <div className="compra-modal-producto-cantidad">
-        <span className="compra-modal-cantidad-label">Cantidad:</span>
-        <span className="compra-modal-cantidad-value">{detalle.cantidad}</span>
+      <div className="pedido-modal-producto-cantidad">
+        <span className="pedido-modal-cantidad-label">Cantidad:</span>
+        <span className="pedido-modal-cantidad-value">{detalle.cantidad}</span>
       </div>
-      <div className="compra-modal-producto-subtotal">
-        <span className="compra-modal-subtotal-label">Subtotal:</span>
-        <span className="compra-modal-subtotal-value">S/. {detalle.subtotal.toFixed(2)}</span>
+      <div className="pedido-modal-producto-subtotal">
+        <span className="pedido-modal-subtotal-label">Subtotal:</span>
+        <span className="pedido-modal-subtotal-value">S/. {detalle.subtotal.toFixed(2)}</span>
       </div>
     </div>
   )

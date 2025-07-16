@@ -26,26 +26,25 @@ function Administradores() {
   };
 
   const cargarAdministradores = async () => {
-  try {
-    setLoading(true);
-    setError(null);
-    const data = await listarAdministradores();
-    setAdministradores(data);
-    setFilteredAdministradores(data);
-  } catch (err) {
-    setError("Error al cargar la lista de administradores");
-    console.error("Error:", err);
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await listarAdministradores();
+      setAdministradores(data);
+      setFilteredAdministradores(data);
+    } catch (err) {
+      setError("Error al cargar la lista de administradores");
+      console.error("Error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-useEffect(() => {
-  cargarAdministradores();
-}, []);
+  useEffect(() => {
+    cargarAdministradores();
+  }, []);
 
-
-    useEffect(() => {
+  useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredAdministradores(administradores);
     } else {
@@ -88,26 +87,31 @@ useEffect(() => {
   };
 
   const handleDeleteConfirm = async () => {
-  try {
-    const confirmacion = await AlertaDeEliminacion(
-      "¿Eliminar administrador?",
-      `¿Estás seguro de eliminar a ${adminToDelete.nombre} ${adminToDelete.apellido}?`
-    );
+    try {
+      const confirmacion = await AlertaDeEliminacion(
+        "¿Eliminar administrador?",
+        `¿Estás seguro de eliminar a ${adminToDelete.nombre} ${adminToDelete.apellido}?`
+      );
 
-    if (confirmacion.isConfirmed) {
-            await eliminarUsuario({ ourUsers: { id: adminToDelete.id } });
-      setShowDeleteModal(false);
-      setAdminToDelete(null);
+      if (confirmacion.isConfirmed) {
+        await eliminarUsuario({ ourUsers: { id: adminToDelete.id } });
+        setShowDeleteModal(false);
+        setAdminToDelete(null);
 
-      AlertaDeExito("Administrador eliminado", "El administrador fue eliminado correctamente.");
-      cargarAdministradores();
+        AlertaDeExito(
+          "Administrador eliminado",
+          "El administrador fue eliminado correctamente."
+        );
+        cargarAdministradores();
+      }
+    } catch (error) {
+      console.error("Error al eliminar administrador:", error);
+      AlertaDeError(
+        "Error al eliminar",
+        "No se pudo eliminar el administrador."
+      );
     }
-  } catch (error) {
-    console.error("Error al eliminar administrador:", error);
-    AlertaDeError("Error al eliminar", "No se pudo eliminar el administrador.");
-  }
-};
-
+  };
 
   const handleDeleteCancel = () => {
     setShowDeleteModal(false);
@@ -133,7 +137,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="Admin-layout">
+    <div className="empleado-layout">
       <div
         style={{
           display: "flex",

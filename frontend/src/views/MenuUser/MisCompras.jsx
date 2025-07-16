@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import {
   Calendar,
@@ -12,7 +10,6 @@ import {
   ReceiptText,
 } from "lucide-react";
 import UserSidebar from "../../components/layout/UserSidebar";
-import MiniProfileUser from "../../components/common/MiniProfileUser";
 import { obtenerUsuarioId } from "../../services/todosroles";
 import Loading from "../../components/common/Loanding";
 import CompraDetalleModal from "./CompraDetalleModal";
@@ -113,6 +110,20 @@ function MisCompras() {
         throw new Error("Token de autenticación no disponible.");
       }
 
+      const obtenerDetallesProducto = async (idProducto) => {
+        try {
+          const response = await fetch(
+            `${import.meta.env.VITE_API}/public/Productos/Buscar/${idProducto}`
+          );
+          if (!response.ok) return null;
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error al obtener el producto:", error);
+          return null;
+        }
+      };
+
       // Obtener los detalles del pago por su ID
       const responsePago = await fetch(
         `${
@@ -151,9 +162,6 @@ function MisCompras() {
 
       const { tipo, idTransaccion, moneda, fechaPago, estado, pedido, total } =
         pago;
-      const IGV_RATE = 0.18; // 18% para Perú
-      const subtotalSinIGV = total / (1 + IGV_RATE);
-      const igvMonto = total - subtotalSinIGV;
 
       const empresa = {
         nombre: "Sirenah S.A.C.",
@@ -281,43 +289,16 @@ function MisCompras() {
       // Detalles de los productos
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      pedido.detalles.forEach((detalle) => {
-        if (yPosition > 260) {
-          pdf.addPage();
-          yPosition = 15;
-          pdf.setFont("helvetica", "bold");
-          pdf.setFontSize(12);
-          pdf.text("DETALLE DE LA VENTA (Continuación)", margin, yPosition);
-          yPosition += 5;
-          drawLine();
-          yPosition += 5;
-          pdf.setFont("helvetica", "bold");
-          pdf.setFillColor(240, 240, 240);
-          pdf.rect(margin, yPosition, pageWidth - 2 * margin, 8, "FD");
-          pdf.text("Cant.", margin + 2, yPosition + 5);
-          pdf.text("Descripción del Producto", margin + 20, yPosition + 5);
-          pdf.text(
-            "P. Unit.",
-            pageWidth - margin - 50,
-            yPosition + 5,
-            null,
-            null,
-            "right"
-          );
-          pdf.text(
-            "Subtotal",
-            pageWidth - margin - 5,
-            yPosition + 5,
-            null,
-            null,
-            "right"
-          );
-          yPosition += 8;
-          pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-        }
+      for (const detalle of pedido.detalles) {
+        const productoCompleto = await obtenerDetallesProducto(
+          detalle.idProducto
+        );
+        const nombreFinal = productoCompleto
+          ? `${productoCompleto.nombre} - ${productoCompleto.descripcion}`
+          : detalle.nombreProducto;
+
         pdf.text(detalle.cantidad.toString(), margin + 2, yPosition + 5);
-        pdf.text(detalle.nombreProducto, margin + 20, yPosition + 5);
+        pdf.text(nombreFinal, margin + 20, yPosition + 5);
         pdf.text(
           detalle.precioUnitario.toFixed(2),
           pageWidth - margin - 50,
@@ -335,47 +316,11 @@ function MisCompras() {
           "right"
         );
         yPosition += 8;
-      });
-      yPosition += 5; // Espacio después de la tabla
-      drawLine();
+      }
+
       yPosition += 5;
 
       // --- 4. Totales ---
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(10);
-      pdf.text(
-        `Subtotal:`,
-        pageWidth - margin - 60,
-        yPosition,
-        null,
-        null,
-        "right"
-      );
-      pdf.text(
-        `${moneda} ${subtotalSinIGV.toFixed(2)}`,
-        pageWidth - margin - 5,
-        yPosition,
-        null,
-        null,
-        "right"
-      );
-      yPosition += lineHeight;
-      pdf.text(
-        `IGV (18%):`,
-        pageWidth - margin - 60,
-        yPosition,
-        null,
-        null,
-        "right"
-      );
-      pdf.text(
-        `${moneda} ${igvMonto.toFixed(2)}`,
-        pageWidth - margin - 5,
-        yPosition,
-        null,
-        null,
-        "right"
-      );
       yPosition += lineHeight;
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(12);
@@ -448,7 +393,7 @@ function MisCompras() {
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(10);
       pdf.text("Código QR:", margin, yPosition);
-      pdf.rect(margin, yPosition + 5, 30, 30); // Cuadrado para simular QR
+      pdf.rect(margin, yPosition + 5, 30, 30);
       pdf.text("QR", margin + 15, yPosition + 20, null, null, "center");
       yPosition += 40;
       drawLine();
@@ -488,14 +433,15 @@ function MisCompras() {
 
   const pagosFiltradosYOrdenados = pagos
     .filter((pago) => {
-      const estadoMatch = filtroEstado === "todos" || pago.estado.toLowerCase() === filtroEstado
-      const tipoMatch = filtroTipo === "todos" || pago.tipo.toLowerCase() === filtroTipo
-      return estadoMatch && tipoMatch
+      const estadoMatch =
+        filtroEstado === "todos" || pago.estado.toLowerCase() === filtroEstado;
+      const tipoMatch =
+        filtroTipo === "todos" || pago.tipo.toLowerCase() === filtroTipo;
+      return estadoMatch && tipoMatch;
     })
     .sort((a, b) => {
-      // Ordenar por fechaPago de forma descendente (más reciente primero)
-      return new Date(b.fechaPago).getTime() - new Date(a.fechaPago).getTime()
-    })
+      return new Date(b.fechaPago).getTime() - new Date(a.fechaPago).getTime();
+    });
 
   useEffect(() => {
     const fetchUsuarioId = async () => {
@@ -547,15 +493,6 @@ function MisCompras() {
 
   return (
     <div className="Admin-layout">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          padding: "10px 20px",
-        }}
-      >
-        <MiniProfileUser />
-      </div>
       <UserSidebar onCollapseChange={handleCollapseChange} />
       <main
         style={{ marginTop: "0px" }}

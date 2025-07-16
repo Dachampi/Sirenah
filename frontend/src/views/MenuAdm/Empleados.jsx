@@ -44,7 +44,7 @@ function Empleados() {
     cargarEmpleados();
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredEmpleados(empleados);
     } else {

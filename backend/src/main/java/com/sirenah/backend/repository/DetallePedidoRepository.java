@@ -22,7 +22,4 @@ public interface DetallePedidoRepository extends JpaRepository<DetallePedido, In
             @Param("hasta") OffsetDateTime hasta
     );
 
-
-
-
 }
