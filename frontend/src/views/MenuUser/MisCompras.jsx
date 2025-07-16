@@ -487,13 +487,16 @@ function MisCompras() {
     }
   };
 
-  const pagosFiltrados = pagos.filter((pago) => {
-    const estadoMatch =
-      filtroEstado === "todos" || pago.estado.toLowerCase() === filtroEstado;
-    const tipoMatch =
-      filtroTipo === "todos" || pago.tipo.toLowerCase() === filtroTipo;
-    return estadoMatch && tipoMatch;
-  });
+  const pagosFiltradosYOrdenados = pagos
+    .filter((pago) => {
+      const estadoMatch = filtroEstado === "todos" || pago.estado.toLowerCase() === filtroEstado
+      const tipoMatch = filtroTipo === "todos" || pago.tipo.toLowerCase() === filtroTipo
+      return estadoMatch && tipoMatch
+    })
+    .sort((a, b) => {
+      // Ordenar por fechaPago de forma descendente (más reciente primero)
+      return new Date(b.fechaPago).getTime() - new Date(a.fechaPago).getTime()
+    })
 
   useEffect(() => {
     const fetchUsuarioId = async () => {
@@ -603,8 +606,8 @@ function MisCompras() {
           </div>
           <div className="compra-stats">
             <span className="compra-total-count">
-              {pagosFiltrados.length}{" "}
-              {pagosFiltrados.length === 1 ? "compra" : "compras"}
+              {pagosFiltradosYOrdenados.length}{" "}
+              {pagosFiltradosYOrdenados.length === 1 ? "compra" : "compras"}
             </span>
           </div>
         </div>
@@ -615,7 +618,7 @@ function MisCompras() {
           </div>
         ) : (
           <div className="compra-content-container">
-            {pagosFiltrados.length === 0 ? (
+            {pagosFiltradosYOrdenados.length === 0 ? (
               <div className="compra-empty-state">
                 <ShoppingBag className="compra-empty-icon" />
                 <h3 className="compra-empty-title">
@@ -631,7 +634,7 @@ function MisCompras() {
               </div>
             ) : (
               <div className="compra-grid-container">
-                {pagosFiltrados.map((pago) => (
+                {pagosFiltradosYOrdenados.map((pago) => (
                   <div key={pago.idPago} className="compra-card">
                     <div className="compra-card-header">
                       <div className="compra-id-transaccion">
