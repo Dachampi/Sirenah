@@ -18,9 +18,8 @@ import Loading from "../../components/common/Loanding";
 import CompraDetalleModal from "./CompraDetalleModal";
 import "../../styles/stylesAdm/ATablas.css";
 import "../../styles/stylesUser/MisCompras.css";
-import jsPDF from "jspdf"; // Importar jsPDF aquí
+import jsPDF from "jspdf";
 
-// Helper para mapear tipos de pago a texto amigable
 const mapPaymentType = (type) => {
   switch (type.toLowerCase()) {
     case "credit_card":
@@ -31,7 +30,7 @@ const mapPaymentType = (type) => {
       return "Transferencia Bancaria";
     case "pago_efectivo":
       return "Pago en Efectivo";
-    case "tarjeta_debito":
+    case "debit_card":
       return "Tarjeta de Débito";
     case "deposito_pago_efectivo":
       return "Depósito Pago Efectivo";
@@ -595,7 +594,7 @@ function MisCompras() {
             >
               <option value="todos">Todos los tipos</option>
               <option value="credit_card">Tarjeta de Crédito</option>
-              <option value="tarjeta_debito">Tarjeta de Débito</option>
+              <option value="debit_card">Tarjeta de Débito</option>
               <option value="account_money">Dinero en Cuenta</option>
               <option value="transferencia">Transferencia Bancaria</option>
               <option value="pago_efectivo">Pago en Efectivo</option>
