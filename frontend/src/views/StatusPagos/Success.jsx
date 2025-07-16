@@ -1,10 +1,4 @@
-import { useEffect, useState } from "react"
-import { CheckCircle, Home, ShoppingBag, CreditCard, User, DollarSign, Info, Banknote, ReceiptText } from "lucide-react"
-import { useNavigate } from "react-router-dom"
-import axios from "axios" // Importar axios
-import Loading from "../../components/common/Loanding.jsx"
-import "../../styles/stylesUser/SuccessPage.css"
-
+import { useEffect, useState } from "react";
 import {
   CheckCircle,
   Home,
@@ -17,10 +11,9 @@ import {
   ReceiptText,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios"; // Importar axios
 import Loading from "../../components/common/Loanding.jsx";
 import "../../styles/stylesPagos/Success.css";
-
 
 const mapPaymentType = (type) => {
   switch (type?.toLowerCase()) {
