@@ -37,7 +37,7 @@ public class MetodoPagoController {
     @Value("${vite.api}")
     private String viteapi;
 
-    @Value("${vite.api.back}")
+    @Value("${vite.apiback}")
     private String viteapiback;
 
     @Autowired
@@ -85,8 +85,6 @@ public class MetodoPagoController {
                 .notificationUrl(viteapiback+"/public/webhook")
                 .externalReference(externalReference)
                 .build();
-
-
 
         PreferenceClient client = new PreferenceClient();
         Preference preference = client.create(preferenceRequest);
