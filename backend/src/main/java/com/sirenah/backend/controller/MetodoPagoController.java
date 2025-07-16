@@ -37,6 +37,9 @@ public class MetodoPagoController {
     @Value("${vite.api}")
     private String viteapi;
 
+    @Value("${vite.api.back}")
+    private String viteapiback;
+
     @Autowired
     private ProductoService productoService;
 
@@ -79,7 +82,7 @@ public class MetodoPagoController {
                 .items(items)
                 .backUrls(backUrls)
                 .autoReturn("approved")
-                .notificationUrl("https://42c801d875b0.ngrok-free.app/public/webhook")
+                .notificationUrl(viteapiback+"/public/webhook")
                 .externalReference(externalReference)
                 .build();
 
