@@ -113,4 +113,13 @@ public class MetodoPagoController {
         }
     }
 
+    @GetMapping("/ObtenerPorCliente/{idCliente}")
+    public ResponseEntity<List<MetodoPago>> obtenerPagosPorCliente(@PathVariable Long idCliente) {
+        List<MetodoPago> pagos = metodoPagoService.obtenerPagosPorCliente(idCliente);
+        if (pagos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(pagos);
+    }
+
 }

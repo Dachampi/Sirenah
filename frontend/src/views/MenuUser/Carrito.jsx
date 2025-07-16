@@ -33,8 +33,6 @@ function Carrito() {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState(null);
 
-  const [pedidoId, setPedidoId] = useState(null);
-
   const handleCheckout = async () => {
     try {
       const data = {

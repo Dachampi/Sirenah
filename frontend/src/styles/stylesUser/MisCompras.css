@@ -1,0 +1,828 @@
+/* ===== VARIABLES CSS ===== */
+:root {
+  --compra-primary-color: #2563eb;
+  --compra-primary-hover: #1d4ed8;
+  --compra-secondary-color: #64748b;
+  --compra-success-color: #059669;
+  --compra-warning-color: #d97706;
+  --compra-danger-color: #dc2626;
+  --compra-info-color: #0891b2;
+  --compra-background: #ffffff;
+  --compra-surface: #f8fafc;
+  --compra-border: #e2e8f0;
+  --compra-text-primary: #1e293b;
+  --compra-text-secondary: #64748b;
+  --compra-text-muted: #94a3b8;
+  --compra-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --compra-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --compra-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --compra-radius: 12px;
+  --compra-radius-sm: 8px;
+  --compra-transition: all 0.2s ease-in-out;
+}
+
+/* ===== HEADER SECTION ===== */
+.compra-header-section {
+  background: linear-gradient(135deg, var(--compra-primary-color) 0%, var(--compra-primary-hover) 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: var(--compra-radius);
+  margin-bottom: 2rem;
+  box-shadow: var(--compra-shadow-lg);
+}
+
+.compra-title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.compra-title-icon {
+  width: 2rem;
+  height: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.compra-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+
+.compra-subtitle {
+  font-size: 1.125rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+}
+
+/* ===== FILTERS SECTION ===== */
+.compra-filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--compra-background);
+  padding: 1.5rem;
+  border-radius: var(--compra-radius);
+  border: 1px solid var(--compra-border);
+  margin-bottom: 2rem;
+  box-shadow: var(--compra-shadow-sm);
+  gap: 1rem; /* Added gap for better spacing on wrap */
+}
+
+.compra-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.compra-filter-label {
+  font-weight: 600;
+  color: var(--compra-text-primary);
+  font-size: 0.875rem;
+}
+
+.compra-filter-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--compra-border);
+  border-radius: var(--compra-radius-sm);
+  background: var(--compra-background);
+  color: var(--compra-text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--compra-transition);
+  min-width: 180px;
+}
+
+.compra-filter-select:focus {
+  outline: none;
+  border-color: var(--compra-primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.compra-filter-select:hover {
+  border-color: var(--compra-primary-color);
+}
+
+.compra-stats {
+  display: flex;
+  align-items: center;
+}
+
+.compra-total-count {
+  background: var(--compra-surface);
+  color: var(--compra-text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--compra-radius-sm);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* ===== LOADING CONTAINER ===== */
+.compra-loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+/* ===== CONTENT CONTAINER ===== */
+.compra-content-container {
+  min-height: 400px;
+}
+
+/* ===== EMPTY STATE ===== */
+.compra-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  background: var(--compra-background);
+  border-radius: var(--compra-radius);
+  border: 2px dashed var(--compra-border);
+  min-height: 300px;
+}
+
+.compra-empty-icon {
+  width: 4rem;
+  height: 4rem;
+  color: var(--compra-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.compra-empty-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--compra-text-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.compra-empty-description {
+  font-size: 1rem;
+  color: var(--compra-text-secondary);
+  margin: 0;
+  max-width: 400px;
+}
+
+/* ===== GRID CONTAINER ===== */
+.compra-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+/* ===== COMPRA CARD ===== */
+.compra-card {
+  background: var(--compra-background);
+  border: 1px solid var(--compra-border);
+  border-radius: var(--compra-radius);
+  box-shadow: var(--compra-shadow-md);
+  transition: var(--compra-transition);
+  overflow: hidden;
+  position: relative;
+}
+
+.compra-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--compra-shadow-lg);
+  border-color: var(--compra-primary-color);
+}
+
+.compra-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid var(--compra-border);
+  background: var(--compra-surface);
+}
+
+.compra-id-transaccion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.compra-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--compra-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.compra-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--compra-text-primary);
+}
+
+/* ===== ESTADO BADGES ===== */
+.compra-estado-badge {
+  padding: 0.5rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.compra-estado-approved {
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--compra-success-color);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.compra-estado-pending {
+  background: rgba(217, 119, 6, 0.1);
+  color: var(--compra-warning-color);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.compra-estado-rejected {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--compra-danger-color);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.compra-estado-default {
+  background: rgba(100, 116, 139, 0.1);
+  color: var(--compra-secondary-color);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+/* ===== CARD BODY ===== */
+.compra-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.compra-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.compra-info-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--compra-primary-color);
+  flex-shrink: 0;
+}
+
+.compra-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.compra-total-amount .compra-value {
+  color: var(--compra-success-color);
+  font-size: 1.125rem;
+}
+
+/* ===== CARD FOOTER ===== */
+.compra-card-footer {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--compra-border);
+  background: var(--compra-surface);
+}
+
+.compra-details-button {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: var(--compra-primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--compra-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--compra-transition);
+}
+
+.compra-details-button:hover {
+  background: var(--compra-primary-hover);
+  transform: translateY(-1px);
+}
+
+.compra-download-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  color: var(--compra-info-color);
+  border: 1px solid var(--compra-info-color);
+  border-radius: var(--compra-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--compra-transition);
+}
+
+.compra-download-button:hover {
+  background: var(--compra-info-color);
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* ===== MODAL DE DETALLES ===== */
+.compra-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.compra-modal-content {
+  background: var(--compra-background);
+  border-radius: var(--compra-radius);
+  box-shadow: var(--compra-shadow-lg);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: compra-modal-appear 0.3s ease-out;
+}
+
+@keyframes compra-modal-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.compra-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--compra-border);
+  background: var(--compra-surface);
+}
+
+.compra-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--compra-text-primary);
+  margin: 0;
+}
+
+.compra-modal-close {
+  background: none;
+  border: none;
+  color: var(--compra-text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--compra-radius-sm);
+  transition: var(--compra-transition);
+}
+
+.compra-modal-close:hover {
+  background: var(--compra-border);
+  color: var(--compra-text-primary);
+}
+
+.compra-modal-body {
+  padding: 1.5rem;
+}
+
+.compra-modal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.compra-modal-info-card {
+  background: var(--compra-surface);
+  padding: 1.5rem;
+  border-radius: var(--compra-radius-sm);
+  border: 1px solid var(--compra-border);
+}
+
+.compra-modal-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--compra-text-primary);
+  margin: 0 0 1rem 0;
+}
+
+.compra-modal-subtitle-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--compra-primary-color);
+}
+
+.compra-modal-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--compra-border);
+}
+
+.compra-modal-info-item:last-child {
+  border-bottom: none;
+}
+
+.compra-modal-label {
+  font-weight: 500;
+  color: var(--compra-text-secondary);
+}
+
+.compra-modal-value {
+  font-weight: 600;
+  color: var(--compra-text-primary);
+}
+
+.compra-modal-estado {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.compra-modal-estado.approved {
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--compra-success-color);
+}
+
+.compra-modal-estado.pending {
+  background: rgba(217, 119, 6, 0.1);
+  color: var(--compra-warning-color);
+}
+
+.compra-modal-estado.rejected {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--compra-danger-color);
+}
+
+.compra-modal-total-amount {
+  background: rgba(5, 150, 105, 0.1);
+  padding: 1rem;
+  border-radius: var(--compra-radius-sm);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+  margin-top: 0.5rem;
+}
+
+.compra-modal-total-amount .compra-modal-label,
+.compra-modal-total-amount .compra-modal-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--compra-success-color);
+}
+
+.compra-loading-text,
+.compra-error-text {
+  font-size: 0.875rem;
+  color: var(--compra-text-secondary);
+  text-align: center;
+  padding: 1rem;
+}
+
+.compra-modal-productos {
+  background: var(--compra-background);
+  border: 1px solid var(--compra-border);
+  border-radius: var(--compra-radius-sm);
+  padding: 1.5rem;
+}
+
+.compra-modal-productos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.compra-modal-producto-item {
+  display: grid;
+  grid-template-columns: 80px 2fr 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background: var(--compra-surface);
+  border-radius: var(--compra-radius-sm);
+  border: 1px solid var(--compra-border);
+}
+
+.compra-modal-producto-imagen {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--compra-radius-sm);
+  overflow: hidden;
+  background: var(--compra-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compra-producto-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--compra-transition);
+}
+
+.compra-producto-imagen:hover {
+  transform: scale(1.05);
+}
+
+.compra-producto-imagen-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--compra-text-muted);
+}
+
+.compra-modal-producto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.compra-modal-producto-nombre {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--compra-text-primary);
+  margin: 0;
+}
+
+.compra-modal-producto-precio {
+  font-size: 0.875rem;
+  color: var(--compra-text-secondary);
+  margin: 0;
+}
+
+.compra-modal-producto-descripcion {
+  font-size: 0.75rem;
+  color: var(--compra-text-muted);
+  margin: 0;
+  line-height: 1.4;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compra-modal-producto-cantidad,
+.compra-modal-producto-subtotal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.compra-modal-cantidad-label,
+.compra-modal-subtotal-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--compra-text-secondary);
+  text-transform: uppercase;
+}
+
+.compra-modal-cantidad-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--compra-primary-color);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.5rem;
+  border-radius: var(--compra-radius-sm);
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.compra-modal-subtotal-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--compra-success-color);
+}
+
+.compra-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--compra-border);
+  background: var(--compra-surface);
+}
+
+.compra-modal-download-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--compra-info-color);
+  color: white;
+  border: none;
+  border-radius: var(--compra-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--compra-transition);
+}
+
+.compra-modal-download-btn:hover {
+  background: #067e9a; /* Darker info color */
+}
+
+.compra-modal-close-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--compra-primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--compra-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--compra-transition);
+}
+
+.compra-modal-close-btn:hover {
+  background: var(--compra-primary-hover);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .compra-grid-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .compra-header-section {
+    padding: 1.5rem;
+  }
+
+  .compra-title {
+    font-size: 1.875rem;
+  }
+
+  .compra-filters-container {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .compra-filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .compra-filter-select {
+    min-width: auto;
+  }
+
+  .compra-card-footer {
+    flex-direction: column;
+  }
+
+  .compra-modal-overlay {
+    padding: 0.5rem;
+  }
+
+  .compra-modal-content {
+    max-height: 95vh;
+  }
+
+  .compra-modal-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .compra-modal-producto-item {
+    grid-template-columns: 60px 1fr;
+    gap: 0.75rem;
+    text-align: left;
+  }
+
+  .compra-modal-producto-imagen {
+    width: 60px;
+    height: 60px;
+  }
+
+  .compra-modal-producto-cantidad,
+  .compra-modal-producto-subtotal {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--compra-border);
+  }
+
+  .compra-modal-footer {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 480px) {
+  .compra-header-section {
+    padding: 1rem;
+  }
+
+  .compra-title {
+    font-size: 1.5rem;
+  }
+
+  .compra-subtitle {
+    font-size: 1rem;
+  }
+
+  .compra-card-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .compra-modal-header {
+    padding: 1rem;
+  }
+
+  .compra-modal-body {
+    padding: 1rem;
+  }
+
+  .compra-modal-footer {
+    padding: 1rem;
+  }
+
+  .compra-modal-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes compra-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.compra-card {
+  animation: compra-fade-in 0.3s ease-out;
+}
+
+.compra-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.compra-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.compra-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.compra-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.compra-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.compra-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --compra-background: #1e293b;
+    --compra-surface: #334155;
+    --compra-border: #475569;
+    --compra-text-primary: #f1f5f9;
+    --compra-text-secondary: #cbd5e1;
+    --compra-text-muted: #94a3b8;
+  }
+}

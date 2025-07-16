@@ -9,6 +9,7 @@ import {
   FaShoppingCart,
   FaMapMarkerAlt,
   FaHeadset,
+  FaClipboardList,
   FaSignOutAlt,
 } from "react-icons/fa";
 import "../../styles/Sidebar.css";
@@ -81,6 +82,11 @@ function UserSidebar({ onCollapseChange }) {
           <li>
             <a href="/MenuCliente/MisCompras">
               <FaShoppingBag /> <span>Mis Compras</span>
+            </a>
+          </li>
+          <li>
+            <a href="/MenuCliente/MisPedidos">
+              <FaClipboardList /> <span>Mis Pedidos</span>
             </a>
           </li>
           <li>

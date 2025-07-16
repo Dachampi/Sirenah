@@ -11,5 +11,6 @@ public interface PedidoService {
     Optional<Pedido> obtenerPedidoPorId(Integer idPedido);
     List<Pedido> obtenerTodosPedidos();
     void eliminarPedido(Integer idPedido);
+    List<Pedido> obtenerPedidosPorCliente(Integer idCliente);
 
 }
