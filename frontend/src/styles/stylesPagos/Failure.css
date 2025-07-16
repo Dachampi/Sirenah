@@ -1,128 +1,222 @@
-/* General */
-.failure-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    background: radial-gradient(circle, #f44336, #d32f2f);
-    /* Gradiente de error */
-    background-size: cover;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
+:root {
+  --failure-primary-color: #c53030;
+  --failure-primary-hover: #9b2c2c;
+  --failure-secondary-color: #6b7280;
+  --failure-background: #fef2f2;
+  --failure-surface: #ffffff;
+  --failure-border: #fecaca;
+  --failure-text-primary: #1f2937;
+  --failure-text-secondary: #4b5563;
+  --failure-text-muted: #9ca3af;
+  --failure-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --failure-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --failure-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --failure-radius: 1.25rem;
+  --failure-radius-sm: 0.625rem;
+  --failure-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Tarjeta */
+.failure-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--failure-background) 0%, var(--failure-border) 100%);
+  padding: 2rem;
+}
+
 .failure-card {
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
-    animation: slideDown 0.6s ease-in-out;
-    border: 1px solid #e0e0e0;
+  background-color: var(--failure-surface);
+  border-radius: var(--failure-radius);
+  box-shadow: var(--failure-shadow-lg);
+  padding: 3rem;
+  text-align: center;
+  max-width: 550px;
+  width: 100%;
+  animation: failure-fade-in 0.6s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  border: 1px solid var(--failure-border);
 }
 
-/* Icono */
+.failure-header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.failure-icon-container {
+  background-color: var(--failure-primary-color);
+  border-radius: 50%;
+  padding: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--failure-shadow-md);
+  transition: var(--failure-transition);
+}
+
+.failure-icon-container:hover {
+  transform: scale(1.05);
+  box-shadow: var(--failure-shadow-lg);
+}
+
 .failure-icon {
-    font-size: 3rem;
-    color: #f44336;
-    margin-bottom: 20px;
-    animation: popUp 0.5s ease-in-out;
+  width: 4.5rem;
+  height: 4.5rem;
+  color: white;
 }
 
-/* Título */
 .failure-title {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 10px;
-    font-weight: bold;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--failure-primary-color);
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
-/* Mensaje */
 .failure-message {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-    line-height: 1.6;
+  font-size: 1.2rem;
+  color: var(--failure-text-primary);
+  margin: 0;
+  line-height: 1.7;
+  max-width: 600px;
 }
 
-/* Acciones */
 .failure-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
 }
 
-/* Botón */
 .failure-button {
-    display: inline-block;
-    background-color: #f44336;
-    color: #ffffff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 1rem 2rem;
+  border-radius: var(--failure-radius-sm);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--failure-transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 200px;
 }
 
-.failure-button:hover {
-    background-color: #d32f2f;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-    transform: translateY(-2px);
+.failure-button-primary {
+  background-color: var(--failure-primary-color);
+  color: white;
+  border: none;
+  box-shadow: var(--failure-shadow-sm);
 }
 
-/* Animaciones */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.failure-button-primary:hover {
+  background-color: var(--failure-primary-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--failure-shadow-md);
 }
 
-@keyframes popUp {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-
-    60% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1);
-    }
+.failure-button-secondary {
+  background-color: var(--failure-surface);
+  color: var(--failure-text-primary);
+  border: 1px solid var(--failure-border);
+  box-shadow: var(--failure-shadow-sm);
 }
 
-/* Responsive */
+.failure-button-secondary:hover {
+  background-color: var(--failure-border);
+  transform: translateY(-3px);
+  box-shadow: var(--failure-shadow-md);
+}
+
+@keyframes failure-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
-    .failure-card {
-        padding: 20px;
-    }
+  .failure-card {
+    padding: 2rem;
+    gap: 2rem;
+  }
 
-    .failure-title {
-        font-size: 1.5rem;
-    }
+  .failure-title {
+    font-size: 2.5rem;
+  }
 
-    .failure-message {
-        font-size: 0.9rem;
-    }
+  .failure-message {
+    font-size: 1.1rem;
+  }
 
-    .failure-button {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
+  .failure-icon-container {
+    padding: 1.25rem;
+  }
+
+  .failure-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .failure-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .failure-button {
+    width: 100%;
+    padding: 0.9rem 1.8rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .failure-page-container {
+    padding: 1rem;
+  }
+
+  .failure-card {
+    padding: 1.5rem;
+  }
+
+  .failure-title {
+    font-size: 2rem;
+  }
+
+  .failure-message {
+    font-size: 1rem;
+  }
+
+  .failure-icon-container {
+    padding: 1rem;
+  }
+
+  .failure-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --failure-background: #1a202c;
+    --failure-surface: #2d3748;
+    --failure-border: #4a5568;
+    --failure-text-primary: #e2e8f0;
+    --failure-text-secondary: #a0aec0;
+    --failure-text-muted: #718096;
+    --failure-primary-color: #fc8181;
+    --failure-primary-hover: #e53e3e;
+  }
 }

@@ -1,249 +1,243 @@
-import { useNavigate } from "react-router-dom";
-import "../../styles/stylesPagos/Success.css";
-import { useEffect, useState } from "react";
-import Loading from "../../components/common/Loanding.jsx";
-import { AlertaDeError } from "../../utils/Alertas.js";
-import jsPDF from "jspdf";
+import { useEffect, useState } from "react"
+import { CheckCircle, Home, ShoppingBag, CreditCard, User, DollarSign, Info, Banknote, ReceiptText } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios" // Importar axios
+import Loading from "../../components/common/Loanding.jsx"
+import "../../styles/stylesUser/SuccessPage.css"
+
+
+const mapPaymentType = (type) => {
+  switch (type?.toLowerCase()) {
+    case "credit_card":
+      return "Tarjeta de Crédito"
+    case "account_money":
+      return "Dinero en Cuenta (Mercado Pago)"
+    case "transferencia":
+      return "Transferencia Bancaria"
+    case "pago_efectivo":
+      return "Pago en Efectivo"
+    case "tarjeta_debito":
+      return "Tarjeta de Débito"
+    case "deposito_pago_efectivo":
+      return "Depósito Pago Efectivo"
+    default:
+      return type ? type.replace(/_/g, " ") : "N/A"
+  }
+}
+
+const traducirEstadoDisplay = (estado) => {
+  switch (estado?.toLowerCase()) {
+    case "approved":
+      return "Aprobado"
+    case "pending":
+      return "Pendiente"
+    case "rejected":
+      return "Rechazado"
+    case "in_process":
+      return "En Proceso"
+    case "cancelled":
+      return "Cancelado"
+    case "refunded":
+      return "Reembolsado"
+    default:
+      return estado || "Desconocido"
+  }
+}
+
+const getTipoIcon = (tipo) => {
+  switch (tipo?.toLowerCase()) {
+    case "credit_card":
+      return <CreditCard />
+    case "account_money":
+      return <DollarSign />
+    case "transferencia":
+      return <Banknote />
+    case "pago_efectivo":
+      return <ReceiptText />
+    case "tarjeta_debito":
+      return <CreditCard />
+    case "deposito_pago_efectivo":
+      return <Banknote />
+    default:
+      return <Info />
+  }
+}
 
 function Success() {
-  const navigate = useNavigate();
-  const [paymentDetails, setPaymentDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [clientData, setClientData] = useState(null);
+  const navigate = useNavigate()
+  const [idPago, setIdPago] = useState(null)
+  const [paymentDetails, setPaymentDetails] = useState(null)
+  const [clientDetails, setClientDetails] = useState(null)
+  const [isLoadingDetails, setIsLoadingDetails] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const query = new URLSearchParams(window.location.search);
-    
-    const idTransaccion = query.get("payment_id") || localStorage.getItem("idPago");
+    const storedIdPago = localStorage.getItem("idPago")
+    if (storedIdPago) {
+      setIdPago(storedIdPago)
+      // No limpiar aquí, ya que se necesita para la carga de detalles
+    } else {
+      setError("No se encontró un ID de pago. Por favor, intente de nuevo.")
+      setIsLoadingDetails(false)
+    }
+  }, [])
 
-    if (!idTransaccion) {
+  useEffect(() => {
+    const fetchPaymentAndClientDetails = async () => {
+      if (!idPago) return
 
-      AlertaDeError("¡Error!", "No se encontró un ID de pago.");
-      return;
+      setIsLoadingDetails(true)
+      setError(null)
+      try {
+        const token = localStorage.getItem("token")
+        if (!token) {
+          throw new Error("Token de autenticación no disponible.")
+        }
+
+        // 1. Obtener detalles del pago
+        const paymentResponse = await axios.get(
+          `${import.meta.env.VITE_API}/todosroles/MercadoPago/ObtenerPorId/${idPago}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        )
+        setPaymentDetails(paymentResponse.data)
+
+        // 2. Obtener datos del cliente usando el idCliente del pedido asociado al pago
+        const idCliente = paymentResponse.data.pedido.idCliente
+        const clientResponse = await axios.get(`${import.meta.env.VITE_API}/todosroles/datosPorId/${idCliente}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        setClientDetails(clientResponse.data)
+
+        // Opcional: Limpiar el ID de pago del localStorage una vez que se han cargado los detalles
+        localStorage.removeItem("idPago")
+      } catch (err) {
+        console.error("Error al cargar detalles de pago o cliente:", err)
+        setError("No se pudieron cargar los detalles de la compra. Intente más tarde.")
+      } finally {
+        setIsLoadingDetails(false)
+      }
     }
 
-    const fetchPaymentDetails = async () => {
-      try {
-        const [paymentRes, paymentErr] = await fetch(
-          `${import.meta.env.VITE_API}/todosroles/Pago/ObtenerPorTransaccion/${idTransaccion}`,
+    fetchPaymentAndClientDetails()
+  }, [idPago])
 
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ).then(async (res) => [await res.json(), res.ok]);
+  const handleGoHome = () => {
+    navigate("/")
+  }
 
-        if (!paymentErr) throw new Error("Error al obtener detalles del pago");
-
-        setPaymentDetails(paymentRes);
-
-        const [clientRes, clientErr] = await fetch(
-          `${import.meta.env.VITE_API}/todosroles/datosPorId/${
-            paymentRes.pedido.idCliente
-          }`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ).then(async (res) => [await res.json(), res.ok]);
-
-        if (!clientErr) throw new Error("Error al obtener datos del cliente");
-
-        setClientData(clientRes);
-      } catch (err) {
-        AlertaDeError("¡Error!", err.message);
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPaymentDetails();
-  }, []);
-
-  const handleBackToMenu = () => {
-    localStorage.removeItem("idPago");
-    navigate("/MenuCliente/MisCompras");
-  };
-
-  const handleDownloadReceipt = () => {
-    if (!paymentDetails || !clientData) return;
-
-    const { idPago, tipo, idTransaccion, moneda, fechaPago, estado, pedido } =
-      paymentDetails;
-
-    const { nombre, apellido, email, telefono, dni } = clientData;
-
-    const empresa = {
-      nombre: "Sirenah",
-      direccion: "Urb. Sol de Huacachina H-4, Ica, Peru 1101",
-      telefono: "(+51) 930 462 483",
-      email: "contacto@sirenah.com",
-    };
-
-    const pdf = new jsPDF();
-
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(18);
-    pdf.text("Boleta de Pago", 105, 20, null, null, "center");
-
-    // Empresa
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(12);
-    let y = 30;
-    pdf.text(empresa.nombre, 20, y);
-    y += 8;
-    pdf.text(empresa.direccion, 20, y);
-    y += 8;
-    pdf.text(`Tel: ${empresa.telefono}`, 20, y);
-    y += 8;
-    pdf.text(`Email: ${empresa.email}`, 20, y);
-    y += 12;
-
-    pdf.setLineWidth(0.5);
-    pdf.line(20, y, 190, y);
-    y += 8;
-
-    // Información de pago
-    pdf.text(`ID Transacción: ${idTransaccion}`, 20, y);
-    y += 8;
-    pdf.text(`Tipo de Pago: ${tipo}`, 20, y);
-    y += 8;
-    pdf.text(`Moneda: ${moneda}`, 20, y);
-    y += 8;
-    pdf.text(`Fecha de Pago: ${new Date(fechaPago).toLocaleString()}`, 20, y);
-    y += 8;
-    pdf.text(`Estado: ${estado}`, 20, y);
-    y += 8;
-
-    pdf.line(20, y, 190, y);
-    y += 8;
-
-    // Cliente
-    pdf.setFont("helvetica", "bold");
-    pdf.text("Datos del Cliente:", 20, y);
-    y += 10;
-    pdf.setFont("helvetica", "normal");
-    pdf.text(`Nombre: ${nombre} ${apellido}`, 20, y);
-    y += 8;
-    pdf.text(`DNI: ${dni}`, 20, y);
-    y += 8;
-    pdf.text(`Email: ${email}`, 20, y);
-    y += 8;
-    pdf.text(`Teléfono: ${telefono}`, 20, y);
-    y += 12;
-
-    // Pedido
-    pdf.setFont("helvetica", "bold");
-    pdf.text("Detalles del Pedido:", 20, y);
-    y += 10;
-    pdf.setFont("helvetica", "normal");
-    pdf.text(`Dirección: ${pedido.direccion}`, 20, y);
-    y += 8;
-    pdf.text(
-      `Fecha del Pedido: ${new Date(pedido.fechaPedido).toLocaleString()}`,
-      20,
-      y
-    );
-    y += 12;
-
-    // Tabla de productos
-    pdf.setFont("helvetica", "bold");
-    pdf.text("Productos:", 20, y);
-    y += 10;
-
-    pdf.setFillColor(200, 220, 255);
-    pdf.rect(20, y, 170, 10, "FD");
-    pdf.text("Producto", 22, y + 6);
-    pdf.text("Cantidad", 90, y + 6);
-    pdf.text("Precio Unitario", 120, y + 6);
-    pdf.text("Subtotal", 160, y + 6);
-    y += 18;
-
-    let total = 0;
-    pedido.detalles.forEach((d) => {
-      if (y > 270) {
-        // salto de página
-        pdf.addPage();
-        y = 20;
-      }
-      pdf.text(d.nombreProducto, 20, y);
-      pdf.text(d.cantidad.toString(), 90, y);
-      pdf.text(d.precioUnitario.toFixed(2), 120, y);
-      pdf.text(d.subtotal.toFixed(2), 160, y);
-      total += d.subtotal;
-      y += 8;
-    });
-
-    pdf.line(20, y, 190, y);
-    y += 10;
-
-    pdf.setFont("helvetica", "bold");
-    pdf.text("Total de la Compra:", 20, y);
-    pdf.setFont("helvetica", "normal");
-    pdf.text(`${total.toFixed(2)} ${moneda}`, 160, y, null, null, "right");
-
-    pdf.save(`Boleta_Pago_${idPago}.pdf`);
-  };
-
-  if (loading) {
-    return (
-      <div className="success-container">
-        <Loading message="Obteniendo Detalles, por favor espera..." />
-      </div>
-    );
+  const handleViewPurchases = () => {
+    navigate("/mis-compras")
   }
 
   return (
-    <div className="success-container">
+    <div className="success-page-container">
       <div className="success-card">
-        <div className="success-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="64"
-            height="64"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-          >
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.93 10.933L4.44 8.44a.5.5 0 0 0-.708 0l-.708.708a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .707 0l8-8a.5.5 0 0 0 0-.707l-.707-.708a.5.5 0 0 0-.708 0L6.93 10.933z" />
-          </svg>
-        </div>
-        <h1 className="success-title">¡Transacción Exitosa!</h1>
-        <p className="success-message">
-          Tu pago se ha procesado correctamente. Gracias por confiar en
-          nosotros. A continuación, puedes ver los detalles de tu transacción.
-        </p>
-        <div className="success-details">
-          <p>
-            <strong>ID de la transacción:</strong>{" "}
-            {paymentDetails.idTransaccion}
-          </p>
-          <p>
-            <strong>Monto:</strong> {paymentDetails.total} PEN
-          </p>
-          <p>
-            <strong>Fecha:</strong>{" "}
-            {new Date(paymentDetails.fechaPago).toLocaleDateString()}
+        <div className="success-header-section">
+          <div className="success-icon-container">
+            <CheckCircle className="success-icon" />
+          </div>
+          <h1 className="success-title">¡Pago Exitoso!</h1>
+          <p className="success-message">
+            Tu transacción se ha completado con éxito. ¡Gracias por tu compra! Recibirás una confirmación por correo
+            electrónico en breve.
           </p>
         </div>
+
+        {isLoadingDetails ? (
+          <div className="success-loading-container">
+            <Loading message="Cargando detalles de la compra..." />
+          </div>
+        ) : error ? (
+          <div className="success-loading-container">
+            <p className="success-message" style={{ color: "var(--success-danger-color)" }}>
+              {error}
+            </p>
+          </div>
+        ) : (
+          <div className="success-details-grid">
+            {/* Resumen del Pago */}
+            <div className="success-info-card">
+              <h3 className="success-subtitle">
+                {getTipoIcon(paymentDetails?.tipo)}
+                Resumen del Pago
+              </h3>
+              <div className="success-info-item">
+                <span className="success-info-label">ID Transacción:</span>
+                <span className="success-info-value">{paymentDetails?.idTransaccion || "N/A"}</span>
+              </div>
+              <div className="success-info-item">
+                <span className="success-info-label">Tipo de Pago:</span>
+                <span className="success-info-value">{mapPaymentType(paymentDetails?.tipo)}</span>
+              </div>
+              <div className="success-info-item">
+                <span className="success-info-label">Fecha de Pago:</span>
+                <span className="success-info-value">
+                  {paymentDetails?.fechaPago
+                    ? new Date(paymentDetails.fechaPago).toLocaleDateString("es-ES", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                    : "N/A"}
+                </span>
+              </div>
+              <div className="success-info-item">
+                <span className="success-info-label">Estado:</span>
+                <span className="success-info-value">{traducirEstadoDisplay(paymentDetails?.estado)}</span>
+              </div>
+              <div className="success-info-item success-total-amount">
+                <span className="success-info-label">Total:</span>
+                <span className="success-info-value">
+                  {paymentDetails?.total?.toFixed(2) || "0.00"} {paymentDetails?.moneda || "S/."}
+                </span>
+              </div>
+            </div>
+
+            {/* Datos del Cliente */}
+            <div className="success-info-card">
+              <h3 className="success-subtitle">
+                <User />
+                Datos del Cliente
+              </h3>
+              <div className="success-info-item">
+                <span className="success-info-label">Nombre:</span>
+                <span className="success-info-value">
+                  {clientDetails?.nombre || "N/A"} {clientDetails?.apellido || ""}
+                </span>
+              </div>
+              <div className="success-info-item">
+                <span className="success-info-label">Email:</span>
+                <span className="success-info-value">{clientDetails?.email || "N/A"}</span>
+              </div>
+              <div className="success-info-item">
+                <span className="success-info-label">Teléfono:</span>
+                <span className="success-info-value">{clientDetails?.telefono || "N/A"}</span>
+              </div>
+              <div className="success-info-item">
+                <span className="success-info-label">DNI:</span>
+                <span className="success-info-value">{clientDetails?.dni || "N/A"}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="success-actions">
-          <button className="success-button" onClick={handleDownloadReceipt}>
-            Descargar Comprobante
+          <button className="success-button success-button-primary" onClick={handleViewPurchases}>
+            <ShoppingBag size={20} />
+            Ver Mis Compras
           </button>
-          <button className="success-button" onClick={handleBackToMenu}>
-            Volver al Menú
+          <button className="success-button success-button-secondary" onClick={handleGoHome}>
+            <Home size={20} />
+            Volver al Inicio
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Success;
+export default Success
